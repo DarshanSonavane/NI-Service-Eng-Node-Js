@@ -1,10 +1,10 @@
-import { createServicerequestService , saveCustomerFeedbackService } from "../helper/Servicerequesthelper.js";
-import ServiceRequest from "../model/ServiceRequest.js";
-import ComplaintType from "../model/ComplaintType.js";
-import EmployeeServiceRequest from "../model/EmployeeServiceRequest.js";
-import { sendMail } from '../service/Mailer.js'
+const { createServicerequestService , saveCustomerFeedbackService } = require("../helper/Servicerequesthelper.js");
+const ServiceRequest = require("../model/ServiceRequest.js");
+const ComplaintType = require("../model/ComplaintType.js");
+const EmployeeServiceRequest = require("../model/EmployeeServiceRequest.js");
+const { sendMail } = require('../service/Mailer.js');
 
-export const createServiceRequest = async (req,res) =>{
+const createServiceRequest = async (req,res) =>{
     try{
         if(!req.body.machineType || !req.body.complaintType || !req.body.customerId){
             return res.status(400).json({
@@ -29,7 +29,7 @@ export const createServiceRequest = async (req,res) =>{
     }
 }
 
-export const getMyComplaints = async(req,res) =>{
+const getMyComplaints = async(req,res) =>{
     try{
         let custoemrId = req.query.customerId;
         if(custoemrId){
@@ -56,7 +56,7 @@ export const getMyComplaints = async(req,res) =>{
     }
 }
 
-export const getAllComplaints = async (req,res)=>{
+const getAllComplaints = async (req,res)=>{
     try{
         await ServiceRequest.find().sort({_id : -1}).populate("complaintType").populate("customerId").populate("assignedTo").then((data)=>{
             if(data){
@@ -68,7 +68,7 @@ export const getAllComplaints = async (req,res)=>{
     }
 }
 
-export const saveCustomerFeedback = async(req,res)=>{
+const saveCustomerFeedback = async(req,res)=>{
     try{
         if(!req.body.employeeCode || !req.body.customerCode){
             return res.status(400).json({
@@ -87,7 +87,7 @@ export const saveCustomerFeedback = async(req,res)=>{
     }
 }
 
-export const getNatureOfComplaints = async(req,res)=>{
+const getNatureOfComplaints = async(req,res)=>{
     try{
         await ComplaintType.find().then((data)=>{
             if(data){
@@ -99,7 +99,7 @@ export const getNatureOfComplaints = async(req,res)=>{
     }
 }
 
-export const saveNatureOfComplaints = async(req,res)=>{
+const saveNatureOfComplaints = async(req,res)=>{
     try{
         let data = req.body;
         await ComplaintType.create({
@@ -114,7 +114,7 @@ export const saveNatureOfComplaints = async(req,res)=>{
     }
 }
 
-export const assignComplaint = async(req,res)=>{
+const assignComplaint = async(req,res)=>{
     try{
         if(!req.body.employeeId || !req.body.complaintId){
             return res.status(400).json({
@@ -158,7 +158,7 @@ export const assignComplaint = async(req,res)=>{
     }
 }
 
-export const getAssignedComplaints = async(req,res)=>{
+const getAssignedComplaints = async(req,res)=>{
     try{
         let employeeId = req.query.employeeId;
         console.log("employeeId",employeeId);
@@ -172,7 +172,7 @@ export const getAssignedComplaints = async(req,res)=>{
     }
 }
 
-export const closeServiceRequest = async(req,res)=>{
+const closeServiceRequest = async(req,res)=>{
     try{
         let reqData = {
             status : "0",
@@ -193,4 +193,16 @@ export const closeServiceRequest = async(req,res)=>{
     }catch(err){
         console.log(err);
     }
+}
+
+module.exports = {
+    createServiceRequest: createServiceRequest,
+    getMyComplaints: getMyComplaints,
+    getAllComplaints: getAllComplaints,
+    saveCustomerFeedback: saveCustomerFeedback,
+    getNatureOfComplaints: getNatureOfComplaints,
+    saveNatureOfComplaints: saveNatureOfComplaints,
+    assignComplaint: assignComplaint,
+    getAssignedComplaints: getAssignedComplaints,
+    closeServiceRequest: closeServiceRequest
 }

@@ -1,7 +1,7 @@
-import express from 'express';
+const express = require('express');
 
-import { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer } from '../api/controller/EmployeeController.js';
-import { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest} from '../api/controller/ServiceRequestController.js';
+const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer } = require('../api/controller/EmployeeController.js');
+const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest} = require('../api/controller/ServiceRequestController.js');
 
 const routes = express.Router();
 
@@ -26,4 +26,4 @@ routes.get("/get-assigned-complaints",getAssignedComplaints);
 routes.post("/assign-complaint",assignComplaint);
 routes.post("/close-service-request",closeServiceRequest);
 
-export default routes;
+module.exports = routes;

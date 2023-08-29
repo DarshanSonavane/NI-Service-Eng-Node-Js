@@ -1,9 +1,9 @@
-import Employee from '../model/Employee.js';
-import { createEmployeeService } from '../helper/EmployeeHelper.js';
-import UserRoles from '../model/UserRoles.js';
-import CustomerDetails from "../model/CustomerDetails.js";
+const Employee =  require('../model/Employee.js');
+const { createEmployeeService } =  require('../helper/EmployeeHelper.js');
+const UserRoles =  require('../model/UserRoles.js');
+const CustomerDetails =  require("../model/CustomerDetails.js");
 
-export const createEmployee = async (req,res) =>{
+const createEmployee = async (req,res) =>{
     let body = req.body;
 
     if(!body.firstName || !body.lastName || !body.gender || !body.email || !body.dob || !body.phone  ){
@@ -20,7 +20,7 @@ export const createEmployee = async (req,res) =>{
     }
 }
 
-export const getEmployeeList = async (req,res) =>{
+const getEmployeeList = async (req,res) =>{
     try{
         let data =  await Employee.find({isActive : "1"}).where({ "role": { "$ne": '0' }});
         return res.status(200).json({ message: "Employee List!!", data: data });
@@ -29,7 +29,7 @@ export const getEmployeeList = async (req,res) =>{
     }
 }
 
-export const login = async(req,res) =>{
+const login = async(req,res) =>{
     try{
         if(!req.body.id || !req.body.type){
             return res.status(400).json({
@@ -74,7 +74,7 @@ export const login = async(req,res) =>{
     }
 }
 
-export const createEmployeeRole = async (req,res)=>{
+const createEmployeeRole = async (req,res)=>{
     try{
         await UserRoles.create({
             name : "Employee",
@@ -89,7 +89,7 @@ export const createEmployeeRole = async (req,res)=>{
     }
 }
 
-export const getEmployeeRole = async (req,res)=>{
+const getEmployeeRole = async (req,res)=>{
     try{
         let data =  await UserRoles.find();
         return res.status(200).json({ message: "Employee List!!", data: data });
@@ -97,7 +97,8 @@ export const getEmployeeRole = async (req,res)=>{
         console.log(err);
     }
 }
-export const createCustomer = async(req,res)=>{
+
+const createCustomer = async(req,res)=>{
     try{
         let arr = [{
             "customerCode": 108012,
@@ -120,4 +121,13 @@ export const createCustomer = async(req,res)=>{
     }catch(err){
         console.log(err);
     }
+}
+
+module.exports = {
+    createEmployee: createEmployee,
+    getEmployeeList: getEmployeeList,
+    login: login,
+    createEmployeeRole: createEmployeeRole,
+    getEmployeeRole: getEmployeeRole,
+    createCustomer: createCustomer
 }

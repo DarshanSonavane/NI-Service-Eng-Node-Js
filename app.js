@@ -1,18 +1,12 @@
-// import config from "./config/config";
-import express from "express"; // This is to include ExpressJs Library in the nodejs.
+var express =  require("express"); // This is to include ExpressJs Library in the nodej)s.
 // const multer = require("multer");
-import fs from "fs";
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 // mongoose.Promise = require("bluebird");
-import bodyParser from "body-parser";
-import cors from "cors";
-import passport from "passport";
-import flash from "express-flash";
-import cookieParser from "cookie-parser";
-// import session from "express-session";
-import path from "path";
-
-// import intializePassport from "./config/passport-config";
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const passport = require("passport");
+const flash = require("express-flash");
+const cookieParser = require("cookie-parser");
 
 // intializePassport(passport);
 var app = new express(); // Create a object for express library
@@ -27,7 +21,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 //define next middleware to fire res status when api goes wrong.
 app.use(cors()); // adding middleware.. https://stackoverflow.com/questions/18310394/no-access-control-allow-origin-node-apache-port-issue
-import routes from "./config/routes.js";
+const routes = require("./config/routes.js");
 // use res.render to load up an ejs view file
 app.use(flash());
 /* app.use(
@@ -57,3 +51,4 @@ app.use("/", routes);
 app.listen(3000, function () {
   console.log("Listing port: " + 3000);
 });
+

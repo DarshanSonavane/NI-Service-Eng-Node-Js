@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose =  require('mongoose');
 const Schema = mongoose.Schema;
 
 let employeeServiceRequestSchema = new Schema({
@@ -7,4 +7,4 @@ let employeeServiceRequestSchema = new Schema({
     serviceRequestId : { type: Schema.Types.ObjectId, ref: 'ServiceRequest' },
 },{ timestamps: true });
 
-export default mongoose.model('EmployeeServiceRequest', employeeServiceRequestSchema);
+module.exports = mongoose.model('EmployeeServiceRequest', employeeServiceRequestSchema);

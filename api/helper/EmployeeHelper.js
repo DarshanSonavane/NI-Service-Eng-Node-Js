@@ -1,6 +1,6 @@
-import Employee from '../model/Employee.js';
+const Employee = require('../model/Employee.js');
 
-export const createEmployeeService = async (req,res,callback)=>{
+const createEmployeeService = async (req,res,callback)=>{
     try{
         let empDobArr = req.body.dob.split("/");
         let yeardigit = String(empDobArr[2]);
@@ -27,4 +27,8 @@ export const createEmployeeService = async (req,res,callback)=>{
     }catch(err){
         console.log(err);
     }
+}
+
+module.exports = {
+    createEmployeeService: createEmployeeService
 }

@@ -1,7 +1,7 @@
-import ServiceRequest from "../model/ServiceRequest.js";
-import Ratings from "../model/Ratings.js";
+const ServiceRequest = require("../model/ServiceRequest.js");
+const Ratings = require("../model/Ratings.js");
 
-export const createServicerequestService = async (req,res,callback) => {
+const createServicerequestService = async (req,res,callback) => {
     try{
         await ServiceRequest.create({
             customerId : req.body.customerId,
@@ -22,7 +22,7 @@ export const createServicerequestService = async (req,res,callback) => {
     }
 }
 
-export const saveCustomerFeedbackService = async(req,res,callback)=>{
+const saveCustomerFeedbackService = async(req,res,callback)=>{
     try{
         await Ratings.create({
             employeeCode : req.body.employeeCode,
@@ -39,4 +39,9 @@ export const saveCustomerFeedbackService = async(req,res,callback)=>{
     }catch(err){
 
     }
+}
+
+module.exports = {
+    createServicerequestService: createServicerequestService,
+    saveCustomerFeedbackService: saveCustomerFeedbackService
 }

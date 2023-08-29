@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+const nodemailer =  require('nodemailer');
 
 let transporter = nodemailer.createTransport({
     host: 'mail.niserviceeng.com',
@@ -10,7 +10,7 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-export const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail)=>{
+const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail)=>{
     let mailList = ['nilesh@niserviceeng.com'];
     let subject = "New Service Request"
     if(employeeEmail){
@@ -33,6 +33,10 @@ export const sendMail = ( customerName,customercode, complaintType , machineType
             console.log("Email sent: " + info.response);
         }
     });
+}
+
+module.exports = {
+    sendMail: sendMail
 }
 
 
