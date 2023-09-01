@@ -2,6 +2,7 @@ const { createServicerequestService , saveCustomerFeedbackService } = require(".
 const ServiceRequest = require("../model/ServiceRequest.js");
 const ComplaintType = require("../model/ComplaintType.js");
 const EmployeeServiceRequest = require("../model/EmployeeServiceRequest.js");
+const Employee = require("../model/Employee.js");
 const { sendMail } = require('../service/Mailer.js');
 
 const createServiceRequest = async (req,res) =>{
@@ -213,6 +214,18 @@ const getDashboardDetails = async(req,res)=>{
     }
 }
 
+const getAdminDashboardDetails = async(req,res)=>{
+    try{
+        const complaintsCount = await ServiceRequest.count();
+        const openComplaintsCount = await ServiceRequest.count({ status : '1'  });
+        const closeComplaintsCount = await ServiceRequest.count({ status : '0'  });
+        const employeeList = await Employee.find({role : '1'});
+        return res.status(200).json({ code : "200" , message: "Dashboard Details!!", totalComplaints: complaintsCount , openComplaints : openComplaintsCount , closeComplaints : closeComplaintsCount , employees :  employeeList});
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createServiceRequest: createServiceRequest,
     getMyComplaints: getMyComplaints,
@@ -223,5 +236,6 @@ module.exports = {
     assignComplaint: assignComplaint,
     getAssignedComplaints: getAssignedComplaints,
     closeServiceRequest: closeServiceRequest,
-    getDashboardDetails : getDashboardDetails
+    getDashboardDetails : getDashboardDetails,
+    getAdminDashboardDetails : getAdminDashboardDetails
 }

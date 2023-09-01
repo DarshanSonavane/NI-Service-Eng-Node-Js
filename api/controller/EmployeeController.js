@@ -123,11 +123,27 @@ const createCustomer = async(req,res)=>{
     }
 }
 
+const getEmployeeDetails = async(req,res)=>{
+    try{
+        if(!req.query.employeeId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        let data = await EmployeeServiceRequest.find({employeeId : req.query.employeeId}).populate("employeeId",{firstName : 1 , lastName : 1 , dob : 1 , employeeCode : 1, email : 1 , phone : 1 , gender : 1 }).populate("serviceRequestId" , { status : 1 });
+        return res.status(200).json({ message: "Employee Details!!", data: data });
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createEmployee: createEmployee,
     getEmployeeList: getEmployeeList,
     login: login,
     createEmployeeRole: createEmployeeRole,
     getEmployeeRole: getEmployeeRole,
-    createCustomer: createCustomer
+    createCustomer: createCustomer,
+    getEmployeeDetails : getEmployeeDetails
 }
