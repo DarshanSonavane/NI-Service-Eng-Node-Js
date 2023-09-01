@@ -138,6 +138,21 @@ const getEmployeeDetails = async(req,res)=>{
     }
 }
 
+const deleteEmployee = async(req,res)=>{
+    try{
+        if(!req.query.id){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        let data = await Employee.deleteOne({_id : req.query.id});
+        return res.status(200).json({ message: "Employee Deleted Successfully!!", data: data });
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createEmployee: createEmployee,
     getEmployeeList: getEmployeeList,
@@ -145,5 +160,6 @@ module.exports = {
     createEmployeeRole: createEmployeeRole,
     getEmployeeRole: getEmployeeRole,
     createCustomer: createCustomer,
-    getEmployeeDetails : getEmployeeDetails
+    getEmployeeDetails : getEmployeeDetails,
+    deleteEmployee : deleteEmployee
 }
