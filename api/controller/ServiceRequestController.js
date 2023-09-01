@@ -195,6 +195,24 @@ const closeServiceRequest = async(req,res)=>{
     }
 }
 
+const getDashboardDetails = async(req,res)=>{
+    try{
+        if(!req.query.customerId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        const complaintsCount = await ServiceRequest.count({customerId : req.query.customerId});
+        const openComplaintsCount = await ServiceRequest.count({customerId : req.query.customerId , status : '1'  });
+        const closeComplaintsCount = await ServiceRequest.count({customerId : req.query.customerId , status : '0'  });
+
+        return res.status(200).json({ code : "200" , message: "Dashboard Details!!", totalComplaints: complaintsCount , openComplaints : openComplaintsCount , closeComplaints : closeComplaintsCount });
+    }catch(err){
+        consol.log(err);
+    }
+}
+
 module.exports = {
     createServiceRequest: createServiceRequest,
     getMyComplaints: getMyComplaints,
@@ -204,5 +222,6 @@ module.exports = {
     saveNatureOfComplaints: saveNatureOfComplaints,
     assignComplaint: assignComplaint,
     getAssignedComplaints: getAssignedComplaints,
-    closeServiceRequest: closeServiceRequest
+    closeServiceRequest: closeServiceRequest,
+    getDashboardDetails : getDashboardDetails
 }

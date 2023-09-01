@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer } = require('../api/controller/EmployeeController.js');
-const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest} = require('../api/controller/ServiceRequestController.js');
+const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails} = require('../api/controller/ServiceRequestController.js');
 
 const routes = express.Router();
 
@@ -25,5 +25,6 @@ routes.post("/create-customer",createCustomer);
 routes.get("/get-assigned-complaints",getAssignedComplaints);
 routes.post("/assign-complaint",assignComplaint);
 routes.post("/close-service-request",closeServiceRequest);
+routes.get("/get-dashboard-details",getDashboardDetails);
 
 module.exports = routes;
