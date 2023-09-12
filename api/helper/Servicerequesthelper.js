@@ -25,10 +25,14 @@ const createServicerequestService = async (req,res,callback) => {
 const saveCustomerFeedbackService = async(req,res,callback)=>{
     try{
         await Ratings.create({
-            employeeCode : req.body.employeeCode,
-            customerCode : req.body.customerCode,
-            feedback : req.body.feedback
-        }).then((data)=>{
+            serviceRequestId : req.body.serviceRequestId,
+            customerId : req.body.customerId,
+            feedback : req.body.feedback,
+            count : req.body.count
+        }).then(async(data)=>{
+            await ServiceRequest.where({_id : req.body.serviceRequestId}).updateOne({
+                ratings : data._id
+            })
             callback(null, true, data);
         }).catch((err)=>{
             return res.status(500).json({

@@ -14,6 +14,7 @@ const serviceRequestSchema = new Schema({
         enum: [null,'0', '1','2'], // 0 = close , 1 = Open , 2 = Assign
         default: null,
     },
+    ratings : { type: Schema.Types.ObjectId, ref: 'Ratings' },
     assignedTo : {type: Schema.Types.ObjectId, ref: 'Employee'},
     updatedBy : { type: Schema.Types.ObjectId, ref: 'Employee' }
 },{ timestamps: true })

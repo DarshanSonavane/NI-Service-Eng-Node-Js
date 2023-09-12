@@ -71,7 +71,7 @@ const getAllComplaints = async (req,res)=>{
 
 const saveCustomerFeedback = async(req,res)=>{
     try{
-        if(!req.body.employeeCode || !req.body.customerCode){
+        if(!req.body.serviceRequestId || !req.body.customerId || !req.body.count){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,

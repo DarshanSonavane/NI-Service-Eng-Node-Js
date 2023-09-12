@@ -2,15 +2,13 @@ const mongoose =  require('mongoose');
 const Schema = mongoose.Schema;
 
 let ratingSchema = new Schema({
-    employeeCode : {
-        type: String,
-        default: null
-    },
-    customerCode : {
-        type: String,
-        default: null
-    },
+    serviceRequestId : { type: Schema.Types.ObjectId, ref: 'ServiceRequest' },
+    customerId : { type: Schema.Types.ObjectId, ref: 'CustomerDetail' },
     feedback : {
+        type: String,
+        default: null
+    },
+    count : {
         type: String,
         default: null
     }
