@@ -226,6 +226,30 @@ const getAdminDashboardDetails = async(req,res)=>{
     }
 }
 
+const updateServiceRequest = async(req,res)=>{
+    try{
+        let reqData = {
+            status : req.body.status,
+            updatedBy : req.body.employeeId,
+            employeeFeedback : req.body.feedback
+        };
+        await ServiceRequest.where({_id : req.body.complaintId}).updateOne({
+            $set : reqData
+        }).then(async(assignedData)=>{
+            // await EmployeeServiceRequest.deleteOne({serviceRequestId : req.body.complaintId})
+            return res.status(200).json({ code : "200" , message: "Service Request Closed Successfully!!", data: assignedData });
+        }).catch((err)=>{
+            console.log(err);
+            return res.status(500).json({
+                message: "Internal server error",
+                status: false,
+            });
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createServiceRequest: createServiceRequest,
     getMyComplaints: getMyComplaints,
@@ -237,5 +261,6 @@ module.exports = {
     getAssignedComplaints: getAssignedComplaints,
     closeServiceRequest: closeServiceRequest,
     getDashboardDetails : getDashboardDetails,
-    getAdminDashboardDetails : getAdminDashboardDetails
+    getAdminDashboardDetails : getAdminDashboardDetails,
+    updateServiceRequest : updateServiceRequest
 }

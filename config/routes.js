@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer , getEmployeeDetails , deleteEmployee} = require('../api/controller/EmployeeController.js');
-const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails} = require('../api/controller/ServiceRequestController.js');
+const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest} = require('../api/controller/ServiceRequestController.js');
 
 const routes = express.Router();
 
@@ -29,5 +29,6 @@ routes.get("/get-dashboard-details",getDashboardDetails);
 routes.get("/get-admin-dashboard-details",getAdminDashboardDetails);
 routes.get("/get-employee-details",getEmployeeDetails);
 routes.get("/delete-employee",deleteEmployee);
+routes.post("/update-service-request", updateServiceRequest);
 
 module.exports = routes;
