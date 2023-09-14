@@ -153,6 +153,38 @@ const deleteEmployee = async(req,res)=>{
     }
 }
 
+const updateCustomerDetails = async(req,res)=>{
+    try{
+        if(!req.body.mobile || !req.body.email || !req.body.customerId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        let reqData = {
+            mobile : req.body.mobile,
+            email : req.body.email,
+            gstNo : req.body.gstNo
+        };
+        await CustomerDetails.where({
+            _id : req.body.customerId
+        }).updateOne({
+            $set : reqData
+        }).then(async(assignedData)=>{
+            // await EmployeeServiceRequest.deleteOne({serviceRequestId : req.body.complaintId})
+            return res.status(200).json({ code : "200" , message: "Customer Details Updated Successfully!!", data: assignedData });
+        }).catch((err)=>{
+            console.log(err);
+            return res.status(500).json({
+                message: "Internal server error",
+                status: false,
+            });
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createEmployee: createEmployee,
     getEmployeeList: getEmployeeList,
@@ -161,5 +193,6 @@ module.exports = {
     getEmployeeRole: getEmployeeRole,
     createCustomer: createCustomer,
     getEmployeeDetails : getEmployeeDetails,
-    deleteEmployee : deleteEmployee
+    deleteEmployee : deleteEmployee,
+    updateCustomerDetails : updateCustomerDetails
 }

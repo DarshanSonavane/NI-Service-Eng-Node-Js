@@ -17,6 +17,18 @@ let customerDetailsSchema = new Schema({
     amcDue: {
         type: String,
         default: null
+    },
+    mobile: {
+        type: String,
+        default: null
+    },
+    email: {
+        type: String,
+        default: null
+    },
+    gstNo: {
+        type: String,
+        default: null
     }
 
 })
