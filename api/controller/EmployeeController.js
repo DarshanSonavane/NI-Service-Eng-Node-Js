@@ -155,7 +155,7 @@ const deleteEmployee = async(req,res)=>{
 
 const updateCustomerDetails = async(req,res)=>{
     try{
-        if(!req.body.customerId){ //!req.body.mobile || !req.body.email ||
+        if(!req.body.mobile || !req.body.email || !req.body.customerId){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,
