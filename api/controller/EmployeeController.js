@@ -185,6 +185,78 @@ const updateCustomerDetails = async(req,res)=>{
     }
 }
 
+const getAllCustomers = async(req,res)=>{
+    try{
+        let data = await CustomerDetails.find();
+        return res.status(200).json({ code : "200" , message: "Customer List!!", data: data });
+    }catch(err){
+        console.log(err)
+    }
+}
+
+const createUpdateCustomerDetails = async(req,res)=>{
+    try{
+        if(!req.body.customerId){
+            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.customerId || !req.body.amcDue){
+                return res.status(400).json({
+                    message: "Required Fields are missing",
+                    status: false,
+                });
+            }
+
+            await CustomerDetails.create({
+                customerCode : req.body.customerCode,
+                customerName : req.body.customerName,
+                city : req.body.city,
+                amcDue : req.body.amcDue,
+                mobile : req.body.mobile,
+                email : req.body.email,
+                gstNo : req.body.gstNo
+            }).then((data)=>{
+                return res.status(200).json({ code : "200" , message: "Customer Created Successfully!!", data: data });
+            }).catch((err)=>{
+                console.log(err);
+                return res.status(500).json({
+                    message: "Internal server error",
+                    status: false,
+                });
+            })
+        }else {
+            /* if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.customerId || !req.body.amcDue){
+                return res.status(400).json({
+                    message: "Required Fields are missing",
+                    status: false,
+                });
+            } */
+            let reqData = {
+                customerCode : req.body.customerCode,
+                customerName : req.body.customerName,
+                city : req.body.city,
+                amcDue : req.body.amcDue,
+                mobile : req.body.mobile,
+                email : req.body.email,
+                gstNo : req.body.gstNo
+            };
+            await CustomerDetails.where({
+                _id : req.body.customerId
+            }).updateOne({
+                $set : reqData
+            }).then(async(data)=>{
+                // await EmployeeServiceRequest.deleteOne({serviceRequestId : req.body.complaintId})
+                return res.status(200).json({ code : "200" , message: "Customer Details Updated Successfully!!", data: data });
+            }).catch((err)=>{
+                console.log(err);
+                return res.status(500).json({
+                    message: "Internal server error",
+                    status: false,
+                });
+            })
+        }
+    }catch(err){
+        consol.log(err);
+    }
+}
+
 module.exports = {
     createEmployee: createEmployee,
     getEmployeeList: getEmployeeList,
@@ -194,5 +266,7 @@ module.exports = {
     createCustomer: createCustomer,
     getEmployeeDetails : getEmployeeDetails,
     deleteEmployee : deleteEmployee,
-    updateCustomerDetails : updateCustomerDetails
+    updateCustomerDetails : updateCustomerDetails,
+    getAllCustomers : getAllCustomers,
+    createUpdateCustomerDetails : createUpdateCustomerDetails
 }
