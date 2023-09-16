@@ -257,6 +257,33 @@ const createUpdateCustomerDetails = async(req,res)=>{
     }
 }
 
+const updateDetailsWithoutValidation = async(req,res)=>{
+    try{
+        let reqData = {
+            amcDue : req.body.amcDue,
+            mobile : req.body.mobile,
+            email : req.body.email,
+            gstNo : req.body.gstNo
+        };
+        await CustomerDetails.where({
+            _id : req.body.customerId
+        }).updateOne({
+            $set : reqData
+        }).then(async(data)=>{
+            // await EmployeeServiceRequest.deleteOne({serviceRequestId : req.body.complaintId})
+            return res.status(200).json({ code : "200" , message: "Customer Details Updated Successfully!!", data: data });
+        }).catch((err)=>{
+            console.log(err);
+            return res.status(500).json({
+                message: "Internal server error",
+                status: false,
+            });
+        })
+    }catch(err){
+        consol.log(err);
+    }
+}
+
 module.exports = {
     createEmployee: createEmployee,
     getEmployeeList: getEmployeeList,
@@ -268,5 +295,6 @@ module.exports = {
     deleteEmployee : deleteEmployee,
     updateCustomerDetails : updateCustomerDetails,
     getAllCustomers : getAllCustomers,
-    createUpdateCustomerDetails : createUpdateCustomerDetails
+    createUpdateCustomerDetails : createUpdateCustomerDetails,
+    updateDetailsWithoutValidation : updateDetailsWithoutValidation
 }
