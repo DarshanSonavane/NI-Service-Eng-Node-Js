@@ -222,12 +222,12 @@ const createUpdateCustomerDetails = async(req,res)=>{
                 });
             })
         }else {
-            /* if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.customerId || !req.body.amcDue){
+            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.customerId || !req.body.amcDue){
                 return res.status(400).json({
                     message: "Required Fields are missing",
                     status: false,
                 });
-            } */
+            }
             let reqData = {
                 customerCode : req.body.customerCode,
                 customerName : req.body.customerName,
