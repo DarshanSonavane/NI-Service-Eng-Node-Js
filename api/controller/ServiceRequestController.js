@@ -140,7 +140,7 @@ const assignComplaint = async(req,res)=>{
                         if(res){
                             let machineType = req.body.machineType == '0' ? 'Petrol' : 'Disel';
                             console.log(res);
-                            sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , 'darshansonavane24@gmail.com');
+                            sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , res['assignedTo']['email']);
                         }
                     })
                     return res.status(200).json({ code : "200" , message: "Service Request Assigned To Employee Successfully!!", data: assignedData });
