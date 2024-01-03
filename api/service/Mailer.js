@@ -11,7 +11,7 @@ let transporter = nodemailer.createTransport({
 });
 
 const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail)=>{
-    let mailList = ['nilesh@niserviceeng.com'];
+    let mailList = ['nilesh@niserviceeng.com','complaints@niserviceeng.com'];
     let subject = "New Service Request"
     if(employeeEmail){
         subject += "Assigned To You"
