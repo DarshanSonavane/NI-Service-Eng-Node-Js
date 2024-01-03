@@ -10,7 +10,7 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail)=>{
+const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail , customerCity)=>{
     let mailList = ['nilesh@niserviceeng.com','complaints@niserviceeng.com'];
     let subject = "New Service Request"
     if(employeeEmail){
@@ -23,7 +23,7 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
         from: 'admin@niserviceeng.com',
         to: mailList,
         subject: 'New Service Request Raised',
-        text: customerName + " with customer code "+ customercode + "has raised new service request of type "+ " " +complaintType + " for machine type " + machineType
+        text: customerName + " with customer code "+ customercode + " " + customerCity + " has raised new service request of type "+ " " +complaintType + " for machine type " + machineType
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
