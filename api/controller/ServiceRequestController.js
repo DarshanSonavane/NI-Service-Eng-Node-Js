@@ -4,6 +4,7 @@ const ComplaintType = require("../model/ComplaintType.js");
 const EmployeeServiceRequest = require("../model/EmployeeServiceRequest.js");
 const Employee = require("../model/Employee.js");
 const { sendMail } = require('../service/Mailer.js');
+const CustomerDetails = require("../model/CustomerDetails.js");
 
 const createServiceRequest = async (req,res) =>{
     try{
@@ -18,7 +19,7 @@ const createServiceRequest = async (req,res) =>{
                     await ServiceRequest.findOne({_id : data._id}).populate("customerId").populate("complaintType").then(async (res)=>{
                         if(res){
                             let machineType = req.body.machineType == '0' ? 'Petrol' : 'Disel';
-                            sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , null , res['customerId']['city']);
+                            sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , null , res['customerId']['city'] , res['customerId']['mobile']);
                         }
                     })
                     return res.status(200).json({ code : "200" , message: "Service Request Created Successfully!!", data: data });
@@ -140,7 +141,7 @@ const assignComplaint = async(req,res)=>{
                         if(res){
                             let machineType = req.body.machineType == '0' ? 'Petrol' : 'Disel';
                             console.log(res);
-                            sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , res['assignedTo']['email'] , res['customerId']['city']);
+                            sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , res['assignedTo']['email'] , res['customerId']['city'] , res['customerId']['mobile']);
                         }
                     })
                     return res.status(200).json({ code : "200" , message: "Service Request Assigned To Employee Successfully!!", data: assignedData });
@@ -250,6 +251,56 @@ const updateServiceRequest = async(req,res)=>{
     }
 }
 
+const updateCustomerPassword = async(req,res) => {
+    try{
+        if( !req.body.customerCode || !req.body.password){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        let reqData = {
+            password : req.body.password
+        };
+
+        await CustomerDetails.where({
+            customerCode : req.body.customerCode
+        }).updateOne({
+            $set : reqData
+        }).then(async(data)=>{
+            return res.status(200).json({ code : "200" , message: "Customer Password Updated Successfully!!" });
+        }).catch((err)=>{
+            console.log(err);
+            return res.status(500).json({
+                message: "Internal server error",
+                status: false,
+            });
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const getCustomerServiceRequestCount = async(req,res)=>{
+    try{
+        if(!req.body.customerCode){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        let customerDetails = await CustomerDetails.findOne({customerCode : req.body.customerCode});
+        if(customerDetails){
+            const closeComplaintsCount = await ServiceRequest.count({customerId : customerDetails._id , status : '0'  });
+            return res.status(200).json({ code : "200" , count : closeComplaintsCount, message: "Customer Visit Count" });
+        }else {
+            return res.status(400).json({ code : "400" , message: "Invalid Customer Code!" });
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createServiceRequest: createServiceRequest,
     getMyComplaints: getMyComplaints,
@@ -262,5 +313,7 @@ module.exports = {
     closeServiceRequest: closeServiceRequest,
     getDashboardDetails : getDashboardDetails,
     getAdminDashboardDetails : getAdminDashboardDetails,
-    updateServiceRequest : updateServiceRequest
+    updateServiceRequest : updateServiceRequest,
+    updateCustomerPassword : updateCustomerPassword,
+    getCustomerServiceRequestCount : getCustomerServiceRequestCount
 }

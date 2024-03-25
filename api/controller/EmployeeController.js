@@ -38,8 +38,9 @@ const login = async(req,res) =>{
             });
         }else {
             let customerCode = req.body.id;
+            let password  = req.body.password;
             if(req.body.type == "0"){
-                await CustomerDetails.find({customerCode : customerCode.toString()}).then((data)=>{
+                await CustomerDetails.find({customerCode : customerCode.toString() , password : password}).then((data)=>{
                     if(data && data != null && data.length > 0){
                         return res.status(200).json({ code : "200",message: "Login Success!!", data: data });
                     }else {
@@ -54,6 +55,7 @@ const login = async(req,res) =>{
             }else if(req.body.type == "1"){
                 await Employee.findOne({
                     employeeCode : req.body.id,
+                    password : req.body.password,
                     isActive : "1"
                 }).then((data)=>{
                     if(data && data != null){
@@ -197,7 +199,7 @@ const getAllCustomers = async(req,res)=>{
 const createUpdateCustomerDetails = async(req,res)=>{
     try{
         if(!req.body.customerId){
-            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.customerId || !req.body.amcDue){
+            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.amcDue){
                 return res.status(400).json({
                     message: "Required Fields are missing",
                     status: false,
@@ -284,6 +286,37 @@ const updateDetailsWithoutValidation = async(req,res)=>{
     }
 }
 
+const updateEmployeePassword = async(req,res) => {
+    try{
+        if( !req.body.employeeCode || !req.body.password){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        let reqData = {
+            password : req.body.password
+        };
+
+        await Employee.where({
+            employeeCode : req.body.employeeCode
+        }).updateOne({
+            $set : reqData
+        }).then(async(data)=>{
+            // await EmployeeServiceRequest.deleteOne({serviceRequestId : req.body.complaintId})
+            return res.status(200).json({ code : "200" , message: "Employee Password Updated Successfully!!", data: data });
+        }).catch((err)=>{
+            console.log(err);
+            return res.status(500).json({
+                message: "Internal server error",
+                status: false,
+            });
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createEmployee: createEmployee,
     getEmployeeList: getEmployeeList,
@@ -296,5 +329,6 @@ module.exports = {
     updateCustomerDetails : updateCustomerDetails,
     getAllCustomers : getAllCustomers,
     createUpdateCustomerDetails : createUpdateCustomerDetails,
-    updateDetailsWithoutValidation : updateDetailsWithoutValidation
+    updateDetailsWithoutValidation : updateDetailsWithoutValidation,
+    updateEmployeePassword : updateEmployeePassword
 }

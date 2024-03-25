@@ -29,7 +29,11 @@ let customerDetailsSchema = new Schema({
     gstNo: {
         type: String,
         default: null
-    }
+    },
+    password : {
+        type : String,
+        default : null
+    },
 
 })
 module.exports =  mongoose.model('CustomerDetail', customerDetailsSchema);

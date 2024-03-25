@@ -5,7 +5,7 @@ const createServicerequestService = async (req,res,callback) => {
     try{
         await ServiceRequest.create({
             customerId : req.body.customerId,
-            machineType : "1",
+            machineType : req.body.machineType,
             complaintType : req.body.complaintType,
             status : "1",
             assignedTo : req.body.assignedTo ? req.body.assignedTo : null

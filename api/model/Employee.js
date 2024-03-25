@@ -39,6 +39,10 @@ let employeeSchema = new Schema({
         type: String,
         default: null
     },
+    password : {
+        type : String,
+        default : null
+    },
     isActive: {
         type: String,
         enum: ['0', '1', '2'],
