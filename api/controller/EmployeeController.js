@@ -297,21 +297,29 @@ const updateEmployeePassword = async(req,res) => {
         let reqData = {
             password : req.body.password
         };
-
-        await Employee.where({
-            employeeCode : req.body.employeeCode
-        }).updateOne({
-            $set : reqData
-        }).then(async(data)=>{
-            // await EmployeeServiceRequest.deleteOne({serviceRequestId : req.body.complaintId})
-            return res.status(200).json({ code : "200" , message: "Employee Password Updated Successfully!!", data: data });
-        }).catch((err)=>{
-            console.log(err);
+        let count  = await Employee.count({employeeCode : req.body.employeeCode});
+        if(count > 0) {
+            await Employee.where({
+                employeeCode : req.body.employeeCode
+            }).updateOne({
+                $set : reqData
+            }).then(async(data)=>{
+                // await EmployeeServiceRequest.deleteOne({serviceRequestId : req.body.complaintId})
+                return res.status(200).json({ code : "200" , message: "Employee Password Updated Successfully!!", data: data });
+            }).catch((err)=>{
+                console.log(err);
+                return res.status(500).json({
+                    message: "Internal server error",
+                    status: false,
+                });
+            })
+        }else {
             return res.status(500).json({
                 message: "Internal server error",
                 status: false,
+                displayMessage : "Employee not found!"
             });
-        })
+        }
     }catch(err){
         console.log(err);
     }
