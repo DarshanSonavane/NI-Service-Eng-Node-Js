@@ -60,7 +60,7 @@ const getMyComplaints = async(req,res) =>{
 
 const getAllComplaints = async (req,res)=>{
     try{
-        await ServiceRequest.find().sort({_id : -1}).populate("complaintType").populate("customerId").populate("assignedTo").then((data)=>{
+        await ServiceRequest.find().sort({_id : -1}).populate("complaintType").populate("customerId").populate("assignedTo").populate('ratings').then((data)=>{
             if(data){
                 return res.status(200).json({ message: "Service Request List!!", data: data });
             }
