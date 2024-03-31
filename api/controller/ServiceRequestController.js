@@ -37,7 +37,7 @@ const getMyComplaints = async(req,res) =>{
         if(custoemrId){
             await ServiceRequest.find({
                 customerId : req.query.customerId
-            }).populate("customerId").populate("complaintType").then((data)=>{
+            }).populate("customerId").populate("complaintType").populate("ratings").then((data)=>{
                 return res.status(200).json({ code : "200" , message: "Service Request List!!", data: data });
             }).catch((err)=>{
                 console.log(err)
