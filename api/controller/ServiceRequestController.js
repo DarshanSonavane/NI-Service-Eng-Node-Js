@@ -362,8 +362,6 @@ const updateAppVersion = async(req,res)=>{
                 console.log(err);
             })
         }
-       
-
     }catch(err){
         console.log(err)
     }

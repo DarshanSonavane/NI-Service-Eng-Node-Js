@@ -37,6 +37,6 @@ routes.post("/postman-customer-update",updateDetailsWithoutValidation);
 routes.post("/update-employee-password" , updateEmployeePassword);
 routes.post("/update-customer-password" , updateCustomerPassword);
 routes.post("/get-customer-service-request-count",getCustomerServiceRequestCount);
-routes.post("/update-app-version",updateAppVersion);
+routes.post("/update-application-version",updateAppVersion);
 
 module.exports = routes;
