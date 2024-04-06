@@ -5,6 +5,7 @@ const EmployeeServiceRequest = require("../model/EmployeeServiceRequest.js");
 const Employee = require("../model/Employee.js");
 const { sendMail } = require('../service/Mailer.js');
 const CustomerDetails = require("../model/CustomerDetails.js");
+const AppVersion = require("../model/AppVersion.js");
 
 const createServiceRequest = async (req,res) =>{
     try{
@@ -14,17 +15,40 @@ const createServiceRequest = async (req,res) =>{
                 status: false,
             });
         }else {
-            await createServicerequestService(req,res,async function (err, status, data){
-                if(status){
-                    await ServiceRequest.findOne({_id : data._id}).populate("customerId").populate("complaintType").then(async (res)=>{
-                        if(res){
-                            let machineType = req.body.machineType == '0' ? 'Petrol' : 'Disel';
-                            sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , null , res['customerId']['city'] , res['customerId']['mobile']);
-                        }
-                    })
-                    return res.status(200).json({ code : "200" , message: "Service Request Created Successfully!!", data: data });
+            if(req.body.version){
+                const version = await AppVersion.find();
+                if(version && version.length > 0){
+                    if(req.body.version == version[0].version){
+                        await createServicerequestService(req,res,async function (err, status, data){
+                            if(status){
+                                await ServiceRequest.findOne({_id : data._id}).populate("customerId").populate("complaintType").then(async (res)=>{
+                                    if(res){
+                                        let machineType = req.body.machineType == '0' ? 'Petrol' : 'Disel';
+                                        sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , null , res['customerId']['city'] , res['customerId']['mobile']);
+                                    }
+                                })
+                                return res.status(200).json({ code : "200" , message: "Service Request Created Successfully!!", data: data });
+                            }
+                        })
+                    }else {
+                        return res.status(400).json({
+                            message: "Please update the app to keep using it. If you don't update, the app might stop working.",
+                            status: false,
+                        });
+                    }
+                }else {
+                    return res.status(400).json({
+                        message: "Please update the latest app version in database.",
+                        status: false,
+                    });
                 }
-            })
+            }else {
+                return res.status(400).json({
+                    message: "Please update the app to keep using it. If you don't update, the app might stop working.",
+                    status: false,
+                });
+            }
+            
         }
     }catch(err){
         console.log(err);
@@ -301,6 +325,50 @@ const getCustomerServiceRequestCount = async(req,res)=>{
     }
 }
 
+const updateAppVersion = async(req,res)=>{
+    try{
+        if(!req.body.version){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        const version = await AppVersion.find();
+        if(version.length > 0){
+            const _id = version[0]._id;
+            let reqData = {
+                version : req.body.version
+            };
+    
+            await AppVersion.where({
+                _id : _id
+            }).updateOne({
+                $set : reqData
+            }).then(async(data)=>{
+                return res.status(200).json({ code : "200" , message: "App Version Updated Successfully!!" });
+            }).catch((err)=>{
+                console.log(err);
+                return res.status(500).json({
+                    message: "Internal server error",
+                    status: false,
+                });
+            })
+        }else{
+            await AppVersion.create({
+                version : req.body.version
+            }).then(async(data)=>{
+                return res.status(200).json({ code : "200" , message: "Version updated successfully!" });
+            }).catch((err)=>{
+                console.log(err);
+            })
+        }
+       
+
+    }catch(err){
+        console.log(err)
+    }
+}
+
 module.exports = {
     createServiceRequest: createServiceRequest,
     getMyComplaints: getMyComplaints,
@@ -315,5 +383,6 @@ module.exports = {
     getAdminDashboardDetails : getAdminDashboardDetails,
     updateServiceRequest : updateServiceRequest,
     updateCustomerPassword : updateCustomerPassword,
-    getCustomerServiceRequestCount : getCustomerServiceRequestCount
+    getCustomerServiceRequestCount : getCustomerServiceRequestCount,
+    updateAppVersion : updateAppVersion
 }
