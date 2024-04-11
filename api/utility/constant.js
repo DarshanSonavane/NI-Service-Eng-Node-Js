@@ -1,0 +1,5 @@
+const NI_SERVICE_ENG_APP = "NI_SERVICE_ENG_APP"
+
+module.exports ={
+    NI_SERVICE_ENG_APP : NI_SERVICE_ENG_APP
+}

@@ -6,6 +6,7 @@ const Employee = require("../model/Employee.js");
 const { sendMail } = require('../service/Mailer.js');
 const CustomerDetails = require("../model/CustomerDetails.js");
 const AppVersion = require("../model/AppVersion.js");
+const ComplaintHistory = require("../model/ComplaintHistory.js");
 
 const createServiceRequest = async (req,res) =>{
     try{
@@ -158,6 +159,10 @@ const assignComplaint = async(req,res)=>{
                     assignedTo : req.body.employeeId,
                     updatedBy : req.body.employeeId
                 };
+                await ComplaintHistory.create({
+                    requestId : req.body.complaintId,
+                    status : "2"
+                });
                 await ServiceRequest.where({_id : req.body.complaintId}).updateOne({
                     $set : reqData
                 }).then(async (assignedData)=>{
@@ -208,6 +213,10 @@ const closeServiceRequest = async(req,res)=>{
             $set : reqData
         }).then(async(assignedData)=>{
             // await EmployeeServiceRequest.deleteOne({serviceRequestId : req.body.complaintId})
+            await ComplaintHistory.create({
+                requestId : req.body.complaintId,
+                status : "0"
+            });
             return res.status(200).json({ code : "200" , message: "Service Request Closed Successfully!!", data: assignedData });
         }).catch((err)=>{
             console.log(err);
@@ -367,6 +376,83 @@ const updateAppVersion = async(req,res)=>{
     }
 }
 
+const trackComplaint = async(req,res)=>{
+    try{
+        let obj = {};
+        if(!req.body.complaintId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        let data = await ComplaintHistory.find({requestId : req.body.complaintId})
+        if(data){
+            const assignedToData = await ServiceRequest.findOne({_id : req.body.complaintId} , {_id : 1}).populate("assignedTo" , {firstName : 1 , lastName : 1 , phone : 1});
+            obj['assignedTo'] = assignedToData;
+            obj['complaintHistory'] = data;
+            return res.status(200).json({ code : "200" , message: "Comaplaint Details!" , data : obj });
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const reAssignComplaint = async(req,res)=>{
+    try{
+        if(!req.body.employeeId || !req.body.complaintId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+
+        let reqData = {
+            employeeId : req.body.employeeId,
+            serviceRequestId : req.body.complaintId
+        };
+
+        await EmployeeServiceRequest.where({
+            serviceRequestId : req.body.complaintId
+        }).updateOne({
+            $set : reqData
+        }).then(async(data)=>{
+            let serviceReqData = {
+                status : "2",
+                assignedTo : req.body.employeeId,
+                updatedBy : req.body.employeeId
+            };
+            
+            await ServiceRequest.where({_id : req.body.complaintId}).updateOne({
+                $set : serviceReqData
+            }).then(async (assignedData)=>{
+                await ServiceRequest.findOne({_id : req.body.complaintId}).populate("customerId").populate("complaintType").populate("assignedTo").then(async (res)=>{
+                    if(res){
+                        let machineType = req.body.machineType == '0' ? 'Petrol' : 'Disel';
+                        console.log(res);
+                        sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , res['assignedTo']['email'] , res['customerId']['city'] , res['customerId']['mobile']);
+                    }
+                })
+                return res.status(200).json({ code : "200" , message: "Service Request Assigned To Employee Successfully!!", data: assignedData });
+            }).catch((err)=>{
+                return res.status(500).json({
+                    message: "Internal server error",
+                    status: false,
+                });
+            })
+            return res.status(200).json({ code : "200" , message: "Complaint Assigned Successfully!!" });
+        }).catch((err)=>{
+            console.log(err);
+            return res.status(500).json({
+                message: "Internal server error",
+                status: false,
+            });
+        })
+
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createServiceRequest: createServiceRequest,
     getMyComplaints: getMyComplaints,
@@ -382,5 +468,7 @@ module.exports = {
     updateServiceRequest : updateServiceRequest,
     updateCustomerPassword : updateCustomerPassword,
     getCustomerServiceRequestCount : getCustomerServiceRequestCount,
-    updateAppVersion : updateAppVersion
+    updateAppVersion : updateAppVersion,
+    trackComplaint : trackComplaint,
+    reAssignComplaint : reAssignComplaint
 }

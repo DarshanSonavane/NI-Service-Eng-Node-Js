@@ -1,5 +1,6 @@
 const ServiceRequest = require("../model/ServiceRequest.js");
 const Ratings = require("../model/Ratings.js");
+const ComplaintHistory = require("../model/ComplaintHistory.js");
 
 const createServicerequestService = async (req,res,callback) => {
     try{
@@ -9,12 +10,26 @@ const createServicerequestService = async (req,res,callback) => {
             complaintType : req.body.complaintType,
             status : "1",
             assignedTo : req.body.assignedTo ? req.body.assignedTo : null
-        }).then((data)=>{
-            callback(null, true, data);
+        }).then(async(data)=>{
+            console.log("requ data",data)
+            await ComplaintHistory.create({
+                requestId : data._id,
+                status : "1"
+            }).then((res)=>{
+                callback(null, true, data);
+            }).catch((err)=>{
+                return res.status(500).json({
+                    message: "Internal server error",
+                    status: false,
+                    err:err
+                });    
+            });
+            
         }).catch((err)=>{
             return res.status(500).json({
                 message: "Internal server error",
                 status: false,
+                err:err
             });
         })
     }catch(err){

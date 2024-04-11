@@ -1,7 +1,9 @@
 const express = require('express');
+const authentication = require('../api/utility/authentication.js');
+const authenticate = authentication.authenticateToken;
 
 const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer , getEmployeeDetails , deleteEmployee , updateCustomerDetails , getAllCustomers , createUpdateCustomerDetails , updateDetailsWithoutValidation , updateEmployeePassword } = require('../api/controller/EmployeeController.js');
-const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion } = require('../api/controller/ServiceRequestController.js');
+const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion , trackComplaint , reAssignComplaint } = require('../api/controller/ServiceRequestController.js');
 
 const routes = express.Router();
 
@@ -38,5 +40,6 @@ routes.post("/update-employee-password" , updateEmployeePassword);
 routes.post("/update-customer-password" , updateCustomerPassword);
 routes.post("/get-customer-service-request-count",getCustomerServiceRequestCount);
 routes.post("/update-application-version",updateAppVersion);
-
+routes.post("/track-complaint",trackComplaint);
+routes.post("/re-assign-complaint", reAssignComplaint);
 module.exports = routes;
