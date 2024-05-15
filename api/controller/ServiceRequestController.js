@@ -386,10 +386,14 @@ const trackComplaint = async(req,res)=>{
             });
         }
         let data = await ComplaintHistory.find({requestId : req.body.complaintId})
+        
         if(data){
             const assignedToData = await ServiceRequest.findOne({_id : req.body.complaintId} , {_id : 1}).populate("assignedTo" , {firstName : 1 , lastName : 1 , phone : 1});
-            obj['assignedTo'] = assignedToData;
+            const complaintTypeData = await ServiceRequest.findOne({_id : req.body.complaintId} , {_id : 1}).populate("complaintType");
+            obj['assignedDetails'] = assignedToData;
             obj['complaintHistory'] = data;
+            obj['complaint'] = complaintTypeData;
+            // const formatedData = await formatData(obj , assignedToData); 
             return res.status(200).json({ code : "200" , message: "Comaplaint Details!" , data : obj });
         }
     }catch(err){
@@ -448,6 +452,24 @@ const reAssignComplaint = async(req,res)=>{
             });
         })
 
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const formatData = async(data , assignedData)=>{
+    console.log("Here" , assignedData)
+    try{
+        for(let i = 0 ; i < data['complaintHistory'].length ; i++){
+            let d = data['complaintHistory'][i];
+            if(d.status == '2'){
+                console.log("Here condition")
+                d['assignedTo'] = assignedData;
+                console.log("Here condition" , d)
+                break;
+            }
+        }
+        return data;
     }catch(err){
         console.log(err);
     }
