@@ -431,8 +431,7 @@ const reAssignComplaint = async(req,res)=>{
             }).then(async (assignedData)=>{
                 await ServiceRequest.findOne({_id : req.body.complaintId}).populate("customerId").populate("complaintType").populate("assignedTo").then(async (res)=>{
                     if(res){
-                        let machineType = req.body.machineType == '0' ? 'Petrol' : 'Disel';
-                        console.log(res);
+                        let machineType = req.body.machineType == '0' ? 'Petrol' : 'Deisel';
                         sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , res['assignedTo']['email'] , res['customerId']['city'] , res['customerId']['mobile']);
                     }
                 })
