@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+/* const jwt = require('jsonwebtoken');
 const constants = require('./constant');
 
 const createToken = (customerCode)=>{
@@ -27,4 +27,4 @@ const authenticateToken =  (req, res, next)=> {
 module.exports = {
     createToken : createToken,
     authenticateToken : authenticateToken,
-}
+} */
