@@ -2,7 +2,7 @@ const Employee =  require('../model/Employee.js');
 const { createEmployeeService } =  require('../helper/EmployeeHelper.js');
 const UserRoles =  require('../model/UserRoles.js');
 const CustomerDetails =  require("../model/CustomerDetails.js");
-const authentication = require("../utility/authentication.js")
+// const authentication = require("../utility/authentication.js");
 
 const createEmployee = async (req,res) =>{
     let body = req.body;
@@ -44,7 +44,7 @@ const login = async(req,res) =>{
                 if(req.body.password){
                     await CustomerDetails.find({customerCode : customerCode.toString() , password : password}).then(async(data)=>{
                         if(data && data != null && data.length > 0){
-                            const token = await authentication.createToken(customerCode);
+                            // const token = await authentication.createToken(customerCode);
                             return res.status(200).json({ code : "200",message: "Login Success!!", data: data , token : token });
                         }else {
                             return res.status(202).json({ message: "Login Success with no data found!!", data: data });
