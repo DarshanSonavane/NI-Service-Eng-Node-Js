@@ -45,11 +45,12 @@ const login = async(req,res) =>{
                     await CustomerDetails.find({customerCode : customerCode.toString() , password : password}).then(async(data)=>{
                         if(data && data != null && data.length > 0){
                             // const token = await authentication.createToken(customerCode);
-                            return res.status(200).json({ code : "200",message: "Login Success!!", data: data , token : token });
+                            return res.status(200).json({ code : "200",message: "Login Success!!", data: data });
                         }else {
                             return res.status(202).json({ message: "Login Success with no data found!!", data: data });
                         }
                     }).catch((err)=>{
+                        console.log(err)
                         return res.status(500).json({
                             message: "Internal server error",
                             status: false,
@@ -63,6 +64,7 @@ const login = async(req,res) =>{
                             return res.status(202).json({ message: "Login Success with no data found!!", data: data });
                         }
                     }).catch((err)=>{
+                        console.log(err)
                         return res.status(500).json({
                             message: "Internal server error",
                             status: false,
@@ -81,6 +83,7 @@ const login = async(req,res) =>{
                         return res.status(202).json({ message: "Login Success with no data found!!", data: data });
                     }
                 }).catch((err)=>{
+                    console.log(err)
                     return res.status(500).json({
                         message: "Internal server error",
                         status: false,

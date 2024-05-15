@@ -1,5 +1,5 @@
 const express = require('express');
-const authentication = require('../api/utility/authentication.js');
+// const authentication = require('../api/utility/authentication.js');
 // const authenticate = authentication.authenticateToken;
 
 const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer , getEmployeeDetails , deleteEmployee , updateCustomerDetails , getAllCustomers , createUpdateCustomerDetails , updateDetailsWithoutValidation , updateEmployeePassword } = require('../api/controller/EmployeeController.js');
