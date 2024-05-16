@@ -251,7 +251,7 @@ const getDashboardDetails = async(req,res)=>{
 const getAdminDashboardDetails = async(req,res)=>{
     try{
         const complaintsCount = await ServiceRequest.count();
-        const openComplaintsCount = await ServiceRequest.count({ status : '1'  });
+        const openComplaintsCount = await ServiceRequest.count({ $and : [{customerId : req.query.customerId} , { $or : [{status : "1"} , {status : "2"}]}]});;
         const closeComplaintsCount = await ServiceRequest.count({ status : '0'  });
         const employeeList = await Employee.find({role : '1'});
         return res.status(200).json({ code : "200" , message: "Dashboard Details!!", totalComplaints: complaintsCount , openComplaints : openComplaintsCount , closeComplaints : closeComplaintsCount , employees :  employeeList});
