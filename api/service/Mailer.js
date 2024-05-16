@@ -10,8 +10,8 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail , customerCity , customerMobile )=>{
-    let mailList = ['nilesh@niserviceeng.com','complaints@niserviceeng.com'];
+const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail , customerCity , customerMobile , requestType )=>{
+    let mailList = ['darshansonavane24@gmail.com'];//['nilesh@niserviceeng.com','complaints@niserviceeng.com'];
     let subject = "New Service Request"
     if(employeeEmail){
         subject += "Assigned To You"
@@ -19,10 +19,11 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
     }else {
         subject += "Raised By Customer"
     }
+    let typeOfRequest = requestType === 'service' ? 'Service' : 'Calibration';
     let mailOptions = {
         from: 'admin@niserviceeng.com',
         to: mailList,
-        subject: 'New Service Request Raised',
+        subject: `New ${typeOfRequest} Request Raised`,
         html : `<html>
         <head>
         <style>
@@ -44,7 +45,7 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
         </style>
         </head>
         <body>
-        <h5>${customerName} with customer code ${customercode} , ${customerCity} has raised new service request. Complaint Details are as follows : </h5>
+        <h5>${customerName} with customer code ${customercode} , ${customerCity} has raised new ${requestType} request. Request Details are as follows : </h5>
         <br/>
         <table>
           <tr>
@@ -67,7 +68,7 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
             <td>${customerMobile}</td>
           </tr>
           <tr>
-            <td>Complaint Type</td>
+            <td>Request Type</td>
             <td>${complaintType}</td>
           </tr>
           <tr>
@@ -89,6 +90,8 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
         }
     });
 }
+
+
 
 module.exports = {
     sendMail: sendMail

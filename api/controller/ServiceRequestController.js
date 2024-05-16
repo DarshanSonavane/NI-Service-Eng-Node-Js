@@ -24,8 +24,8 @@ const createServiceRequest = async (req,res) =>{
                             if(status){
                                 await ServiceRequest.findOne({_id : data._id}).populate("customerId").populate("complaintType").then(async (res)=>{
                                     if(res){
-                                        let machineType = req.body.machineType == '0' ? 'Petrol' : 'Disel';
-                                        sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , null , res['customerId']['city'] , res['customerId']['mobile']);
+                                        let machineType = req.body.machineType == '0' ? 'Petrol' : 'Deisel';
+                                        sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , null , res['customerId']['city'] , res['customerId']['mobile'] , 'service');
                                     }
                                 })
                                 return res.status(200).json({ code : "200" , message: "Service Request Created Successfully!!", data: data });
