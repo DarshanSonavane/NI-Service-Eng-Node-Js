@@ -239,7 +239,7 @@ const getDashboardDetails = async(req,res)=>{
             });
         }
         const complaintsCount = await ServiceRequest.count({customerId : req.query.customerId});
-        const openComplaintsCount = await ServiceRequest.count({customerId : req.query.customerId , status : { $in : ["1" , "2"]}  });
+        const openComplaintsCount = await ServiceRequest.count({ $and : [{customerId : req.query.customerId} , { $or : [{status : "1"} , {status : "2"}]}]});
         const closeComplaintsCount = await ServiceRequest.count({customerId : req.query.customerId , status : '0'  });
 
         return res.status(200).json({ code : "200" , message: "Dashboard Details!!", totalComplaints: complaintsCount , openComplaints : openComplaintsCount , closeComplaints : closeComplaintsCount });
