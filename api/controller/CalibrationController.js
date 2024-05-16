@@ -75,10 +75,26 @@ const getMyCalibrationRequestList = async(req,res)=>{
     }
 }
 
+const getCustomerCalibrationList = async(req,res)=>{
+    try{
+        if(!req.body.customerId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        let data = await CalibrationRequest.find({customerId : req.body.customerId}).populate('customerId').populate('employeeId');
+        return res.status(200).json({ message: "Calibration Request List!!", data: data });
+    }catch(err){
+        console.log(err);
+    }
+}
+
 
 module.exports = {
     generateCalibrationRequest : generateCalibrationRequest,
     getCalibrationEmployeeList : getCalibrationEmployeeList,
     getAllCalibrationList : getAllCalibrationList,
-    getMyCalibrationRequestList : getMyCalibrationRequestList
+    getMyCalibrationRequestList : getMyCalibrationRequestList,
+    getCustomerCalibrationList : getCustomerCalibrationList
 }
