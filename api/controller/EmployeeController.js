@@ -233,7 +233,8 @@ const createUpdateCustomerDetails = async(req,res)=>{
                 amcDue : req.body.amcDue,
                 mobile : req.body.mobile,
                 email : req.body.email,
-                gstNo : req.body.gstNo
+                gstNo : req.body.gstNo,
+                machineNumber : req.body.machineNumber
             }).then((data)=>{
                 return res.status(200).json({ code : "200" , message: "Customer Created Successfully!!", data: data });
             }).catch((err)=>{
@@ -257,7 +258,8 @@ const createUpdateCustomerDetails = async(req,res)=>{
                 amcDue : req.body.amcDue,
                 mobile : req.body.mobile,
                 email : req.body.email,
-                gstNo : req.body.gstNo
+                gstNo : req.body.gstNo,
+                machineNumber : req.body.machineNumber
             };
             await CustomerDetails.where({
                 _id : req.body.customerId

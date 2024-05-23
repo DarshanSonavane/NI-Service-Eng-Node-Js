@@ -4,7 +4,7 @@ const express = require('express');
 
 const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer , getEmployeeDetails , deleteEmployee , updateCustomerDetails , getAllCustomers , createUpdateCustomerDetails , updateDetailsWithoutValidation , updateEmployeePassword } = require('../api/controller/EmployeeController.js');
 const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion , trackComplaint , reAssignComplaint } = require('../api/controller/ServiceRequestController.js');
-const { generateCalibrationRequest , getCalibrationEmployeeList , getAllCalibrationList , getMyCalibrationRequestList , getCustomerCalibrationList } = require('../api/controller/CalibrationController.js');
+const { generateCalibrationRequest , getCalibrationEmployeeList , getAllCalibrationList , getMyCalibrationRequestList , getCustomerCalibrationList , validateCalibration } = require('../api/controller/CalibrationController.js');
 
 const routes = express.Router();
 
@@ -48,4 +48,5 @@ routes.get("/calibration-employee-list" , getCalibrationEmployeeList);
 routes.get("/get-calibration-request-list",getAllCalibrationList);
 routes.post("/get-my-calibration-list",getMyCalibrationRequestList);
 routes.post("/get-customer-calibration-list",getCustomerCalibrationList);
+routes.post("/validate-calibration", validateCalibration);
 module.exports = routes;

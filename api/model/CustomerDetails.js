@@ -34,6 +34,10 @@ let customerDetailsSchema = new Schema({
         type : String,
         default : null
     },
+    machineNumber : {
+        type : String,
+        default : null
+    }
 
 })
 module.exports =  mongoose.model('CustomerDetail', customerDetailsSchema);
