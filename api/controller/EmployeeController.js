@@ -234,7 +234,9 @@ const createUpdateCustomerDetails = async(req,res)=>{
                 mobile : req.body.mobile,
                 email : req.body.email,
                 gstNo : req.body.gstNo,
-                machineNumber : req.body.machineNumber
+                petrolMachineNumber : req.body.petrolMachineNumber,
+                dieselMachineNumber : req.body.dieselMachineNumber,
+                comboMachineNumber : req.body.comboMachineNumber
             }).then((data)=>{
                 return res.status(200).json({ code : "200" , message: "Customer Created Successfully!!", data: data });
             }).catch((err)=>{
@@ -259,7 +261,9 @@ const createUpdateCustomerDetails = async(req,res)=>{
                 mobile : req.body.mobile,
                 email : req.body.email,
                 gstNo : req.body.gstNo,
-                machineNumber : req.body.machineNumber
+                petrolMachineNumber : req.body.petrolMachineNumber,
+                dieselMachineNumber : req.body.dieselMachineNumber,
+                comboMachineNumber : req.body.comboMachineNumber
             };
             await CustomerDetails.where({
                 _id : req.body.customerId

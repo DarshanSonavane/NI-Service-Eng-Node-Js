@@ -34,7 +34,15 @@ let customerDetailsSchema = new Schema({
         type : String,
         default : null
     },
-    machineNumber : {
+    petrolMachineNumber : {
+        type : String,
+        default : null
+    },
+    dieselMachineNumber : {
+        type : String,
+        default : null
+    },
+    comboMachineNumber : {
         type : String,
         default : null
     }
