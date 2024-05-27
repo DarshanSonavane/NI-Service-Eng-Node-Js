@@ -2,6 +2,7 @@ const Employee =  require('../model/Employee.js');
 const { createEmployeeService } =  require('../helper/EmployeeHelper.js');
 const UserRoles =  require('../model/UserRoles.js');
 const CustomerDetails =  require("../model/CustomerDetails.js");
+const StateList = require("../model/StateList.js");
 // const authentication = require("../utility/authentication.js");
 
 const createEmployee = async (req,res) =>{
@@ -219,7 +220,7 @@ const getAllCustomers = async(req,res)=>{
 const createUpdateCustomerDetails = async(req,res)=>{
     try{
         if(!req.body.customerId){
-            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.amcDue){
+            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.amcDue || !req.body.stateCode){
                 return res.status(400).json({
                     message: "Required Fields are missing",
                     status: false,
@@ -236,7 +237,8 @@ const createUpdateCustomerDetails = async(req,res)=>{
                 gstNo : req.body.gstNo,
                 petrolMachineNumber : req.body.petrolMachineNumber,
                 dieselMachineNumber : req.body.dieselMachineNumber,
-                comboMachineNumber : req.body.comboMachineNumber
+                comboMachineNumber : req.body.comboMachineNumber,
+                stateCode : req.body.stateCode
             }).then((data)=>{
                 return res.status(200).json({ code : "200" , message: "Customer Created Successfully!!", data: data });
             }).catch((err)=>{
@@ -247,7 +249,7 @@ const createUpdateCustomerDetails = async(req,res)=>{
                 });
             })
         }else {
-            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.customerId || !req.body.amcDue){
+            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.customerId || !req.body.amcDue || !req.body.stateCode){
                 return res.status(400).json({
                     message: "Required Fields are missing",
                     status: false,
@@ -263,7 +265,8 @@ const createUpdateCustomerDetails = async(req,res)=>{
                 gstNo : req.body.gstNo,
                 petrolMachineNumber : req.body.petrolMachineNumber,
                 dieselMachineNumber : req.body.dieselMachineNumber,
-                comboMachineNumber : req.body.comboMachineNumber
+                comboMachineNumber : req.body.comboMachineNumber,
+                stateCode : req.body.stateCode
             };
             await CustomerDetails.where({
                 _id : req.body.customerId
@@ -351,6 +354,32 @@ const updateEmployeePassword = async(req,res) => {
     }
 }
 
+const generateStateList = async(req,res)=>{
+    try{
+        const stateList = [{"code": "AN","name": "Andaman and Nicobar Islands"}, {"code": "AP","name": "Andhra Pradesh"}, {"code": "AR","name": "Arunachal Pradesh"}, {"code": "AS","name": "Assam"}, {"code": "BR","name": "Bihar"}, {"code": "CG","name": "Chandigarh"}, {"code": "CH","name": "Chhattisgarh"}, {"code": "DH","name": "Dadra and Nagar Haveli"}, {"code": "DD","name": "Daman and Diu"}, {"code": "DL","name": "Delhi"}, {"code": "GA","name": "Goa"}, {"code": "GJ","name": "Gujarat"}, {"code": "HR","name": "Haryana"}, {"code": "HP","name": "Himachal Pradesh"}, {"code": "JK","name": "Jammu and Kashmir"}, {"code": "JH","name": "Jharkhand"}, {"code": "KA","name": "Karnataka"}, {"code": "KL","name": "Kerala"}, {"code": "LD","name": "Lakshadweep"}, {"code": "MP","name": "Madhya Pradesh"}, {"code": "MH","name": "Maharashtra"}, {"code": "MN","name": "Manipur"}, {"code": "ML","name": "Meghalaya"}, {"code": "MZ","name": "Mizoram"}, {"code": "NL","name": "Nagaland"}, {"code": "OR","name": "Odisha"}, {"code": "PY","name": "Puducherry"}, {"code": "PB","name": "Punjab"}, {"code": "RJ","name": "Rajasthan"}, {"code": "SK","name": "Sikkim"}, {"code": "TN","name": "Tamil Nadu"}, {"code": "TS","name": "Telangana"}, {"code": "TR","name": "Tripura"}, {"code": "UK","name": "Uttarakhand"}, {"code": "UP","name": "Uttar Pradesh"}, {"code": "WB","name": "West Bengal"}];
+        await StateList.insertMany(stateList).then(data=>{
+            return res.status(200).json({ code : "200" , message: "State List Created Successfully!!", data: data });
+        }).catch((err)=>{
+            console.log(err);
+            return res.status(500).json({
+                message: "Internal server error",
+                status: false,
+            });
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const getStateList = async(req,res)=>{
+    try{
+        const stateList = await StateList.find();
+        return res.status(200).json({ code : "200" , message: "State List!!", data: stateList });
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createEmployee: createEmployee,
     getEmployeeList: getEmployeeList,
@@ -364,5 +393,7 @@ module.exports = {
     getAllCustomers : getAllCustomers,
     createUpdateCustomerDetails : createUpdateCustomerDetails,
     updateDetailsWithoutValidation : updateDetailsWithoutValidation,
-    updateEmployeePassword : updateEmployeePassword
+    updateEmployeePassword : updateEmployeePassword,
+    generateStateList : generateStateList,
+    getStateList : getStateList
 }

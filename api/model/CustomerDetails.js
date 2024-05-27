@@ -45,6 +45,10 @@ let customerDetailsSchema = new Schema({
     comboMachineNumber : {
         type : String,
         default : null
+    },
+    stateCode : {
+        type : String,
+        default : null
     }
 
 })
