@@ -220,7 +220,7 @@ const getAllCustomers = async(req,res)=>{
 const createUpdateCustomerDetails = async(req,res)=>{
     try{
         if(!req.body.customerId){
-            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.amcDue || !req.body.stateCode){
+            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.amcDue || !req.body.stateCode){
                 return res.status(400).json({
                     message: "Required Fields are missing",
                     status: false,
@@ -249,7 +249,7 @@ const createUpdateCustomerDetails = async(req,res)=>{
                 });
             })
         }else {
-            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.mobile || !req.body.email || !req.body.customerId || !req.body.amcDue || !req.body.stateCode){
+            if( !req.body.customerCode || !req.body.customerName || !req.body.city || !req.body.customerId || !req.body.amcDue || !req.body.stateCode){
                 return res.status(400).json({
                     message: "Required Fields are missing",
                     status: false,
