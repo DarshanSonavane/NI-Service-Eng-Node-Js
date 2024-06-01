@@ -24,7 +24,7 @@ const createServiceRequest = async (req,res) =>{
                             if(status){
                                 await ServiceRequest.findOne({_id : data._id}).populate("customerId").populate("complaintType").then(async (res)=>{
                                     if(res){
-                                        let machineType = req.body.machineType == '0' ? 'Petrol' : 'Deisel';
+                                        let machineType = req.body.machineType == '0' ? 'Petrol' : 'Diesel';
                                         sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , null , res['customerId']['city'] , res['customerId']['mobile'] , 'service');
                                     }
                                 })
@@ -168,9 +168,9 @@ const assignComplaint = async(req,res)=>{
                 }).then(async (assignedData)=>{
                     await ServiceRequest.findOne({_id : req.body.complaintId}).populate("customerId").populate("complaintType").populate("assignedTo").then(async (res)=>{
                         if(res){
-                            let machineType = req.body.machineType == '0' ? 'Petrol' : 'Disel';
+                            let machineType = req.body.machineType == '0' ? 'Petrol' : 'Diesel';
                             console.log(res);
-                            sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , res['assignedTo']['email'] , res['customerId']['city'] , res['customerId']['mobile']);
+                            sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , res['assignedTo']['email'] , res['customerId']['city'] , res['customerId']['mobile'] , 'service');
                         }
                     })
                     return res.status(200).json({ code : "200" , message: "Service Request Assigned To Employee Successfully!!", data: assignedData });
@@ -431,8 +431,8 @@ const reAssignComplaint = async(req,res)=>{
             }).then(async (assignedData)=>{
                 await ServiceRequest.findOne({_id : req.body.complaintId}).populate("customerId").populate("complaintType").populate("assignedTo").then(async (res)=>{
                     if(res){
-                        let machineType = req.body.machineType == '0' ? 'Petrol' : 'Deisel';
-                        sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , res['assignedTo']['email'] , res['customerId']['city'] , res['customerId']['mobile']);
+                        let machineType = req.body.machineType == '0' ? 'Petrol' : 'Diesel';
+                        sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , res['assignedTo']['email'] , res['customerId']['city'] , res['customerId']['mobile'] , 'service');
                     }
                 })
                 return res.status(200).json({ code : "200" , message: "Service Request Assigned To Employee Successfully!!", data: assignedData });
