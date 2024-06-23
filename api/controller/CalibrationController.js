@@ -230,16 +230,17 @@ const generateAndSendCalibration = async(req,res)=>{
 
                 try {
                     // Generate the PDF
-                    pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
-                        if (err) return console.log(err);
-                        console.log(`PDF saved to ${res.filename}`);
-                        const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
-                        const subject = `Calibration certificate`;
-                        const receiverEmail = 'darshansonavane24@gmail.com'; //calibrationrequestData['customerId']['email'];//
-                        console.log('Receiver Email' , receiverEmail);
-                        await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
-                    });
-                    
+                    setTimeout(()=>{
+                        pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
+                            if (err) return console.log(err);
+                            console.log(`PDF saved to ${res.filename}`);
+                            const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
+                            const subject = `Calibration certificate`;
+                            const receiverEmail = 'darshansonavane24@gmail.com'; //calibrationrequestData['customerId']['email'];//
+                            console.log('Receiver Email' , receiverEmail);
+                            await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
+                        });
+                    },3000);
                 } catch (error) {
                     console.error('Error generating PDF:', error);
                 }
