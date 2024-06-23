@@ -189,63 +189,65 @@ const generateAndSendCalibration = async(req,res)=>{
             fileName = '../templates/Petrol.ejs';
         }
         console.log('FileName:', fileName);
-        setTimeout(()=>{
-            ejs.renderFile(
-                path.join(__dirname, fileName),{
-                    serialNumber : serialNumber,
-                    issueDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
-                    modelNumber : "NPM MGA-1",
-                    machineNumber : calibrationrequestData['customerId']['petrolMachineNumber'],
-                    centerName : calibrationrequestData['customerId']['customerName'],
-                    city : calibrationrequestData['customerId']['city'],
-                    coValue : cylinderDetails[0]['CO'],
-                    hcValue : cylinderDetails[0]['HC'],
-                    co2Value : cylinderDetails[0]['CO2'],
-                    cylinderNumber : cylinderDetails[0]['cylinderNumber'] ,
-                    cylinderMake : cylinderDetails[0]['cylinderMake'] ,
-                    validityDate : cylinderDetails[0]['validityDate'] ,
-                    nextCalibrationDate : nextCalibrationDate,
-                    logoPath : `${constants.SERVER_FILE_PATH}logo.jpg`,
-                    checked : `${constants.SERVER_FILE_PATH}checkmark.svg`,
-                    unChecked : `${constants.SERVER_FILE_PATH}close.svg`,
-                    sign : `${constants.SERVER_FILE_PATH}sign.png`,
-                    stamp : `${constants.SERVER_FILE_PATH}nistamplogo.png`,
-                    swacha : `${constants.SERVER_FILE_PATH}swach.jpg`,
-                },async (err, newHtml) => {
-                    if(err){
-                        console.log(err);
+        ejs.renderFile(
+            path.join(__dirname, fileName),{
+                serialNumber : serialNumber,
+                issueDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
+                modelNumber : "NPM MGA-1",
+                machineNumber : calibrationrequestData['customerId']['petrolMachineNumber'],
+                centerName : calibrationrequestData['customerId']['customerName'],
+                city : calibrationrequestData['customerId']['city'],
+                coValue : cylinderDetails[0]['CO'],
+                hcValue : cylinderDetails[0]['HC'],
+                co2Value : cylinderDetails[0]['CO2'],
+                cylinderNumber : cylinderDetails[0]['cylinderNumber'] ,
+                cylinderMake : cylinderDetails[0]['cylinderMake'] ,
+                validityDate : cylinderDetails[0]['validityDate'] ,
+                nextCalibrationDate : nextCalibrationDate,
+                logoPath : `${constants.SERVER_FILE_PATH}logo.jpg`,
+                checked : `${constants.SERVER_FILE_PATH}checkmark.svg`,
+                unChecked : `${constants.SERVER_FILE_PATH}close.svg`,
+                sign : `${constants.SERVER_FILE_PATH}sign.png`,
+                stamp : `${constants.SERVER_FILE_PATH}nistamplogo.png`,
+                swacha : `${constants.SERVER_FILE_PATH}swach.jpg`,
+            },async (err, newHtml) => {
+                if(err){
+                    console.log(err);
+                }
+                console.log('New HTML =====' , newHtml);
+                const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}.pdf`;
+                // const options = { type: "A4" };
+                let options = { format: 'A4' , path : './assets/uploads/'};
+                /* const options = {
+                    type: 'Legal',
+                    format: 'Legal',  // or 'A4', etc.
+                    border: {
+                        top: '0.5in',
+                        right: '0.5in',
+                        bottom: '0.5in',
+                        left: '0.5in'
                     }
+                }; */
+
+                try {
+                    // Generate the PDF
+                    pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
+                        if (err) return console.log(err);
+                        console.log(`PDF saved to ${res.filename}`);
+                        const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
+                        const subject = `Calibration certificate`;
+                        const receiverEmail = 'darshansonavane24@gmail.com'; //calibrationrequestData['customerId']['email'];//
+                        console.log('Receiver Email' , receiverEmail);
+                        await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
+                    });
                     
-                    const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}.pdf`;
-                    // const options = { type: "A4" };
-                    const options = {
-                        type: 'Legal',
-                        format: 'Legal',  // or 'A4', etc.
-                        border: {
-                            top: '0.5in',
-                            right: '0.5in',
-                            bottom: '0.5in',
-                            left: '0.5in'
-                        }
-                    };
-    
-                    try {
-                        // Generate the PDF
-                        pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
-                            if (err) return console.log(err);
-                            console.log(`PDF saved to ${res.filename}`);
-                            const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
-                            const subject = `Calibration certificate`;
-                            const receiverEmail = 'darshansonavane24@gmail.com'; //calibrationrequestData['customerId']['email'];//
-                            console.log('Receiver Email' , receiverEmail);
-                            await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
-                        });
-                        
-                    } catch (error) {
-                        console.error('Error generating PDF:', error);
-                    }
-                })
-        },5000)
+                } catch (error) {
+                    console.error('Error generating PDF:', error);
+                }
+            })
+        
+
+
         return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});
     }catch(err){
         console.log(err);
