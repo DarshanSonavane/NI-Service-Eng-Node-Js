@@ -218,6 +218,7 @@ const generateAndSendCalibration = async(req,res)=>{
                 const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}.pdf`;
                 // const options = { type: "A4" };
                 const options = {
+                    type: 'Legal',
                     format: 'Legal',  // or 'A4', etc.
                     border: {
                         top: '0.5in',
