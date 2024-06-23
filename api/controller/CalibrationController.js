@@ -225,7 +225,7 @@ const generateAndSendCalibration = async(req,res)=>{
                         console.log(`PDF saved to ${res.filename}`);
                         const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
                         const subject = `Calibration certificate`;
-                        const receiverEmail = 'darshansonavane24@gmail.com';// calibrationrequestData['customerId']['email'];
+                        const receiverEmail = calibrationrequestData['customerId']['email'];
                         console.log('Receiver Email' , receiverEmail);
                         await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
                     });
