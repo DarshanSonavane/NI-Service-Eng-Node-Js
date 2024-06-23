@@ -216,8 +216,7 @@ const generateAndSendCalibration = async(req,res)=>{
                 }
                 
                 const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}.pdf`;
-
-                const options = { format: 'Legal' };
+                const options = { type: "pdf" };
 
                 try {
                     // Generate the PDF
