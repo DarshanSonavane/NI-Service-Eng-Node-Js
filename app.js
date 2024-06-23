@@ -7,6 +7,8 @@ const cors = require("cors");
 const passport = require("passport");
 const flash = require("express-flash");
 const cookieParser = require("cookie-parser");
+const ejs = require('ejs');
+var path=require('path');    
 
 // intializePassport(passport);
 var app = new express(); // Create a object for express library
@@ -24,6 +26,8 @@ app.use(cors()); // adding middleware.. https://stackoverflow.com/questions/1831
 const routes = require("./config/routes.js");
 // use res.render to load up an ejs view file
 app.use(flash());
+app.use("/", express.static(__dirname + "/assets"));
+
 /* app.use(
   session({
     secret: "test",

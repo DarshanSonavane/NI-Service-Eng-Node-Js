@@ -91,6 +91,25 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
     });
 }
 
+/* sendMailWithAttachment = (htmlEmailContents, toMail, subject) => {
+  let path = `./assets/uploads/original/purchase_details${userId}.pdf`;
+  console.log(path);
+  var mailOptions = {
+      from: 'admin@niserviceeng.com',
+      to: toMail,
+      subject: subject,
+      html: htmlEmailContents,
+      attachments : [{ path: path}]
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+          console.log(error);
+      } else {
+          console.log("Email sent: " + info.response);
+      }
+  });
+}
+ */
 
 
 module.exports = {

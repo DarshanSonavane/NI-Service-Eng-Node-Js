@@ -3,6 +3,11 @@ const CustomerDetails =  require("../model/CustomerDetails.js");
 const Employee =  require('../model/Employee.js');
 const { sendMail } = require('../service/Mailer.js');
 const CylinderDetails = require('../model/CylinderDetails.js');
+const ejs = require('ejs');
+const path = require("path");
+const puppeteer = require('puppeteer');
+const fs = require('fs');
+const constants = require("../utility/constant.js")
 
 const generateCalibrationRequest = async(req,res)=>{
     try{
@@ -176,18 +181,63 @@ const generateAndSendCalibration = async(req,res)=>{
         const serialNumber = Math.floor(1000 + Math.random() * 9000);
         const currentDate = new Date();
         const nextCalibrationDate = generateDate();
-        const certificateobj = {
-            serialNumber : serialNumber,
-            createdOn : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
-            modelNumber : "NPM MGA-1",
-            machineNumber : calibrationrequestData.customerId['machineNumber'],
-            centerName : calibrationrequestData.customerId['customerName'],
-            city : calibrationrequestData.customerId['city'],
-            cylinderDetails : cylinderDetails,
-            nextCalibrationDate : nextCalibrationDate
-        }
+        
 
-        return res.status(200).json({ code : "200" , message: "Cylinder Details Updated Successfully!", data: certificateobj });
+        let fileName = '';
+        if(calibrationrequestData && calibrationrequestData['machineType'] == '0'){
+            fileName = '../templates/Petrol.ejs';
+        }
+        console.log('FileName:', fileName);
+        ejs.renderFile(
+            path.join(__dirname, fileName),{
+                serialNumber : serialNumber,
+                issueDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
+                modelNumber : "NPM MGA-1",
+                machineNumber : calibrationrequestData['customerId']['petrolMachineNumber'],
+                centerName : calibrationrequestData['customerId']['customerName'],
+                city : calibrationrequestData['customerId']['city'],
+                coValue : cylinderDetails[0]['CO'],
+                hcValue : cylinderDetails[0]['HC'],
+                co2Value : cylinderDetails[0]['CO2'],
+                cylinderNumber : cylinderDetails[0]['cylinderNumber'] ,
+                cylinderMake : cylinderDetails[0]['cylinderMake'] ,
+                validityDate : cylinderDetails[0]['validityDate'] ,
+                nextCalibrationDate : nextCalibrationDate,
+                logoPath : `${constants.LOCAL_FILE_PATH}logo.jpg`,
+                checked : `${constants.LOCAL_FILE_PATH}checkmark.svg`,
+                unChecked : `${constants.LOCAL_FILE_PATH}close.svg`,
+                sign : `${constants.LOCAL_FILE_PATH}sign.png`,
+                stamp : `${constants.LOCAL_FILE_PATH}nistamplogo.png`,
+                swacha : `${constants.LOCAL_FILE_PATH}swach.jpg`,
+            },async (err, newHtml) => {
+                if(err){
+                    console.log(err);
+                }
+                
+                const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}_1.pdf`;
+                const browser = await puppeteer.launch();
+                const page = await browser.newPage();
+
+                // Set the content of the page to your HTML content
+                await page.setContent(newHtml);
+
+                // Specify the path where you want to save the PDF
+                // const pdfPath = 'example.pdf';
+
+                try {
+                    // Generate the PDF
+                    await page.pdf({ path: outputPath, format: 'Legal' });
+                    console.log('PDF successfully generated at:', outputPath);
+                } catch (error) {
+                    console.error('Error generating PDF:', error);
+                }
+
+                await browser.close();
+            })
+        
+
+
+        return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});
     }catch(err){
         console.log(err);
     }

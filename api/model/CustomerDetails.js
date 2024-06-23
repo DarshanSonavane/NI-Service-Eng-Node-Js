@@ -49,6 +49,10 @@ let customerDetailsSchema = new Schema({
     stateCode : {
         type : String,
         default : null
+    },
+    machineModel : {
+        type : String,
+        default : null
     }
 
 })
