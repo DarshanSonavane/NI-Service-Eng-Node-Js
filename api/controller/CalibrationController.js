@@ -7,7 +7,8 @@ const ejs = require('ejs');
 const path = require("path");
 const puppeteer = require('puppeteer');
 const fs = require('fs');
-const constants = require("../utility/constant.js")
+const constants = require("../utility/constant.js");
+const pdf = require('html-pdf');
 
 const generateCalibrationRequest = async(req,res)=>{
     try{
@@ -215,27 +216,30 @@ const generateAndSendCalibration = async(req,res)=>{
                 }
                 
                 const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}_1.pdf`;
-                const browser = await puppeteer.launch({
-                    headless: 'shell',
-                    args: ['--enable-gpu'],
-                });
-                const page = await browser.newPage();
+                /* const browser = await puppeteer.launch();
+                const page = await browser.newPage(); */
 
                 // Set the content of the page to your HTML content
-                await page.setContent(newHtml);
+                // await page.setContent(newHtml);
 
                 // Specify the path where you want to save the PDF
                 // const pdfPath = 'example.pdf';
 
+                const options = { format: 'Letter' };
+
                 try {
                     // Generate the PDF
-                    await page.pdf({ path: outputPath, format: 'Legal' });
-                    console.log('PDF successfully generated at:', outputPath);
+                    /* await page.pdf({ path: outputPath, format: 'Legal' }); */
+                    pdf.create(newHtml, options).toFile(outputPath, function(err, res) {
+                        if (err) return console.log(err);
+                        console.log(`PDF saved to ${res.filename}`);
+                    });
+                    // console.log('PDF successfully generated at:', outputPath);
                 } catch (error) {
                     console.error('Error generating PDF:', error);
                 }
 
-                await browser.close();
+                // await browser.close();
             })
         
 
