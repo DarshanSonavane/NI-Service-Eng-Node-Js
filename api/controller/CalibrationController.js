@@ -215,7 +215,10 @@ const generateAndSendCalibration = async(req,res)=>{
                 }
                 
                 const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}_1.pdf`;
-                const browser = await puppeteer.launch();
+                const browser = await puppeteer.launch({
+                    headless: 'shell',
+                    args: ['--enable-gpu'],
+                });
                 const page = await browser.newPage();
 
                 // Set the content of the page to your HTML content
