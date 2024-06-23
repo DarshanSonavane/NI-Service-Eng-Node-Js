@@ -240,7 +240,7 @@ const generateAndSendCalibration = async(req,res)=>{
                             console.log('Receiver Email' , receiverEmail);
                             await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
                         });
-                    },3000);
+                    },7000);
                 } catch (error) {
                     console.error('Error generating PDF:', error);
                 }
