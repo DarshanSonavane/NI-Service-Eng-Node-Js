@@ -216,7 +216,16 @@ const generateAndSendCalibration = async(req,res)=>{
                 }
                 
                 const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}.pdf`;
-                const options = { type: "A4" };
+                // const options = { type: "A4" };
+                const options = {
+                    format: 'Letter',  // or 'A4', etc.
+                    border: {
+                        top: '0.5in',
+                        right: '0.5in',
+                        bottom: '0.5in',
+                        left: '0.5in'
+                    }
+                };
 
                 try {
                     // Generate the PDF
@@ -225,7 +234,7 @@ const generateAndSendCalibration = async(req,res)=>{
                         console.log(`PDF saved to ${res.filename}`);
                         const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
                         const subject = `Calibration certificate`;
-                        const receiverEmail = calibrationrequestData['customerId']['email'];
+                        const receiverEmail = calibrationrequestData['customerId']['email'];//'darshansonavane24@gmail.com'
                         console.log('Receiver Email' , receiverEmail);
                         await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
                     });
