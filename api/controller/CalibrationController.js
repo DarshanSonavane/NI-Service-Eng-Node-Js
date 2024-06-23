@@ -203,12 +203,12 @@ const generateAndSendCalibration = async(req,res)=>{
                 cylinderMake : cylinderDetails[0]['cylinderMake'] ,
                 validityDate : cylinderDetails[0]['validityDate'] ,
                 nextCalibrationDate : nextCalibrationDate,
-                logoPath : `${constants.LOCAL_FILE_PATH}logo.jpg`,
-                checked : `${constants.LOCAL_FILE_PATH}checkmark.svg`,
-                unChecked : `${constants.LOCAL_FILE_PATH}close.svg`,
-                sign : `${constants.LOCAL_FILE_PATH}sign.png`,
-                stamp : `${constants.LOCAL_FILE_PATH}nistamplogo.png`,
-                swacha : `${constants.LOCAL_FILE_PATH}swach.jpg`,
+                logoPath : `${constants.SERVER_FILE_PATH}logo.jpg`,
+                checked : `${constants.SERVER_FILE_PATH}checkmark.svg`,
+                unChecked : `${constants.SERVER_FILE_PATH}close.svg`,
+                sign : `${constants.SERVER_FILE_PATH}sign.png`,
+                stamp : `${constants.SERVER_FILE_PATH}nistamplogo.png`,
+                swacha : `${constants.SERVER_FILE_PATH}swach.jpg`,
             },async (err, newHtml) => {
                 if(err){
                     console.log(err);
