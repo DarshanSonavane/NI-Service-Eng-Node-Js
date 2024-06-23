@@ -1,7 +1,7 @@
 const CalibrationRequest =  require('../model/CalibrationRequest.js');
 const CustomerDetails =  require("../model/CustomerDetails.js");
 const Employee =  require('../model/Employee.js');
-const { sendMail } = require('../service/Mailer.js');
+const { sendMail , sendMailWithAttachment } = require('../service/Mailer.js');
 const CylinderDetails = require('../model/CylinderDetails.js');
 const ejs = require('ejs');
 const path = require("path");
@@ -215,31 +215,25 @@ const generateAndSendCalibration = async(req,res)=>{
                     console.log(err);
                 }
                 
-                const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}_1.pdf`;
-                /* const browser = await puppeteer.launch();
-                const page = await browser.newPage(); */
-
-                // Set the content of the page to your HTML content
-                // await page.setContent(newHtml);
-
-                // Specify the path where you want to save the PDF
-                // const pdfPath = 'example.pdf';
+                const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}.pdf`;
 
                 const options = { format: 'Letter' };
 
                 try {
                     // Generate the PDF
-                    /* await page.pdf({ path: outputPath, format: 'Legal' }); */
-                    pdf.create(newHtml, options).toFile(outputPath, function(err, res) {
+                    pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
                         if (err) return console.log(err);
                         console.log(`PDF saved to ${res.filename}`);
+                        const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
+                        const subject = `Calibration certificate`;
+                        const receiverEmail = calibrationrequestData['customerId']['email'];
+                        console.log('Receiver Email' , receiverEmail);
+                        await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
                     });
-                    // console.log('PDF successfully generated at:', outputPath);
+                    
                 } catch (error) {
                     console.error('Error generating PDF:', error);
                 }
-
-                // await browser.close();
             })
         
 

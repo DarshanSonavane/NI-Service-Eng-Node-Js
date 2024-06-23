@@ -91,8 +91,7 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
     });
 }
 
-/* sendMailWithAttachment = (htmlEmailContents, toMail, subject) => {
-  let path = `./assets/uploads/original/purchase_details${userId}.pdf`;
+sendMailWithAttachment = (htmlEmailContents, toMail, subject , path) => {
   console.log(path);
   var mailOptions = {
       from: 'admin@niserviceeng.com',
@@ -109,11 +108,12 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
       }
   });
 }
- */
+
 
 
 module.exports = {
-    sendMail: sendMail
+    sendMail: sendMail,
+    sendMailWithAttachment : sendMailWithAttachment
 }
 
 
