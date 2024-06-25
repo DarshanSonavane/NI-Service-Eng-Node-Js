@@ -224,7 +224,8 @@ const generateAndSendCalibration = async(req,res)=>{
                       right: '0.5in',
                       bottom: '0.5in',
                       left: '0.5in'
-                    }
+                    },
+                    zoom: 0.5
                   };
 
                 try {
