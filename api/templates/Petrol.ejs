@@ -4,289 +4,236 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive Email Template</title>
-    <style>
-        body {
-            font-size: 13px;
-            display: flex;
-            justify-content: center;
-            text-align: center;
-        }
-        .container {
-            padding: 20px;
-            display: table;
-            width: 100%;
-        }
-        .content {
-            width: 600px;
-            margin: 0 auto;
-            border-collapse: collapse;
-        }
-        .header td {
-            background-color: #fff;
-            padding: 0px;
-            text-align: right;
-        }
-        .header img {
-            width: 250px;
-        }
-        .title {
-            font-size: 16px;
-            text-align: center;
-        }
-        .info td {
-            background-color: #fff;
-            padding: 10px 0;
-        }
-        .details td {
-            padding: 5px;
-            text-align: left;
-        }
-        .observations td {
-            padding: 5px;
-        }
-        .observations strong {
-            text-decoration: underline;
-        }
-        .accessories {
-            width: 95%;
-        }
-        .accessories td {
-            padding: 5px;
-            border: 1px solid;
-        }
-        .calibration td {
-            padding: 5px;
-            text-align: right;
-        }
-        .calibration strong {
-            text-decoration: underline;
-        }
-        .conclusion td {
-            padding: 5px;
-            border-right: 2px solid;
-        }
-        .conclusion strong {
-            font-weight: bold;
-        }
-        .footer td {
-            padding: 0px 0 20px;
-        }
-        .footer hr {
-            border: 1px solid black;
-        }
-        .contact-info {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .contact-info td {
-            font-size: 12.5px;
-            padding: 5px;
-        }
-        .signature {
-            height: 60px;
-        }
-        .swacha {
-            width: 180px;
-        }
-    </style>
+	
 </head>
-<body>
-    <div class="container">
-        <table class="content">
-            <!-- Header -->
-            <tr class="header">
-                <td colspan="2">
-                    <img src="<%= logoPath %>" alt="Logo">
-                </td>
-            </tr>
-            <tr class="info">
-                <td colspan="2">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td align="left">SR. No : <%= serialNumber %></td>
-                            <td class="title"><strong><u>CALIBRATION CERTIFICATE</u></strong></td>
-                            <td align="right">Date : <%= issueDate %></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <!-- Body -->
-            <tr class="details">
-                <td colspan="2">
-                    <table width="100%" border="1" cellspacing="0">
-                        <tr>
-                            <td width="6%" valign="top" style="text-align: center;">1</td>
-                            <td width="94%">
-                                <strong><u>COMPONENT :</u></strong> <br>
-                                PUC EQUIPMENT MODEL No. <b><%= modelNumber %></b><br>
-                                PUC EQUIPMENT SR. <b><%= machineNumber %></b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" style="text-align: center;">2</td>
-                            <td>
-                                <strong><u>PUC CENTRE : <b> <%= centerName %> <%= city %> </b></u></strong> <br> 
-                                PUC REGISTRATION NO.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" style="text-align: center;">3</td>
-                            <td>
-                                <strong><u>OBJECTIVE OF THE TEST :</u></strong> Tocarry out Physical Check and calibration of Smoke Meter / Multigas
-                                NUVO/10/20/ Analyser as per the test procedure specified in Annexure 1of CMVRTAP 115-116 Part -8
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" style="text-align: center;">4</td>
-                            <td>
-                                <strong><u>DETAILED OBSERVATIONS :</u> <b>OK</b> </strong> <br>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" style="text-align: center;">4.1</td>
-                            <td>
-                                <strong><u>CHECKING OF SUPPLY / EARTHING :</u> <b>OK</b> </strong> <br>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" style="text-align: center;">4.2</td>
-                            <td>
-                                <table class="accessories">
-                                    <tr>
-                                        <td width="35%"><strong><u>CHECKING OF ACCESSORIES :</u></strong></td>
-                                        <td width="10%">CHECKED</td>
-                                        <td width="10%"><span style="width: 50px; float: left; text-align: center; border: 1px solid;"><img src="<%= checked %>" alt="Checked" style="height: 20px;"></span></td>
-                                        <td align="right" width="20%">NOT CHECKED</td>
-                                        <td width="10%"><span style="width: 50px; float: left; text-align: center; border: 1px solid;"><img src="<%= unChecked %>" alt="Unchecked" style="height: 20px;"></span></td>
-                                    </tr>
-                                </table>
-                                <table>
-                                    <tr>
-                                        <td align="center" width="50%">
-                                            <strong><%= modelNumber %></strong><br>
-                                            <table border="1" cellspacing="0" cellpadding="0">
-                                                <tr>
-                                                    <td style="padding: 5px;" width="70%">1. PROBE ASSEMBLY</td>
-                                                    <td style="padding: 5px;" width="30%"><b>OK</b></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding: 5px;">2. AIRMATIC FILTER</td>
-                                                    <td style="padding: 5px;"><b>OK</b></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding: 5px;">3. DUST FILTER</td>
-                                                    <td style="padding: 5px;"><b>OK</b></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding: 5px;">4. PICKUP PROBE FILTER</td>
-                                                    <td style="padding: 5px;"><b>OK</b></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" style="text-align: center;">4.3</td>
-                            <td>
-                                <strong><u>SPAN CALIBRATION :</u></strong><br>
-                                <table>
-                                    <tr>
-                                        <td align="right" width="49%">DETAILS OF SPAN CALIBRATION CO:</td>
-                                        <td width="13.50%"><span style="width: 100%; float: left; text-align: center; border-bottom: 1px solid;"><%= coValue %></span></td>
-                                        <td width="10%">% AND</td>
-                                        <td align="right" width="5%">HC</td>
-                                        <td width="14%"><span style="width: 100%; float: left; text-align: center; border-bottom: 1px solid;"><%= hcValue %></span></td>
-                                        <td width="10%">PPM</td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right" width="49%">CO2:</td>
-                                        <td width="13.50%"><span style="width: 100%; float: left; text-align: center; border-bottom: 1px solid;"><%= co2Value %></span></td>
-                                        <td width="10%">% AND</td>
-                                        <td align="right" width="5%">O2</td>
-                                        <td width="14%"><span style="width: 100%; float: left; text-align: center; border-bottom: 1px solid;">-</span></td>
-                                        <td width="10%">%</td>
-                                    </tr>
-                                </table>
-                                <br>
-                                * CALIBRATION GAS CYLINDER NO.: <b><%= cylinderNumber %></b> <br>
-                                * CALIBRATION GAS CYLINDER MAKE: <b><%= cylinderMake %></b> <br>
-                                * CALIBRATION GAS VALIDITY DATE: <b><%= validityDate %></b> <br>
-                                OR
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" style="text-align: center;">4.4</td>
-                            <td>
-                                ELECTRICAL CALIBRATION AGAINST SPAN GAS CALIBRATION VALUE : <strong>OK</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" style="text-align: center;">4.5</td>
-                            <td>
-                                LEAK TEST : <strong>PASS</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" style="text-align: center;">4.6</td>
-                            <td>
-                                <strong>VEHICLE TESTEDAFTER CALIBRATION :</strong> <br>
-                                ONE No. OF PETROL VEHICLE CHECKED IDLING EMISSION
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" style="text-align: center;">5</td>
-                            <td>
-                                <table class="conclusion">
-                                    <tr>
-                                        <td width="40%"><strong>CONCLUSION :</strong></td>
-                                        <td><b>Tested Found OK</b></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" style="text-align: center;">6</td>
-                            <td>
-                                <table class="conclusion">
-                                    <tr>
-                                        <td width="40%"><strong>NEXT CALIBRATION DUE DATE :</strong></td>
-                                        <td><%= nextCalibrationDate %></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <!-- Footer -->
-            <tr class="footer">
-                <td colspan="2">
-                    SIGNATURE AND SEAL OF MFA JR SUPPLIER
-                    <img src="<%= sign %>" alt="Signature" class="signature">
-                    <img src="<%= stamp %>" alt="Stamp" width="80" style="position: relative; bottom: -20px;">
-                    <hr>
-                    <table class="contact-info">
-                        <tr>
-                            <td width="33.33%" align="left">
-                                Office No. 18,<br>
-                                2nd Floor, GNP Galleria,<br>
-                                MIDC Road, <br>
-                                Dombivli (E) 421 302.
-                            </td>
-                            <td width="33.33%" align="center">
-                                <img src="<%= swacha %>" alt="Swacha" class="swacha">
-                            </td>
-                            <td width="33.33%" align="right">
-                                Mob.: 9892151843<br>
-                                E-mail: service@niserviceeng.com
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </div>
+<body style="font-size:13px;display: flex;text-align: center;justify-content: center;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="center" style="padding: 10px;">
+                <table class="content" width="600" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
+                    <!-- Header -->
+                    <tr>
+                        <td align="right" style="background-color: #fff; padding: 0px;">
+                        <img src="<%= logoPath %>" width="250">
+                        </td>
+                    </tr>
+					 <tr>
+                        <td align="right" style="background-color: #fff; padding: 10px 0;">
+                       <table style="width:100% ">
+  
+  <tr>
+    <td align="left">SR. No : <%= serialNumber %></td>
+    <td align="center" style="font-size:16px;"><strong><u>CALIBRATION CERTIFICATE</u></strong></td>
+    <td align="right">Date : <%= issueDate %></td>
+  </tr>
+  
+</table>
+                        </td>
+						
+                    </tr>
+
+
+                    <!-- Body -->
+                    <tr>
+                        <td class="body" style="padding: 0px; text-align: left; line-height: 1.6;">
+                        <table width="100%" border="1" cellspacing="0" >
+  <tr>
+    <td width="6%" valign="top" style="padding:5px; text-align:center;">1</td>
+    <td width="94%" style="padding:5px;"><strong><u>COMPONENT :</u></strong> <br/>PUC EQUIPMENT MODEL No. <b><%= modelNumber %></b><br/>
+PUC ECQUIPMENT SR. <b><%= machineNumber %></b></td>
+    
+  </tr>
+  <tr>
+    <td valign="top" style="padding:5px; text-align:center;">2</td>
+    <td style="padding:5px;"><strong><u>PUC CENTRE : <b> <%= centerName %> <%= city %> </b></u></strong> <br> 
+PUC REGISTRATION NO.</td>
+   
+  </tr>
+  <tr>
+    <td valign="top" style="padding:5px; text-align:center;">3</td>
+    <td style="padding:5px;"><strong><u>OBJECTIVE OF THE TEST :</u></strong> Tocarry out Physical Check and calibration of Smoke Meter / Multigas
+NUVO/10/20/ Analyser as per the test procedure specified in Annexure 1of CMVRTAP 115-116 Part -8</td>
+    
+  </tr>
+  <tr>
+    <td valign="top" style="padding:5px; text-align:center;">4</td>
+    <td style="padding:5px;"><strong><u>DETAILED OBSERVATIONS :</u> <b>OK</b> </strong> <Br/></td>
+   
+  </tr>
+  <tr>
+    <td valign="top" style="padding:5px; text-align:center;">4.1</td>
+    <td style="padding:5px;"><strong><u>CHECKING OF SUPPLY / EARTHING :</u> <b>OK</b> </strong> <br/> </td>
+    
+  </tr>
+  <tr>
+    <td valign="top" style="padding:5px; text-align:center;">4.2</td>
+    <td style="padding:5px;"> 
+	<table style="width:95%">
+  
+  <tr>
+    <td width="35%"><strong><u>CHECKING OF ASSESORIES :</u></strong></td>
+    <td width="10%">CHECKED</td>
+    <td width="10%"><span style="width:50px; float:left; text-align:center; border:1px solid;"><img src="<%= checked %>" style="height: 20px;"/></span></td>
+	<td align="right" width="20%">NOT CHECKED</td>
+    <td width="10%"><span style="width:50px; float:left; text-align:center; border:1px solid;"><img src="<%= unChecked %>" style="height: 20px;"/></span></td>
+  </tr>
+  
+</table>
+<table style="width:100%">
+  
+  <tr>
+    <td align="center" width="50%">
+	<strong><%= modelNumber %></strong><Br/>
+	<table style="width:100%" border="1px solid;" cellspacing="0" cellpadding="0">
+  
+  <tr>
+    <td style="padding:5px;" width="70%">1. PROBE ASSEMBLY </td>
+    <td style="padding:5px;" width="30%"><b>OK</b></td>
+    
+  </tr>
+  <tr>
+    <td style="padding:5px;">2. AIRMATIC FILTER </td>
+    <td style="padding:5px;"><b>OK</b></td>
+    
+  </tr>
+  <tr>
+    <td style="padding:5px;">3. DUST FILTER</td>
+    <td style="padding:5px;"><b>OK</b></td>
+   
+  </tr>
+  <tr>
+    <td style="padding:5px;">4. PICKUP PROBE FILTER</td>
+    <td style="padding:5px;"><b>OK</b></td>
+   
+  </tr>
+</table>
+	
+	</td>
+  <!-- <td valign="bottom" align="center" width="50%">
+	<strong>NUVOI10/20/NPM SM 111B</strong><Br/>
+	<table style="width:90%" border="1px solid;" cellspacing="0" cellpadding="0">
+  
+  <tr>
+    <td style="padding:5px;" width="70%">1. PROBE ASSEMBLY </td>
+    <td style="padding:5px;" width="30%"></td>
+    
+  </tr>
+  <tr>
+    <td style="padding:5px;">2. ND FILTER  </td>
+    <td style="padding:5px;"></td>
+    
+  </tr>
+  <tr>
+    <td style="padding:5px;">3. HOSE PIPE </td>
+    <td style="padding:5px;"></td>
+   
+  </tr>
+  
+</table>
+	</td> -->
+    
+  </tr>
+  
+</table>
+	</td>
+    
+  </tr>
+  <tr>
+    <td valign="top" style="padding:5px; text-align:center;">4.3</td>
+    <td style="padding:5px;"><strong><u>SPAN CALIBRATION :</u></strong><br/>
+	<table style="width:90%">
+  
+  <tr>
+    <td align="right" width="49%">DETAILS OF SPAN CALIBRATION CO: </td>
+    <td width="13.50%"><span style="width:100%; float:left; text-align:center; border-bottom:1px solid;"><%= coValue %></span></td>
+    <td width="10%">% AND</td>
+	<td align="right" width="5%">HC</td>
+	<td width="14%"><span style="width:100%; float:left; text-align:center; border-bottom:1px solid;"><%= hcValue %></span></td>
+	<td width="10%">PPM</td>
+  </tr>
+  <tr>
+    <td align="right" width="49%">CO2: </td>
+    <td width="13.50%"><span style="width:100%; float:left; text-align:center; border-bottom:1px solid;"><%= co2Value %></span></td>
+    <td width="10%">% AND</td>
+	<td align="right" width="5%">O2</td>
+	<td width="14%"><span style="width:100%; float:left; text-align:center; border-bottom:1px solid;">-</span></td>
+	<td width="10%">%</td>
+  </tr>
+ 
+</table><br/>
+* CALIBRATION GAs CYLINDER NO. :  <b><%= cylinderNumber %></b>  <br/>
+* CALIBRATION GAS CYLINDER MAKE : <b><%= cylinderMake %></b>   <br/>
+* CALIBRATION GAS VALIDITY DATE : <b><%= validityDate %></b>   <br/>
+OR <br/>
+
+	</td>
+   
+  </tr>
+  <tr>
+    <td valign="top" style="padding:5px; text-align:center;">4.4</td>
+    <td style="padding:5px;">ELECTRICAL CALIBRATION AGAINST SPAN GAS CALIBRATION VALUE : <strong>OK</strong></td>
+   
+  </tr>
+  <tr>
+    <td valign="top" style="padding:5px; text-align:center;">4.5</td>
+    <td style="padding:5px;">LEAK TEST : <strong>PASS</strong></td>
+   
+  </tr>
+  <tr>
+    <td valign="top" style="padding:5px; text-align:center;">4.6</td>
+    <td style="padding:5px;"><strong>VEHICLE TESTEDAFTER CALIBRATION :</strong> <BR/>ONE No. OF PETROL VEHICLE CHECKED IDLING EMISSION</td>
+   
+  </tr>
+  <tr>
+    <td valign="top" style="padding:5px; text-align:center;">5</td>
+    <td>
+	<table style="width:100%; border-collapse: collapse;">
+  <tr>
+    <td  width="40%" style="padding:5px; border-right:2px solid"><strong>CONCLUSION :</strong> </td>
+    <td><b> Tested Found OK</b></td>
+   </tr>
+  
+</table>
+	</td>
+   
+  </tr>
+  <tr>
+    <td valign="top" style="padding:5px; text-align:center;">6</td>
+    <td> <table style="width:100%; border-collapse: collapse;">
+  <tr>
+    <td  width="40%" style="padding:5px; border-right:2px solid"><strong>NEXT CALIBRATION DUE DATE :</strong> </td>
+    <td><%= nextCalibrationDate %></td>
+   </tr>
+  
+</table> </td>
+  
+  </tr>
+</table>           
+                        </td>
+                    </tr>
+
+                    
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 0px 0 20px;">
+						
+                        SIGNATURE AND SEAL OF MFA JR SUPPLIER <img src="<%= sign %>" style="height: 60px;"/> <img src="<%= stamp %>" width="80" style="position: relative; bottom: -20px;"/>
+<HR></HR>				
+<table style="width:100%" valign="top">
+  
+  <tr>
+    <td width="33.33%" style="font-size:12.5px;" align="left">Office No. 18,<br/>2nd Floor, GNP Galleria,<br/>MIDC Road, <br/>Dombivli (E) 421 302.</td>
+    <td width="33.33%" align="center" ><img src="<%= swacha %>" width="180"/></td>
+    <td width="33.33%" style="font-size:12.5px;" align="right">Mob.: 9892151843<br/>E-mail: service@niserviceeng.com</td>
+  </tr>
+  
+</table>			
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
