@@ -198,7 +198,7 @@ const generateAndSendCalibration = async(req,res)=>{
                 centerName : calibrationrequestData['customerId']['customerName'],
                 city : calibrationrequestData['customerId']['city'],
                 coValue : cylinderDetails[0]['CO'],
-                hcValue : cylinderDetails[0]['HC'],
+                hcValue : cylinderDetails[0]['HC'] + " PPM",
                 co2Value : cylinderDetails[0]['CO2'],
                 cylinderNumber : cylinderDetails[0]['cylinderNumber'] ,
                 cylinderMake : cylinderDetails[0]['cylinderMake'] ,
@@ -214,7 +214,7 @@ const generateAndSendCalibration = async(req,res)=>{
                 if(err){
                     console.log(err);
                 }
-                console.log(newHtml);
+                
                 const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}.pdf`;
                 // const options = { type: "A4" };
                 // const options = { type: 'A4'};
