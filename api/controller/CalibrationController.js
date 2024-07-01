@@ -214,13 +214,14 @@ const generateAndSendCalibration = async(req,res)=>{
                 if(err){
                     console.log(err);
                 }
+                console.log(newHtml);
                 const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}.pdf`;
                 // const options = { type: "A4" };
                 // const options = { type: 'A4'};
                 var options = {
                     format: 'A4',
-                    border: '1cm',
-                    zoomFactor: '1.0',
+                    border: '0.5cm',
+                    zoomFactor: '0.5',
                     // other options
                 };
 
