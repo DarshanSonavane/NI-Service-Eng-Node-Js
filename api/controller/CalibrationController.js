@@ -187,7 +187,9 @@ const generateAndSendCalibration = async(req,res)=>{
         let fileName = '';
         if(calibrationrequestData && calibrationrequestData['machineType'] == '0'){
             fileName = '../templates/Petrol.ejs';
-        }
+        }else if(calibrationrequestData && calibrationrequestData['machineType'] == '1'){
+            fileName = '../templates/Diesel.ejs';
+        } 
         console.log('FileName:', fileName);
         ejs.renderFile(
             path.join(__dirname, fileName),{
