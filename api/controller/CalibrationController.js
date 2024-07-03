@@ -256,7 +256,7 @@ const generateAndSendCalibration = async(req,res)=>{
         console.log(d.toLocaleDateString());
         d.setMonth(d.getMonth() + 3);
         // console.log(d.toLocaleDateString())
-        return d.toLocaleDateString();
+        return d.getDate() + "/" + d.getMonth() + 3 + "/" + d.getFullYear();
     }
 }
 
