@@ -253,10 +253,18 @@ const generateAndSendCalibration = async(req,res)=>{
 
     function generateDate(){
         var d = new Date();
-        console.log(d.toLocaleDateString());
+        /* console.log(d.toLocaleDateString());
         d.setMonth(d.getMonth() + 3);
-        // console.log(d.toLocaleDateString())
-        return d.getDate() + "/" + d.getMonth() + 3 + "/" + d.getFullYear();
+        console.log(d.toLocaleDateString())
+        return d.getDate() + "/" + d.getMonth() + 3 + "/" + d.getFullYear(); */
+        let month = d.getMonth() + 1; // Months start at 0!
+        let day = d.getDate();
+
+        if (day < 10) day = '0' + day;
+        if (month < 10) month = '0' + month;
+
+        const formattedToday = day + '/' + month + '/' + d.getFullYear();
+        return formattedToday
     }
 }
 
