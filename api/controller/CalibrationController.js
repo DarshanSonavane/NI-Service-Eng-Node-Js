@@ -9,6 +9,8 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const constants = require("../utility/constant.js");
 const pdf = require('html-pdf');
+const MachineModel = require('../model/MachineModel.js');
+const CalibrationHistory = require('../model/CalibrationHistory.js');
 
 const generateCalibrationRequest = async(req,res)=>{
     try{
@@ -34,7 +36,8 @@ const generateCalibrationRequest = async(req,res)=>{
                 type = "Combo";
             }
             let customerDetails = await CustomerDetails.findOne({_id : req.body.customerId});
-            let employeeDetails = await Employee.findOne({_id : req.body.employeeId})
+            let employeeDetails = await Employee.findOne({_id : req.body.employeeId});
+            await CalibrationHistory.create({ request : data._id, status : '2'});
             sendMail(customerDetails.customerName , customerDetails.customerCode , "Calibration" , type , employeeDetails.email , customerDetails.city , customerDetails.mobile , 'calibration')
             return res.status(200).json({ code : "200" , message: "Calibration Request Raised Successfully!", data: data });
         }).catch((err)=>{
@@ -182,91 +185,123 @@ const generateAndSendCalibration = async(req,res)=>{
         const serialNumber = Math.floor(1000 + Math.random() * 9000);
         const currentDate = new Date();
         const nextCalibrationDate = generateDate();
+        const machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['petrolMachineNumber']});
         
-
         let fileName = '';
         if(calibrationrequestData && calibrationrequestData['machineType'] == '0'){
             fileName = '../templates/Petrol.ejs';
         }else if(calibrationrequestData && calibrationrequestData['machineType'] == '1'){
-            fileName = '../templates/Combo.ejs';
+            fileName = '../templates/Diesel.ejs';
         }else if(calibrationrequestData && calibrationrequestData['machineType'] == '2'){
             fileName = '../templates/Combo.ejs';
         } 
-        console.log('FileName:', fileName);
-        ejs.renderFile(
-            path.join(__dirname, fileName),{
-                serialNumber : serialNumber,
-                issueDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
-                modelNumber : "NPM MGA-1",
-                machineNumber : calibrationrequestData['customerId']['petrolMachineNumber'],
-                centerName : calibrationrequestData['customerId']['customerName'],
-                city : calibrationrequestData['customerId']['city'],
-                coValue : cylinderDetails[0]['CO'],
-                hcValue : cylinderDetails[0]['HC'] + " PPM",
-                co2Value : cylinderDetails[0]['CO2'],
-                cylinderNumber : cylinderDetails[0]['cylinderNumber'] ,
-                cylinderMake : cylinderDetails[0]['cylinderMake'] ,
-                validityDate : cylinderDetails[0]['validityDate'] ,
-                nextCalibrationDate : nextCalibrationDate,
-                logoPath : `${constants.SERVER_FILE_PATH}logo.jpg`,
-                checked : `${constants.SERVER_FILE_PATH}checkmark.svg`,
-                unChecked : `${constants.SERVER_FILE_PATH}close.svg`,
-                sign : `${constants.SERVER_FILE_PATH}sign.png`,
-                stamp : `${constants.SERVER_FILE_PATH}nistamplogo.png`,
-                swacha : `${constants.SERVER_FILE_PATH}swach.jpg`,
-            },async (err, newHtml) => {
-                if(err){
-                    console.log(err);
-                }
-                
-                const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}.pdf`;
-                // const options = { type: "A4" };
-                // const options = { type: 'A4'};
-                var options = {
-                    format: 'A4',
-                    border: '0.5cm',
-                    zoomFactor: '0.5',
-                    // other options
-                };
-
-                try {
-                    // Generate the PDF
-                    pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
-                        if (err) return console.log(err);
-                        console.log(`PDF saved to ${res.filename}`);
-                        const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
-                        const subject = `Calibration certificate`;
-                        const receiverEmail = 'darshansonavane24@gmail.com'; //calibrationrequestData['customerId']['email'];//
-                        console.log('Receiver Email' , receiverEmail);
-                        await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
-                    });
-                    
-                } catch (error) {
-                    console.error('Error generating PDF:', error);
-                }
-            })
         
-
-
-        return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});
+        if(machineModelDetails && machineModelDetails.MODEL){
+            ejs.renderFile(
+                path.join(__dirname, fileName),{
+                    serialNumber : serialNumber,
+                    issueDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
+                    modelNumber : machineModelDetails.MODEL,
+                    machineNumber : calibrationrequestData['customerId']['petrolMachineNumber'],
+                    centerName : calibrationrequestData['customerId']['customerName'],
+                    city : calibrationrequestData['customerId']['city'],
+                    coValue : cylinderDetails[0]['CO'],
+                    hcValue : cylinderDetails[0]['HC'] + " PPM",
+                    co2Value : cylinderDetails[0]['CO2'],
+                    cylinderNumber : cylinderDetails[0]['cylinderNumber'] ,
+                    cylinderMake : cylinderDetails[0]['cylinderMake'] ,
+                    validityDate : cylinderDetails[0]['validityDate'] ,
+                    nextCalibrationDate : nextCalibrationDate,
+                    logoPath : `${constants.SERVER_FILE_PATH}logo.jpg`,
+                    checked : `${constants.SERVER_FILE_PATH}checkmark.svg`,
+                    unChecked : `${constants.SERVER_FILE_PATH}close.svg`,
+                    sign : `${constants.SERVER_FILE_PATH}sign.png`,
+                    stamp : `${constants.SERVER_FILE_PATH}nistamplogo.png`,
+                    swacha : `${constants.SERVER_FILE_PATH}swach.jpg`,
+                },async (err, newHtml) => {
+                    if(err){
+                        console.log(err);
+                    }
+                    
+                    const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}.pdf`;
+                    // const options = { type: "A4" };
+                    // const options = { type: 'A4'};
+                    var options = {
+                        format: 'A4',
+                        border: '0.5cm',
+                        zoomFactor: '0.5',
+                        // other options
+                    };
+    
+                    try {
+                        // Generate the PDF
+                        pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
+                            if (err) return console.log(err);
+                            console.log(`PDF saved to ${res.filename}`);
+                            const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
+                            const subject = `Calibration certificate`;
+                            const receiverEmail = 'darshansonavane24@gmail.com'; //calibrationrequestData['customerId']['email'];//
+                            console.log('Receiver Email' , receiverEmail);
+                            const reqData = {
+                                status : '0'
+                            }
+                            await CalibrationRequest.where({_id : req.body.calibrationId}).updateOne({
+                                $set : reqData
+                            }).then(async(data)=>{});
+                            await CalibrationHistory.create({ request : req.body.calibrationId, status : '0'})
+                            await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
+                            return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});
+                        });
+                        
+                    } catch (error) {
+                        console.error('Error generating PDF:', error);
+                    }
+                })
+        }else {
+            return res.status(400).json({ code : "400" , message: "Machine Details Not Found!"});
+        }
     }catch(err){
         console.log(err);
     }
+}
 
-    function generateDate(){
-        var d = new Date();
-        /* console.log(d.toLocaleDateString());
-        d.setMonth(d.getMonth() + 3);
-        console.log(d.toLocaleDateString())
-        return d.getDate() + "/" + d.getMonth() + 3 + "/" + d.getFullYear(); */
-        let month = d.getMonth() + 4; // Months start at 0!
-        let day = d.getDate();
+function generateDate(){
+    var d = new Date();
+    /* console.log(d.toLocaleDateString());
+    d.setMonth(d.getMonth() + 3);
+    console.log(d.toLocaleDateString())
+    return d.getDate() + "/" + d.getMonth() + 3 + "/" + d.getFullYear(); */
+    let month = d.getMonth() + 4; // Months start at 0!
+    let day = d.getDate();
 
-        if (day < 10) day = '0' + day;
-        if (month < 10) month = '0' + month;
+    if (day < 10) day = '0' + day;
+    if (month < 10) month = '0' + month;
 
-        const formattedToday = day + '/' + month + '/' + d.getFullYear();
-        return formattedToday
+    const formattedToday = day + '/' + month + '/' + d.getFullYear();
+    return formattedToday
+}
+
+const insertMachineModel = async(req,res)=>{
+    try{
+        const dbData = [{
+            "MODEL": "NPM MGA-1",
+            "MACHINE_NO": 1235
+        },
+        {
+            "MODEL": "NPM SM 111B",
+            "MACHINE_NO": 5679
+        }];
+        await MachineModel.insertMany(dbData).then((data)=>{
+            return res.status(200).json({ code : "200" , message: "State List Created Successfully!!", data: data });
+        }).catch((err)=>{
+            console.log(err);
+            return res.status(500).json({
+                message: "Internal server error",
+                status: false,
+            });
+        })
+    }catch(err){
+        console.log(err);
     }
 }
 
@@ -279,5 +314,6 @@ module.exports = {
     getCustomerCalibrationList : getCustomerCalibrationList,
     validateCalibration : validateCalibration,
     updateCylinderDetails : updateCylinderDetails,
-    generateAndSendCalibration : generateAndSendCalibration
+    generateAndSendCalibration : generateAndSendCalibration,
+    insertMachineModel : insertMachineModel
 }
