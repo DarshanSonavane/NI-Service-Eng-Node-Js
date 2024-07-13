@@ -184,16 +184,17 @@ const generateAndSendCalibration = async(req,res)=>{
         const cylinderDetails = await CylinderDetails.find();
         const serialNumber = Math.floor(1000 + Math.random() * 9000);
         const currentDate = new Date();
-        const nextCalibrationDate = generateDate();
+        const customerState = calibrationrequestData['customerId']['stateCode'];
+        const nextCalibrationDate = generateDate(customerState);
         const machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['petrolMachineNumber']});
         
         let fileName = '';
         if(calibrationrequestData && calibrationrequestData['machineType'] == '0'){
-            fileName = '../templates/Petrol.ejs';
+            fileName = await getFileName('Petrol' , customerState);
         }else if(calibrationrequestData && calibrationrequestData['machineType'] == '1'){
-            fileName = '../templates/Diesel.ejs';
+            fileName = await getFileName('Diesel' , customerState);
         }else if(calibrationrequestData && calibrationrequestData['machineType'] == '2'){
-            fileName = '../templates/Combo.ejs';
+            fileName = await getFileName('Combo' , customerState);
         } 
         
         if(machineModelDetails && machineModelDetails.MODEL){
@@ -205,6 +206,7 @@ const generateAndSendCalibration = async(req,res)=>{
                     machineNumber : calibrationrequestData['customerId']['petrolMachineNumber'],
                     centerName : calibrationrequestData['customerId']['customerName'],
                     city : calibrationrequestData['customerId']['city'],
+                    state : customerState == 'GA' ? 'GOA' : 'MAHARASHTRA',
                     coValue : cylinderDetails[0]['CO'],
                     hcValue : cylinderDetails[0]['HC'] + " PPM",
                     co2Value : cylinderDetails[0]['CO2'],
@@ -250,9 +252,8 @@ const generateAndSendCalibration = async(req,res)=>{
                             }).then(async(data)=>{});
                             await CalibrationHistory.create({ request : req.body.calibrationId, status : '0'})
                             await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
-                            return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});
                         });
-                        
+                        return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});
                     } catch (error) {
                         console.error('Error generating PDF:', error);
                     }
@@ -265,13 +266,13 @@ const generateAndSendCalibration = async(req,res)=>{
     }
 }
 
-function generateDate(){
+function generateDate(stateCode){
     var d = new Date();
     /* console.log(d.toLocaleDateString());
     d.setMonth(d.getMonth() + 3);
     console.log(d.toLocaleDateString())
     return d.getDate() + "/" + d.getMonth() + 3 + "/" + d.getFullYear(); */
-    let month = d.getMonth() + 4; // Months start at 0!
+    let month = stateCode == 'GA' ? d.getMonth() + 5 : d.getMonth() + 4; // Months start at 0!
     let day = d.getDate();
 
     if (day < 10) day = '0' + day;
@@ -279,6 +280,16 @@ function generateDate(){
 
     const formattedToday = day + '/' + month + '/' + d.getFullYear();
     return formattedToday
+}
+
+function getFileName(type , state){
+    if(type == 'Petrol'){
+        return  state == 'GA' ?  '../templates/Petrol_GA.ejs' : '../templates/Petrol.ejs';
+    }else if(type == 'Diesel'){
+        return  state == 'GA' ?  '../templates/Diesel_GA.ejs' : '../templates/Diesel.ejs';
+    }else if(type == 'Combo'){
+        return  state == 'GA' ?  '../templates/Combo_GA.ejs' : '../templates/Combo.ejs';
+    }
 }
 
 const insertMachineModel = async(req,res)=>{
