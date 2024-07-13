@@ -296,11 +296,14 @@ const insertMachineModel = async(req,res)=>{
     try{
         const dbData = [{
             "MODEL": "NPM MGA-1",
-            "MACHINE_NO": 1235
+            "MACHINE_NO": 123456
         },
         {
             "MODEL": "NPM SM 111B",
-            "MACHINE_NO": 5679
+            "MACHINE_NO": 85216
+        },{
+            "MODEL": "NPM NUVOI10",
+            "MACHINE_NO": 85246
         }];
         await MachineModel.insertMany(dbData).then((data)=>{
             return res.status(200).json({ code : "200" , message: "State List Created Successfully!!", data: data });
