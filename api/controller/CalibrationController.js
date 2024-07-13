@@ -185,16 +185,19 @@ const generateAndSendCalibration = async(req,res)=>{
         const serialNumber = Math.floor(1000 + Math.random() * 9000);
         const currentDate = new Date();
         const customerState = calibrationrequestData['customerId']['stateCode'];
-        const nextCalibrationDate = generateDate(customerState);
-        const machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['petrolMachineNumber']});
+        const nextCalibrationDate = generateDate(customerState); 
         
         let fileName = '';
+        let machineModelDetails = '';
         if(calibrationrequestData && calibrationrequestData['machineType'] == '0'){
             fileName = await getFileName('Petrol' , customerState);
+            machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['petrolMachineNumber']});
         }else if(calibrationrequestData && calibrationrequestData['machineType'] == '1'){
             fileName = await getFileName('Diesel' , customerState);
+            machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['dieselMachineNumber']});
         }else if(calibrationrequestData && calibrationrequestData['machineType'] == '2'){
             fileName = await getFileName('Combo' , customerState);
+            machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['comboMachineNumber']});
         } 
         
         if(machineModelDetails && machineModelDetails.MODEL){
