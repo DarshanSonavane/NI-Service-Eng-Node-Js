@@ -189,15 +189,19 @@ const generateAndSendCalibration = async(req,res)=>{
         
         let fileName = '';
         let machineModelDetails = '';
+        let machineNumber = '';
         if(calibrationrequestData && calibrationrequestData['machineType'] == '0'){
             fileName = await getFileName('Petrol' , customerState);
             machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['petrolMachineNumber']});
+            machineNumber = calibrationrequestData['customerId']['petrolMachineNumber'];
         }else if(calibrationrequestData && calibrationrequestData['machineType'] == '1'){
             fileName = await getFileName('Diesel' , customerState);
             machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['dieselMachineNumber']});
+            machineNumber = calibrationrequestData['customerId']['dieselMachineNumber'];
         }else if(calibrationrequestData && calibrationrequestData['machineType'] == '2'){
             fileName = await getFileName('Combo' , customerState);
             machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['comboMachineNumber']});
+            machineNumber = calibrationrequestData['customerId']['comboMachineNumber'];
         } 
         
         if(machineModelDetails && machineModelDetails.MODEL){
@@ -206,7 +210,7 @@ const generateAndSendCalibration = async(req,res)=>{
                     serialNumber : serialNumber,
                     issueDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
                     modelNumber : machineModelDetails.MODEL,
-                    machineNumber : calibrationrequestData['customerId']['petrolMachineNumber'],
+                    machineNumber : machineNumber,
                     centerName : calibrationrequestData['customerId']['customerName'],
                     city : calibrationrequestData['customerId']['city'],
                     state : customerState == 'GA' ? 'GOA' : 'MAHARASHTRA',
