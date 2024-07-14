@@ -78,7 +78,7 @@ const getMyCalibrationRequestList = async(req,res)=>{
                 status: false,
             });
         }
-        let data = await CalibrationRequest.find({employeeId : req.body.employeeId}).populate('customerId');
+        let data = await CalibrationRequest.find({employeeId : req.body.employeeId}).populate('customerId').populate('employeeId');
         return res.status(200).json({ code : "200" , message: "Calibration Request List!!", data: data });
     }catch(err){
         console.log(err);
