@@ -249,7 +249,7 @@ const generateAndSendCalibration = async(req,res)=>{
                             console.log(`PDF saved to ${res.filename}`);
                             const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
                             const subject = `Calibration certificate`;
-                            const receiverEmail = 'nilesh@niserviceeng.com'//'darshansonavane24@gmail.com'; //calibrationrequestData['customerId']['email'];//
+                            const receiverEmail = 'darshansonavane24@gmail.com'; // 'nilesh@niserviceeng.com' calibrationrequestData['customerId']['email'];//
                             console.log('Receiver Email' , receiverEmail);
                             const reqData = {
                                 status : '0'
@@ -275,12 +275,16 @@ const generateAndSendCalibration = async(req,res)=>{
 
 function generateDate(stateCode){
     var d = new Date();
-    /* console.log(d.toLocaleDateString());
-    d.setMonth(d.getMonth() + 3);
-    console.log(d.toLocaleDateString())
-    return d.getDate() + "/" + d.getMonth() + 3 + "/" + d.getFullYear(); */
-    let month = stateCode == 'GA' ? d.getMonth() + 5 : d.getMonth() + 4; // Months start at 0!
-    let day = d.getDate();
+    let month = '';
+    if(stateCode == 'GA'){ // GOA
+        month = d.getMonth() + 5;
+    }else if(stateCode == 'GJ'){ // GUJRAT
+        month = d.getMonth() + 3;
+    }else { // Maharashtra
+        month = d.getMonth() + 4;
+    }
+     // Months start at 0!
+    let day = d.getDate() - 1;
 
     if (day < 10) day = '0' + day;
     if (month < 10) month = '0' + month;
