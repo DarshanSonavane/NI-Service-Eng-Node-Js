@@ -256,9 +256,8 @@ const generateAndSendCalibration = async(req,res)=>{
                             if (err) return console.log(err);
                             console.log(`PDF saved to ${res.filename}`);
                             const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
-                            const subject = `Calibration certificate`;
-                            const receiverEmail = 'darshansonavane24@gmail.com'; // 'nilesh@niserviceeng.com' calibrationrequestData['customerId']['email'];//
-                            console.log('Receiver Email' , receiverEmail);
+                            const subject = `Calibration Certificate`;
+                            const receiverEmail = 'nilesh@niserviceeng.com'; // 'darshansonavane24@gmail.com';  // calibrationrequestData['customerId']['email'];//
                             const reqData = {
                                 status : '0'
                             }
