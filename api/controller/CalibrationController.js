@@ -185,6 +185,7 @@ const generateAndSendCalibration = async(req,res)=>{
         const serialNumber = Math.floor(1000 + Math.random() * 9000);
         const currentDate = new Date();
         const customerState = calibrationrequestData['customerId']['stateCode'];
+        const customerEmail = calibrationrequestData['customerId']['email'];
         const nextCalibrationDate = generateDate(customerState); 
         
         let fileName = '';
@@ -203,8 +204,15 @@ const generateAndSendCalibration = async(req,res)=>{
             machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['comboMachineNumber']});
             machineNumber = calibrationrequestData['customerId']['comboMachineNumber'];
         } 
-        
-        if(machineModelDetails && machineModelDetails.MODEL){
+        let state = '';
+        if(customerState == 'GA'){
+            state = 'GOA';
+        }else if(customerState == 'GJ'){
+            state = 'GUJRAT';
+        }else if(customerState == 'MH'){
+            state = 'MAHARASHTRA'
+        }
+        if(machineModelDetails && machineModelDetails.MODEL && customerEmail){
             ejs.renderFile(
                 path.join(__dirname, fileName),{
                     serialNumber : serialNumber,
@@ -213,7 +221,7 @@ const generateAndSendCalibration = async(req,res)=>{
                     machineNumber : machineNumber,
                     centerName : calibrationrequestData['customerId']['customerName'],
                     city : calibrationrequestData['customerId']['city'],
-                    state : customerState == 'GA' ? 'GOA' : 'MAHARASHTRA',
+                    state : state,
                     coValue : cylinderDetails[0]['CO'],
                     hcValue : cylinderDetails[0]['HC'] + " PPM",
                     co2Value : cylinderDetails[0]['CO2'],
@@ -266,7 +274,7 @@ const generateAndSendCalibration = async(req,res)=>{
                     }
                 })
         }else {
-            return res.status(400).json({ code : "400" , message: "Machine Details Not Found!"});
+            return res.status(400).json({ code : "400" , message: "Machine Details OR Customer Email Not Found!"});
         }
     }catch(err){
         console.log(err);
