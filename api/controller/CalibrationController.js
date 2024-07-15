@@ -340,6 +340,15 @@ const insertMachineModel = async(req,res)=>{
     }
 }
 
+const getCylinderDetails = async(req,res)=>{
+    try{
+        const data = await CylinderDetails.find();
+        return res.status(200).json({code : "200" , message : 'Cylinder Details Fetched!' , data : data});
+    }catch(err){
+        console.log(err);
+    }
+}
+
 
 module.exports = {
     generateCalibrationRequest : generateCalibrationRequest,
@@ -350,5 +359,6 @@ module.exports = {
     validateCalibration : validateCalibration,
     updateCylinderDetails : updateCylinderDetails,
     generateAndSendCalibration : generateAndSendCalibration,
-    insertMachineModel : insertMachineModel
+    insertMachineModel : insertMachineModel,
+    getCylinderDetails : getCylinderDetails,
 }
