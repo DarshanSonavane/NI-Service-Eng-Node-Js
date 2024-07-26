@@ -4,7 +4,8 @@ const express = require('express');
 
 const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer , getEmployeeDetails , deleteEmployee , updateCustomerDetails , getAllCustomers , createUpdateCustomerDetails , updateDetailsWithoutValidation , updateEmployeePassword , generateStateList , getStateList } = require('../api/controller/EmployeeController.js');
 const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion , trackComplaint , reAssignComplaint } = require('../api/controller/ServiceRequestController.js');
-const { generateCalibrationRequest , getCalibrationEmployeeList , getAllCalibrationList , getMyCalibrationRequestList , getCustomerCalibrationList , validateCalibration , updateCylinderDetails , generateAndSendCalibration , insertMachineModel , getCylinderDetails } = require('../api/controller/CalibrationController.js');
+const { generateCalibrationRequest , getCalibrationEmployeeList , getAllCalibrationList , getMyCalibrationRequestList , getCustomerCalibrationList , validateCalibration , updateCylinderDetails , generateAndSendCalibration , insertMachineModel , getCylinderDetails , insertNewMachineDetails } = require('../api/controller/CalibrationController.js');
+const { saveNotification , fetchNotification } = require('../api/controller/NotificationController.js');
 
 const routes = express.Router();
 
@@ -55,4 +56,7 @@ routes.get("/generate-state-list", generateStateList);
 routes.get("/state-list",getStateList);
 routes.post("/insert-machine-model" , insertMachineModel);
 routes.get("/get-cylinder-details" , getCylinderDetails);
+routes.post("/insert-machine-details" , insertNewMachineDetails);
+routes.post("/save-notification" , saveNotification);
+routes.get("/fetch-notification", fetchNotification);
 module.exports = routes;
