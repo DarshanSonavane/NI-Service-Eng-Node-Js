@@ -20,6 +20,7 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
     }else {
         subject += "Raised By Customer"
     }
+    console.log('mailList', mailList)
     let typeOfRequest = requestType === 'service' ? 'Service' : 'Calibration';
     let mailOptions = {
         from: 'admin@niserviceeng.com',
