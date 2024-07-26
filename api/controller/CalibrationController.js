@@ -257,7 +257,7 @@ const generateAndSendCalibration = async(req,res)=>{
                             console.log(`PDF saved to ${res.filename}`);
                             const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
                             const subject = `Calibration Certificate`;
-                            const receiverEmail = 'nilesh@niserviceeng.com'; // 'darshansonavane24@gmail.com';  // calibrationrequestData['customerId']['email'];//
+                            const receiverEmail = calibrationrequestData['customerId']['email'];
                             const reqData = {
                                 status : '0'
                             }
@@ -342,6 +342,16 @@ const insertMachineModel = async(req,res)=>{
         },{
             "MODEL": "NPM NUVOI10",
             "MACHINE_NO": 8462
+        },{
+            "MODEL": "NPM MGA-1",
+            "MACHINE_NO": 681
+        },
+        {
+            "MODEL": "NPM SM 111B",
+            "MACHINE_NO": 2792
+        },{
+            "MODEL": "NPM NUVOI10",
+            "MACHINE_NO": 100
         }];
         await MachineModel.insertMany(dbData).then((data)=>{
             return res.status(200).json({ code : "200" , message: "State List Created Successfully!!", data: data });
