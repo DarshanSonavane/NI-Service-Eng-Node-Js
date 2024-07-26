@@ -377,6 +377,27 @@ const getCylinderDetails = async(req,res)=>{
     }
 }
 
+const insertNewMachineDetails = async(req,res)=>{
+    try{
+        if(!req.body.model || !req.body.machineNumber){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        await MachineModel.create({
+            MODEL : req.body.model,
+            MACHINE_NO : req.body.machineNumber
+        }).then(data=>{
+            return res.status(200).json({code : "200" , message : 'Machine Details Added Successfully!' , data : data});
+        }).catch(err=>{
+            console.log(err);
+        })
+    }catch(err){    
+        console.log(err);
+    }
+}
+
 
 module.exports = {
     generateCalibrationRequest : generateCalibrationRequest,
@@ -389,4 +410,5 @@ module.exports = {
     generateAndSendCalibration : generateAndSendCalibration,
     insertMachineModel : insertMachineModel,
     getCylinderDetails : getCylinderDetails,
+    insertNewMachineDetails : insertNewMachineDetails
 }

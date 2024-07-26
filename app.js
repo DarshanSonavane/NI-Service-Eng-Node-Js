@@ -19,8 +19,9 @@ app.use(passport.initialize());
 // app.use(passport.session());
 app.use(cookieParser());
 
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '10mb' })); // support json encoded bodies
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+
 //define next middleware to fire res status when api goes wrong.
 app.use(cors()); // adding middleware.. https://stackoverflow.com/questions/18310394/no-access-control-allow-origin-node-apache-port-issue
 const routes = require("./config/routes.js");
