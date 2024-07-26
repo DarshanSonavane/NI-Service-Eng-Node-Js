@@ -187,7 +187,7 @@ const generateAndSendCalibration = async(req,res)=>{
         const customerState = calibrationrequestData['customerId']['stateCode'];
         const customerEmail = calibrationrequestData['customerId']['email'];
         const nextCalibrationDate = generateDate(customerState); 
-        
+        console.log('calibrationrequestData', calibrationrequestData);
         let fileName = '';
         let machineModelDetails = '';
         let machineNumber = '';
@@ -212,6 +212,7 @@ const generateAndSendCalibration = async(req,res)=>{
         }else if(customerState == 'MH'){
             state = 'MAHARASHTRA'
         }
+        console.log('machineModelDetails====' , machineModelDetails);
         if(machineModelDetails && machineModelDetails.MODEL && customerEmail){
             ejs.renderFile(
                 path.join(__dirname, fileName),{
