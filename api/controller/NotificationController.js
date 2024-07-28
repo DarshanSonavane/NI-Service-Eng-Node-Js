@@ -1,4 +1,5 @@
 const Notification = require('../model/Notification');
+const CustomerFCM = require('../model/CustomerFCMMapping');
 
 const saveNotification = async(req,res)=>{
     try{
@@ -35,7 +36,52 @@ const fetchNotification = async(req,res)=>{
     }
 }
 
+const insertCustomerFCM = async(req,res)=>{
+    try{
+        if(!req.body.customerId || !req.body.fcmKey || !req.body.deviceId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+    
+        await CustomerFCM.create({
+            fcmKey : req.body.fcmKey,
+            deviceId : req.body.deviceId,
+            customerId : req.body.customerId
+        }).then((data)=>{
+            return res.status(200).json({ code : "200" , message: "Customer FCM Mapping Saved Successfully!", data: data });
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const validateCustomerDeviceFCM = async(req,res)=>{
+    try{
+        if(!req.body.customerId || !req.body.deviceId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+
+        const data = await CustomerFCM.findOne({customerId : req.body.customerId , deviceId : req.body.deviceId});
+        if(data){
+            return res.status(200).json({ code : "200" , message: "Customer FCM Mapping Available In DB!", isFCMMappingAvailable: true });
+        }else {
+            return res.status(200).json({ code : "200" , message: "Customer FCM Mapping Saved Successfully!", isFCMMappingAvailable: false });
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     saveNotification : saveNotification,
-    fetchNotification : fetchNotification
+    fetchNotification : fetchNotification,
+    insertCustomerFCM : insertCustomerFCM,
+    validateCustomerDeviceFCM : validateCustomerDeviceFCM
 }
