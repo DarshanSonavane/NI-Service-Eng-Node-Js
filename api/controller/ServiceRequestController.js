@@ -232,17 +232,38 @@ const closeServiceRequest = async(req,res)=>{
 
 const getDashboardDetails = async(req,res)=>{
     try{
-        if(!req.query.customerId){
+        if(!req.query.customerId || !req.query.version){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,
             });
         }
-        const complaintsCount = await ServiceRequest.count({customerId : req.query.customerId});
-        const openComplaintsCount = await ServiceRequest.count({customerId : req.query.customerId , status: { $in: ["1", "2"] }  });
-        const closeComplaintsCount = await ServiceRequest.count({customerId : req.query.customerId , status : '0'  });
-
-        return res.status(200).json({ code : "200" , message: "Dashboard Details!!", totalComplaints: complaintsCount , openComplaints : openComplaintsCount , closeComplaints : closeComplaintsCount });
+        if(req.body.version){
+            const version = await AppVersion.find();
+                if(version && version.length > 0){
+                    if(req.body.version == version[0].version){
+                        const complaintsCount = await ServiceRequest.count({customerId : req.query.customerId});
+                        const openComplaintsCount = await ServiceRequest.count({customerId : req.query.customerId , status: { $in: ["1", "2"] }  });
+                        const closeComplaintsCount = await ServiceRequest.count({customerId : req.query.customerId , status : '0'  });
+                        return res.status(200).json({ code : "200" , message: "Dashboard Details!!", totalComplaints: complaintsCount , openComplaints : openComplaintsCount , closeComplaints : closeComplaintsCount });
+                    }else {
+                        return res.status(400).json({
+                            message: "Please update the app to keep using it. If you don't update, the app might stop working.",
+                            status: false,
+                        });
+                    }
+                }else {
+                    return res.status(400).json({
+                        message: "Please update the latest app version in database.",
+                        status: false,
+                    });
+                }
+        }else {
+            return res.status(400).json({
+                message: "Please update the app to keep using it. If you don't update, the app might stop working.",
+                status: false,
+            });
+        }
     }catch(err){
         consol.log(err);
     }
