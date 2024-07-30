@@ -238,10 +238,10 @@ const getDashboardDetails = async(req,res)=>{
                 status: false,
             });
         }
-        if(req.body.version){
+        if(req.query.version){
             const version = await AppVersion.find();
                 if(version && version.length > 0){
-                    if(req.body.version == version[0].version){
+                    if(req.query.version == version[0].version){
                         const complaintsCount = await ServiceRequest.count({customerId : req.query.customerId});
                         const openComplaintsCount = await ServiceRequest.count({customerId : req.query.customerId , status: { $in: ["1", "2"] }  });
                         const closeComplaintsCount = await ServiceRequest.count({customerId : req.query.customerId , status : '0'  });
