@@ -187,7 +187,7 @@ const generateAndSendCalibration = async(req,res)=>{
         const customerState = calibrationrequestData['customerId']['stateCode'];
         const customerEmail = calibrationrequestData['customerId']['email'];
         const nextCalibrationDate = generateDate(customerState); 
-        
+        console.log('nextCalibrationDate', nextCalibrationDate);
         let fileName = '';
         let machineModelDetails = '';
         let machineNumber = '';
@@ -258,7 +258,7 @@ const generateAndSendCalibration = async(req,res)=>{
                             console.log(`PDF saved to ${res.filename}`);
                             const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
                             const subject = `Calibration Certificate`;
-                            const receiverEmail = calibrationrequestData['customerId']['email'];
+                            const receiverEmail = 'darshansonavane24@gmail.com'//calibrationrequestData['customerId']['email'];
                             const reqData = {
                                 status : '0'
                             }
@@ -281,7 +281,7 @@ const generateAndSendCalibration = async(req,res)=>{
     }
 }
 
-function generateDate(stateCode){
+/* function generateDate(stateCode){
     var d = new Date();
     let month = '';
     if(stateCode == 'GA'){ // GOA
@@ -292,13 +292,73 @@ function generateDate(stateCode){
         month = d.getMonth() + 4;
     }
      // Months start at 0!
-    let day = d.getDate() - 1;
-
+    let day = d.getDate();
+    console.log('Day', day , d.getDate());
     if (day < 10) day = '0' + day;
     if (month < 10) month = '0' + month;
 
     const formattedToday = day + '/' + month + '/' + d.getFullYear();
     return formattedToday
+}
+ */
+function getCurrentDate() {
+    const now = new Date();
+    return now.toLocaleDateString(); // Converts to local date string
+}
+
+// Function to add months to a given date
+function addMonths(date, months) {
+    const newDate = new Date(date);
+    newDate.setMonth(newDate.getMonth() + months);
+    return newDate;
+}
+
+// Function to subtract one day from a given date
+function subtractOneDay(date) {
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() - 1);
+    return newDate;
+}
+
+function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+// Main function to handle the logic based on state
+function generateDate(state) {
+    // Get the current date
+    const currentDate = new Date();
+    console.log('Current Date:', getCurrentDate());
+
+    let adjustedDate;
+    // Determine how many months to add based on the state
+    switch (state.toLowerCase()) {
+        case 'mh':
+            adjustedDate = addMonths(currentDate, 3);
+            break;
+        case 'ga':
+            adjustedDate = addMonths(currentDate, 4);
+            break;
+        case 'gj':
+            adjustedDate = addMonths(currentDate, 2);
+            break;
+        default:
+            console.log('Unknown state');
+            return;
+    }
+
+    // Print the adjusted date
+    console.log('Date after adding months:', adjustedDate.toLocaleDateString());
+
+    // Subtract one day from the adjusted date
+    const finalDate = subtractOneDay(adjustedDate);
+    
+    // Print the final date
+    console.log('Final Date:', finalDate.toLocaleDateString());
+    return formatDate(finalDate);
 }
 
 function getFileName(type , state){

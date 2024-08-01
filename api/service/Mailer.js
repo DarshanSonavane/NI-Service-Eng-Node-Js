@@ -95,13 +95,15 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
 
 sendMailWithAttachment = (htmlEmailContents, toMail, subject , path) => {
   console.log(path);
+  let mailList = ['nilesh@niserviceeng.com', toMail]; 
   var mailOptions = {
       from: 'admin@niserviceeng.com',
-      to: toMail,
+      to: mailList,
       subject: subject,
       html: htmlEmailContents,
       attachments : [{ path: path}]
   };
+  console.log('mailList', mailList)
   transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
           console.log(error);
