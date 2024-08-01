@@ -4815,6 +4815,22 @@ const insertNewMachineDetails = async(req,res)=>{
     }
 }
 
+const updateCalibrationStatusById = async(req,res)=>{
+    try{
+        let reqData = {
+            status : "2"
+        }
+        
+        await CalibrationRequest.where({_id : req.body.calibrationId}).updateOne({
+            $set : reqData
+        }).then(async(data)=>{
+            return res.status(200).json({code : "200" , message : 'Request updated successfully!' , data : data});
+        });
+    }catch(err){
+        console.log(err);
+    }
+}
+
 
 module.exports = {
     generateCalibrationRequest : generateCalibrationRequest,
@@ -4827,5 +4843,6 @@ module.exports = {
     generateAndSendCalibration : generateAndSendCalibration,
     insertMachineModel : insertMachineModel,
     getCylinderDetails : getCylinderDetails,
-    insertNewMachineDetails : insertNewMachineDetails
+    insertNewMachineDetails : insertNewMachineDetails,
+    updateCalibrationStatusById : updateCalibrationStatusById
 }
