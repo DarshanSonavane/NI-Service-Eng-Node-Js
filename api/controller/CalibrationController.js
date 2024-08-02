@@ -63,7 +63,7 @@ const getCalibrationEmployeeList = async (req,res) =>{
 
 const getAllCalibrationList = async(req,res)=>{
     try{
-        let data = await CalibrationRequest.find().populate('customerId').populate('employeeId');
+        let data = await CalibrationRequest.find().sort({_id : -1}).populate('customerId').populate('employeeId');
         return res.status(200).json({ code : "200" , message: "Calibration Request List!!", data: data });
     }catch(err){
         console.log(err);
@@ -78,7 +78,7 @@ const getMyCalibrationRequestList = async(req,res)=>{
                 status: false,
             });
         }
-        let data = await CalibrationRequest.find({employeeId : req.body.employeeId}).populate('customerId').populate('employeeId');
+        let data = await CalibrationRequest.find({employeeId : req.body.employeeId}).sort({_id : -1}).populate('customerId').populate('employeeId');
         return res.status(200).json({ code : "200" , message: "Calibration Request List!!", data: data });
     }catch(err){
         console.log(err);
@@ -93,7 +93,7 @@ const getCustomerCalibrationList = async(req,res)=>{
                 status: false,
             });
         }
-        let data = await CalibrationRequest.find({customerId : req.body.customerId}).populate('customerId').populate('employeeId');
+        let data = await CalibrationRequest.find({customerId : req.body.customerId}).sort({_id : -1}).populate('customerId').populate('employeeId');
         return res.status(200).json({ code : "200" , message: "Calibration Request List!!", data: data });
     }catch(err){
         console.log(err);
