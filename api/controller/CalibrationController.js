@@ -314,9 +314,9 @@ function addMonths(date, months) {
 }
 
 // Function to subtract one day from a given date
-function subtractOneDay(date) {
+function subtractOneDay(date , state) {
     const newDate = new Date(date);
-    newDate.setDate(newDate.getDate() - 1);
+    state == 'gj' ? newDate.setDate(newDate.getDate() - 2) : newDate.setDate(newDate.getDate() - 1);
     return newDate;
 }
 
@@ -354,7 +354,7 @@ function generateDate(state) {
     console.log('Date after adding months:', adjustedDate.toLocaleDateString());
 
     // Subtract one day from the adjusted date
-    const finalDate = subtractOneDay(adjustedDate);
+    const finalDate = subtractOneDay(adjustedDate , state);
     
     // Print the final date
     console.log('Final Date:', finalDate.toLocaleDateString());
