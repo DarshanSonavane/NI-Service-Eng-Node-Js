@@ -316,7 +316,7 @@ function addMonths(date, months) {
 // Function to subtract one day from a given date
 function subtractOneDay(date , state) {
     const newDate = new Date(date);
-    state == 'gj' ? newDate.setDate(newDate.getDate() - 2) : newDate.setDate(newDate.getDate() - 1);
+    state.toLowerCase() == 'gj' ? newDate.setDate(newDate.getDate() - 2) : newDate.setDate(newDate.getDate() - 1);
     return newDate;
 }
 
