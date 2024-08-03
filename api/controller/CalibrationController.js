@@ -37,7 +37,7 @@ const generateCalibrationRequest = async(req,res)=>{
             }
             let customerDetails = await CustomerDetails.findOne({_id : req.body.customerId});
             let employeeDetails = await Employee.findOne({_id : req.body.employeeId});
-            await CalibrationHistory.create({ request : data._id, status : '2'});
+            await CalibrationHistory.create({ requestId : data._id, status : '2'});
             sendMail(customerDetails.customerName , customerDetails.customerCode , "Calibration" , type , employeeDetails.email , customerDetails.city , customerDetails.mobile , 'calibration')
             return res.status(200).json({ code : "200" , message: "Calibration Request Raised Successfully!", data: data });
         }).catch((err)=>{
@@ -265,7 +265,7 @@ const generateAndSendCalibration = async(req,res)=>{
                             await CalibrationRequest.where({_id : req.body.calibrationId}).updateOne({
                                 $set : reqData
                             }).then(async(data)=>{});
-                            await CalibrationHistory.create({ request : req.body.calibrationId, status : '0'})
+                            await CalibrationHistory.create({ requestId : req.body.calibrationId, status : '0'})
                             await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
                         });
                         return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});
@@ -4831,6 +4831,21 @@ const updateCalibrationStatusById = async(req,res)=>{
     }
 }
 
+const deletecalibrationRequestById = async (req,res)=>{
+    try{
+        if(!req.body.calibrationId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        let data = await CalibrationRequest.deleteOne({_id : req.body.calibrationId});
+        return res.status(200).json({ message: "Calibration Request Deleted Successfully!!", data: data });
+    }catch(err){
+        console.log(err);
+    }
+}
+
 
 module.exports = {
     generateCalibrationRequest : generateCalibrationRequest,
@@ -4844,5 +4859,6 @@ module.exports = {
     insertMachineModel : insertMachineModel,
     getCylinderDetails : getCylinderDetails,
     insertNewMachineDetails : insertNewMachineDetails,
-    updateCalibrationStatusById : updateCalibrationStatusById
+    updateCalibrationStatusById : updateCalibrationStatusById,
+    deletecalibrationRequestById : deletecalibrationRequestById
 }
