@@ -11,6 +11,7 @@ const constants = require("../utility/constant.js");
 const pdf = require('html-pdf');
 const MachineModel = require('../model/MachineModel.js');
 const CalibrationHistory = require('../model/CalibrationHistory.js');
+const qr = require('qr-image');
 
 const generateCalibrationRequest = async(req,res)=>{
     try{
@@ -187,6 +188,9 @@ const generateAndSendCalibration = async(req,res)=>{
         const customerState = calibrationrequestData['customerId']['stateCode'];
         const customerEmail = calibrationrequestData['customerId']['email'];
         const nextCalibrationDate = generateDate(customerState); 
+        const customerName = calibrationrequestData['customerId']['customerName'];
+        await generateBarcodeForCalibrationRequest(req.body.calibrationId , customerName);
+
         console.log('nextCalibrationDate', nextCalibrationDate);
         let fileName = '';
         let machineModelDetails = '';
@@ -236,6 +240,7 @@ const generateAndSendCalibration = async(req,res)=>{
                     sign : `${constants.SERVER_FILE_PATH}sign.png`,
                     stamp : `${constants.SERVER_FILE_PATH}nistamplogo.png`,
                     swacha : `${constants.SERVER_FILE_PATH}swach.jpg`,
+                    qrURL : `${constants.SERVER_FILE_PATH}assets/QR-Codes/qr-code_${customerName}_${req.body.calibrationId}.png`
                 },async (err, newHtml) => {
                     if(err){
                         console.log(err);
@@ -258,7 +263,7 @@ const generateAndSendCalibration = async(req,res)=>{
                             console.log(`PDF saved to ${res.filename}`);
                             const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
                             const subject = `Calibration Certificate`;
-                            const receiverEmail = calibrationrequestData['customerId']['email'];
+                            const receiverEmail = 'darshansonavane24@gmail.com'//calibrationrequestData['customerId']['email'];
                             const reqData = {
                                 status : '0'
                             }
@@ -368,6 +373,19 @@ function getFileName(type , state){
         return  state == 'GA' ?  '../templates/Diesel_GA.ejs' : '../templates/Diesel.ejs';
     }else if(type == 'Combo'){
         return  state == 'GA' ?  '../templates/Combo_GA.ejs' : '../templates/Combo.ejs';
+    }
+}
+
+const generateBarcodeForCalibrationRequest =  async(calibrationId , customerName)=>{
+    try{
+        const URL = `http://16.170.250.91:3000/assets/uploads/${customerName}_${calibrationId}.pdf`;
+        const qrSvg = qr.imageSync(URL, { type: 'png' });
+        const filePath = `./assets/QR-Codes/qr-code_${customerName}_${calibrationId}.png`
+        // Save the image to a file
+        fs.writeFileSync(filePath, qrSvg);
+        console.log("QR Generated and saved successfully!");
+    }catch(err){
+        console.log(err);
     }
 }
 
@@ -4845,7 +4863,6 @@ const deletecalibrationRequestById = async (req,res)=>{
         console.log(err);
     }
 }
-
 
 module.exports = {
     generateCalibrationRequest : generateCalibrationRequest,
