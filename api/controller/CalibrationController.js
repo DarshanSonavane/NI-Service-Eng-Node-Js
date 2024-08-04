@@ -240,7 +240,7 @@ const generateAndSendCalibration = async(req,res)=>{
                     sign : `${constants.SERVER_FILE_PATH}sign.png`,
                     stamp : `${constants.SERVER_FILE_PATH}nistamplogo.png`,
                     swacha : `${constants.SERVER_FILE_PATH}swach.jpg`,
-                    qrURL : `${constants.SERVER_FILE_PATH}assets/QR-Codes/qr-code_${customerName}_${req.body.calibrationId}.png`
+                    qrURL : `${constants.SERVER_FILE_PATH}QR-Codes/qr-code_${req.body.calibrationId}.png`
                 },async (err, newHtml) => {
                     if(err){
                         console.log(err);
