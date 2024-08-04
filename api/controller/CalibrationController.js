@@ -378,7 +378,7 @@ function getFileName(type , state){
 
 const generateBarcodeForCalibrationRequest =  async(calibrationId , customerName)=>{
     try{
-        const URL = `http://16.170.250.91:3000/assets/uploads/${customerName}_${calibrationId}.pdf`;
+        const URL = `http://16.170.250.91:3000/uploads/${customerName}.pdf`;
         const qrSvg = qr.imageSync(URL, { type: 'png' });
         const filePath = `./assets/QR-Codes/qr-code_${calibrationId}.png`
         // Save the image to a file
