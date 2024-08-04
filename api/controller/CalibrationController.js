@@ -380,10 +380,10 @@ const generateBarcodeForCalibrationRequest =  async(calibrationId , customerName
     try{
         const URL = `http://16.170.250.91:3000/assets/uploads/${customerName}_${calibrationId}.pdf`;
         const qrSvg = qr.imageSync(URL, { type: 'png' });
-        const filePath = `./assets/QR-Codes/qr-code_${customerName}_${calibrationId}.png`
+        const filePath = `./assets/QR-Codes/qr-code_${calibrationId}.png`
         // Save the image to a file
         fs.writeFileSync(filePath, qrSvg);
-        console.log("QR Generated and saved successfully!");
+        console.log("QR Generated and saved successfully!" , filePath);
     }catch(err){
         console.log(err);
     }
