@@ -246,7 +246,7 @@ const generateAndSendCalibration = async(req,res)=>{
                         console.log(err);
                     }
                     
-                    const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}.pdf`;
+                    const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}_${req.body.calibrationId}.pdf`;
                     // const options = { type: "A4" };
                     // const options = { type: 'A4'};
                     var options = {
@@ -378,7 +378,7 @@ function getFileName(type , state){
 
 const generateBarcodeForCalibrationRequest =  async(calibrationId , customerName)=>{
     try{
-        const URL = `http://16.170.250.91:3000/uploads/${customerName}.pdf`;
+        const URL = `http://16.170.250.91:3000/uploads/${customerName}_${calibrationId}.pdf`;
         const qrSvg = qr.imageSync(URL, { type: 'png' });
         const filePath = `./assets/QR-Codes/qr-code_${calibrationId}.png`
         // Save the image to a file
