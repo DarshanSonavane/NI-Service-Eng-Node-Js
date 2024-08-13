@@ -9,7 +9,8 @@ const createServicerequestService = async (req,res,callback) => {
             machineType : req.body.machineType,
             complaintType : req.body.complaintType,
             status : "1",
-            assignedTo : req.body.assignedTo ? req.body.assignedTo : null
+            assignedTo : req.body.assignedTo ? req.body.assignedTo : null,
+            additionalReq : req.body.additionalReq
         }).then(async(data)=>{
             console.log("requ data",data)
             await ComplaintHistory.create({

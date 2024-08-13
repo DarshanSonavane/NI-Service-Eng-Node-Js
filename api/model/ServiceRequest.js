@@ -20,6 +20,10 @@ const serviceRequestSchema = new Schema({
     },
     ratings : { type: Schema.Types.ObjectId, ref: 'Ratings' },
     assignedTo : {type: Schema.Types.ObjectId, ref: 'Employee'},
+    additionalReq : {
+        type: String,
+        default: null,
+    },
     updatedBy : { type: Schema.Types.ObjectId, ref: 'Employee' }
 },{ timestamps: true })
 
