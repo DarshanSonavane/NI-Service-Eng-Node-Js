@@ -216,7 +216,7 @@ const generateAndSendCalibration = async(req,res)=>{
         }else if(customerState == 'MH'){
             state = 'MAHARASHTRA'
         }else if(customerState == 'MP'){
-            state = 'Madhya Pradesh'
+            state = 'MADHYA PRADESH'
         }
         console.log('machineModelDetails====' , machineModelDetails);
         if(machineModelDetails && machineModelDetails.MODEL && customerEmail){
