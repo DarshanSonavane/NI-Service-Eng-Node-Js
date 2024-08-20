@@ -9,6 +9,10 @@ let machineModelSchema = new Schema({
     MACHINE_NO : {
         type: String,
         default: null
+    },
+    CUSTOMER_CODE : {
+        type: String,
+        default: null
     } 
 },{ timestamps: true })
 
