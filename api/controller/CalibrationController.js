@@ -6215,7 +6215,7 @@ const getCylinderDetails = async(req,res)=>{
 
 const insertNewMachineDetails = async(req,res)=>{
     try{
-        if(!req.body.model || !req.body.machineNumber){
+        if(!req.body.model || !req.body.machineNumber || !req.body.customerCode){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,
@@ -6223,7 +6223,8 @@ const insertNewMachineDetails = async(req,res)=>{
         }
         await MachineModel.create({
             MODEL : req.body.model,
-            MACHINE_NO : req.body.machineNumber
+            MACHINE_NO : req.body.machineNumber,
+            CUSTOMER_CODE : req.body.customerCode
         }).then(data=>{
             return res.status(200).json({code : "200" , message : 'Machine Details Added Successfully!' , data : data});
         }).catch(err=>{
