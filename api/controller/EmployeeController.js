@@ -48,8 +48,7 @@ const login = async(req,res) =>{
                         if(data && data != null && data.length > 0){
                             // const token = await authentication.createToken(customerCode);
                             const machineDetails = await MachineModel.find({ CUSTOMER_CODE  : customerCode})
-                            data.push(machineDetails);
-                            return res.status(200).json({ code : "200",message: "Login Success!!", data: data });
+                            return res.status(200).json({ code : "200",message: "Login Success!!", data: data , machineDetails : machineDetails  });
                         }else {
                             return res.status(202).json({ message: "Login Success with no data found!!", data: data });
                         }
@@ -64,8 +63,7 @@ const login = async(req,res) =>{
                     await CustomerDetails.find({customerCode : customerCode.toString()}).then(async(data)=>{
                         if(data && data != null && data.length > 0){
                             const machineDetails = await MachineModel.find({ CUSTOMER_CODE  : customerCode})
-                            data.push(machineDetails);
-                            return res.status(200).json({ code : "200",message: "Login Success!!", data: data });
+                            return res.status(200).json({ code : "200",message: "Login Success!!", data: data , machineDetails : machineDetails });
                         }else {
                             return res.status(202).json({ message: "Login Success with no data found!!", data: data });
                         }
