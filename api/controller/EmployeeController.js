@@ -3,6 +3,7 @@ const { createEmployeeService } =  require('../helper/EmployeeHelper.js');
 const UserRoles =  require('../model/UserRoles.js');
 const CustomerDetails =  require("../model/CustomerDetails.js");
 const StateList = require("../model/StateList.js");
+const MachineModel = require('../model/MachineModel.js');
 // const authentication = require("../utility/authentication.js");
 
 const createEmployee = async (req,res) =>{
@@ -46,6 +47,8 @@ const login = async(req,res) =>{
                     await CustomerDetails.find({customerCode : customerCode.toString() , password : password}).then(async(data)=>{
                         if(data && data != null && data.length > 0){
                             // const token = await authentication.createToken(customerCode);
+                            const machineDetails = await MachineModel.find({ CUSTOMER_CODE  : customerCode})
+                            data.push(machineDetails);
                             return res.status(200).json({ code : "200",message: "Login Success!!", data: data });
                         }else {
                             return res.status(202).json({ message: "Login Success with no data found!!", data: data });
@@ -58,8 +61,10 @@ const login = async(req,res) =>{
                         });
                     })
                 }else {
-                    await CustomerDetails.find({customerCode : customerCode.toString()}).then((data)=>{
+                    await CustomerDetails.find({customerCode : customerCode.toString()}).then(async(data)=>{
                         if(data && data != null && data.length > 0){
+                            const machineDetails = await MachineModel.find({ CUSTOMER_CODE  : customerCode})
+                            data.push(machineDetails);
                             return res.status(200).json({ code : "200",message: "Login Success!!", data: data });
                         }else {
                             return res.status(202).json({ message: "Login Success with no data found!!", data: data });
