@@ -16,7 +16,7 @@ const AppVersion = require("../model/AppVersion.js");
 
 const generateCalibrationRequest = async(req,res)=>{
     try{
-        if(!req.body.customerId || !req.body.machineType || !req.body.employeeId || req.body.version){
+        if(!req.body.customerId || !req.body.machineType || !req.body.employeeId || !req.body.version){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,
