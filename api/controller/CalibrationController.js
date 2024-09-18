@@ -12,42 +12,65 @@ const pdf = require('html-pdf');
 const MachineModel = require('../model/MachineModel.js');
 const CalibrationHistory = require('../model/CalibrationHistory.js');
 const qr = require('qr-image');
+const AppVersion = require("../model/AppVersion.js");
 
 const generateCalibrationRequest = async(req,res)=>{
     try{
-        if(!req.body.customerId || !req.body.machineType || !req.body.employeeId){
+        if(!req.body.customerId || !req.body.machineType || !req.body.employeeId || req.body.version){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,
             });
         }
-
-        await CalibrationRequest.create({
-            customerId : req.body.customerId,
-            machineType : req.body.machineType,
-            employeeId : req.body.employeeId,
-            status : "2"
-        }).then( async (data) => {
-            let type = "";
-            if(req.body.machineType == "0"){
-                type = "Petrol"
-            }else if(req.body.machineType == "1"){
-                type = "Diesel";
-            }else if(req.body.machineType == "2"){
-                type = "Combo";
+        if(req.body.version){
+            const version = await AppVersion.find();
+            if(version && version.length > 0){
+                if(req.body.version == version[0].version){
+                    await CalibrationRequest.create({
+                        customerId : req.body.customerId,
+                        machineType : req.body.machineType,
+                        employeeId : req.body.employeeId,
+                        status : "2"
+                    }).then( async (data) => {
+                        let type = "";
+                        if(req.body.machineType == "0"){
+                            type = "Petrol"
+                        }else if(req.body.machineType == "1"){
+                            type = "Diesel";
+                        }else if(req.body.machineType == "2"){
+                            type = "Combo";
+                        }
+                        let customerDetails = await CustomerDetails.findOne({_id : req.body.customerId});
+                        let employeeDetails = await Employee.findOne({_id : req.body.employeeId});
+                        await CalibrationHistory.create({ requestId : data._id, status : '2'});
+                        sendMail(customerDetails.customerName , customerDetails.customerCode , "Calibration" , type , employeeDetails.email , customerDetails.city , customerDetails.mobile , 'calibration')
+                        return res.status(200).json({ code : "200" , message: "Calibration Request Raised Successfully!", data: data });
+                    }).catch((err)=>{
+                        console.log(err);
+                        return res.status(500).json({
+                            message: "Internal server error",
+                            status: false,
+                        });
+                    })
+                }else {
+                    return res.status(400).json({
+                        message: "Please update the app to keep using it. If you don't update, the app might stop working.",
+                        status: false,
+                    });
+                }
+            }else {
+                return res.status(400).json({
+                    message: "Please update the latest app version in database.",
+                    status: false,
+                });
             }
-            let customerDetails = await CustomerDetails.findOne({_id : req.body.customerId});
-            let employeeDetails = await Employee.findOne({_id : req.body.employeeId});
-            await CalibrationHistory.create({ requestId : data._id, status : '2'});
-            sendMail(customerDetails.customerName , customerDetails.customerCode , "Calibration" , type , employeeDetails.email , customerDetails.city , customerDetails.mobile , 'calibration')
-            return res.status(200).json({ code : "200" , message: "Calibration Request Raised Successfully!", data: data });
-        }).catch((err)=>{
-            console.log(err);
-            return res.status(500).json({
-                message: "Internal server error",
+        }else {
+            return res.status(400).json({
+                message: "Please update the app to keep using it. If you don't update, the app might stop working.",
                 status: false,
             });
-        })
+        }
+        
     }catch(err){
         console.log(err);
     }
