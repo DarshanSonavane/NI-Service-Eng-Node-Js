@@ -266,7 +266,7 @@ const getDashboardDetails = async(req,res)=>{
             });
         }
     }catch(err){
-        consol.log(err);
+        console.log(err);
     }
 }
 
