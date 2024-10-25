@@ -113,11 +113,30 @@ sendMailWithAttachment = (htmlEmailContents, toMail, subject , path) => {
   });
 }
 
+sendOneTimeVerificationEmail = (subject , data , otp) =>{
+  console.log('data', data);
+  var mailOptions = {
+    from: 'admin@niserviceeng.com',
+    to: data.email,
+    subject: subject,
+    html: `<p>Dear Customer,</p><p>${data.customerName} , - ${data.customerCode}</p><p>${data.city} , ${data.stateCode}</p><p>Your one time verification password for initiating Service Request is : <b>${otp}</b></p>`
+};
+
+  transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+          console.log(error);
+      } else {
+          console.log("Email sent: " + info.response);
+      }
+  });
+}
+
 
 
 module.exports = {
     sendMail: sendMail,
-    sendMailWithAttachment : sendMailWithAttachment
+    sendMailWithAttachment : sendMailWithAttachment,
+    sendOneTimeVerificationEmail : sendOneTimeVerificationEmail
 }
 
 

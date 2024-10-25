@@ -3,10 +3,11 @@ const ServiceRequest = require("../model/ServiceRequest.js");
 const ComplaintType = require("../model/ComplaintType.js");
 const EmployeeServiceRequest = require("../model/EmployeeServiceRequest.js");
 const Employee = require("../model/Employee.js");
-const { sendMail } = require('../service/Mailer.js');
+const { sendMail , sendOneTimeVerificationEmail } = require('../service/Mailer.js');
 const CustomerDetails = require("../model/CustomerDetails.js");
 const AppVersion = require("../model/AppVersion.js");
 const ComplaintHistory = require("../model/ComplaintHistory.js");
+const CustomerOTP = require("../model/CustomerOTP.js");
 
 const createServiceRequest = async (req,res) =>{
     try{
@@ -495,6 +496,74 @@ const formatData = async(data , assignedData)=>{
     }
 }
 
+const generateAndSendOTP = async(req,res)=>{
+    try{
+        if(!req.body.customerCode){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        const customerOTPDetails = await CustomerOTP.findOne({ customerCode : req.body.customerCode});
+        console.log('customerOTPDetails' , customerOTPDetails);
+        if(customerOTPDetails && customerOTPDetails.status == '1'){
+            reqData = {
+                status : '0'
+            }
+
+            await CustomerOTP.where({
+                customerCode : req.body.customerCode
+            }).updateOne({
+                $set : reqData
+            }).then(async(custUpdatedData)=>{}).catch((err)=>{
+                console.log(err);
+                return res.status(500).json({
+                    message: "Internal server error",
+                    status: false,
+                });
+            })
+        }
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        const otpType = 'Complaints';
+        const status = '1';
+        const data = await CustomerOTP.create({
+            customerCode : req.body.customerCode,
+            status : status,
+            otp : otp,
+            otpType : otpType
+        }).then(async (data) =>{
+            const customerDetails = await CustomerDetails.findOne({ customerCode : req.body.customerCode} , {_id : 1 , customerName : 1 , customerCode : 1 , email : 1 , city : 1 , stateCode : 1 });
+            console.log('customerDetails', customerDetails);
+            if(customerDetails && customerDetails.email){
+                sendOneTimeVerificationEmail('One Time Verification code' , customerDetails , otp);
+                return res.status(200).json({ code : "200" , message: "Verification email sent Successfully!!" });
+            }
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const verifyOTP = async(req,res)=>{
+    try{
+        if(!req.body.otp || !req.body.customerCode){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+
+        const otpData = await CustomerOTP.findOne({customerCode : req.body.customerCode , otp : req.body.otp , status : "1"});
+        if(otpData){
+            return res.status(200).json({ code : "200" , message: "OTP verified Successfully!!" });
+        }else {
+            return res.status(400).json({ code : "400" , message: "Invalid OTP Provided!!" });
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createServiceRequest: createServiceRequest,
     getMyComplaints: getMyComplaints,
@@ -512,5 +581,7 @@ module.exports = {
     getCustomerServiceRequestCount : getCustomerServiceRequestCount,
     updateAppVersion : updateAppVersion,
     trackComplaint : trackComplaint,
-    reAssignComplaint : reAssignComplaint
+    reAssignComplaint : reAssignComplaint,
+    generateAndSendOTP : generateAndSendOTP,
+    verifyOTP : verifyOTP
 }
