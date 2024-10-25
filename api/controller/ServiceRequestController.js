@@ -532,8 +532,7 @@ const generateAndSendOTP = async(req,res)=>{
             otp : otp,
             otpType : otpType
         }).then(async (data) =>{
-            const customerDetails = await CustomerDetails.findOne({ customerCode : req.body.customerCode} , {_id : 1 , customerName : 1 , customerCode : 1 , email : 1 , city : 1 , stateCode : 1 });
-            console.log('customerDetails', customerDetails);
+            const customerDetails = await CustomerDetails.findOne({ customerCode : req.body.customerCode});
             if(customerDetails && customerDetails.email){
                 sendOneTimeVerificationEmail('One Time Verification code' , customerDetails , otp);
                 return res.status(200).json({ code : "200" , message: "Verification email sent Successfully!!" });
