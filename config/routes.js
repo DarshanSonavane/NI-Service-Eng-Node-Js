@@ -3,7 +3,7 @@ const express = require('express');
 // const authenticate = authentication.authenticateToken;
 
 const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer , getEmployeeDetails , deleteEmployee , updateCustomerDetails , getAllCustomers , createUpdateCustomerDetails , updateDetailsWithoutValidation , updateEmployeePassword , generateStateList , getStateList } = require('../api/controller/EmployeeController.js');
-const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion , trackComplaint , reAssignComplaint , generateAndSendOTP , verifyOTP } = require('../api/controller/ServiceRequestController.js');
+const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion , trackComplaint , reAssignComplaint /* , generateAndSendOTP , verifyOTP */ } = require('../api/controller/ServiceRequestController.js');
 const { generateCalibrationRequest , getCalibrationEmployeeList , getAllCalibrationList , getMyCalibrationRequestList , getCustomerCalibrationList , validateCalibration , updateCylinderDetails , generateAndSendCalibration , insertMachineModel , getCylinderDetails , insertNewMachineDetails , updateCalibrationStatusById , deletecalibrationRequestById } = require('../api/controller/CalibrationController.js');
 const { saveNotification , fetchNotification , insertCustomerFCM , validateCustomerDeviceFCM } = require('../api/controller/NotificationController.js');
 
@@ -63,6 +63,6 @@ routes.post("/insert-customer-fcm-details", insertCustomerFCM);
 routes.post("/validate-customer-device-fcm" , validateCustomerDeviceFCM);
 routes.post("/update-calibration-request-status" , updateCalibrationStatusById);
 routes.post("/delete-calibration-request", deletecalibrationRequestById);
-routes.post("/send-verification-code", generateAndSendOTP);
-routes.post("/verify-otp", verifyOTP)
+/* routes.post("/send-verification-code", generateAndSendOTP);
+routes.post("/verify-otp", verifyOTP) */
 module.exports = routes;
