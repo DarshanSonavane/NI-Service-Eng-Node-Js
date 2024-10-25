@@ -7,7 +7,7 @@ const { sendMail , sendOneTimeVerificationEmail } = require('../service/Mailer.j
 const CustomerDetails = require("../model/CustomerDetails.js");
 const AppVersion = require("../model/AppVersion.js");
 const ComplaintHistory = require("../model/ComplaintHistory.js");
-/* const CustomerOTP = require("../model/CustomerOTP.js"); */
+const CustomerOTP = require("../model/CustomerOTP.js");
 
 const createServiceRequest = async (req,res) =>{
     try{
@@ -496,7 +496,7 @@ const formatData = async(data , assignedData)=>{
     }
 }
 
-/* const generateAndSendOTP = async(req,res)=>{
+const generateAndSendOTP = async(req,res)=>{
     try{
         if(!req.body.customerCode){
             return res.status(400).json({
@@ -561,7 +561,7 @@ const verifyOTP = async(req,res)=>{
     }catch(err){
         console.log(err);
     }
-} */
+}
 
 module.exports = {
     createServiceRequest: createServiceRequest,
@@ -581,6 +581,6 @@ module.exports = {
     updateAppVersion : updateAppVersion,
     trackComplaint : trackComplaint,
     reAssignComplaint : reAssignComplaint,
-    /* generateAndSendOTP : generateAndSendOTP,
-    verifyOTP : verifyOTP */
+    generateAndSendOTP : generateAndSendOTP,
+    verifyOTP : verifyOTP
 }
