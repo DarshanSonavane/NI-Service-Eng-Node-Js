@@ -40,10 +40,7 @@ app.use("/", express.static(__dirname + "/assets"));
 // app.use("/", express.static(__dirname + "/assets"));
 
 mongoose
-  .connect("mongodb://localhost:27017/ni-service",{
-    serverSelectionTimeoutMS: 15000, // Increase timeout as needed
-    socketTimeoutMS: 45000 
-  })
+  .connect("mongodb://localhost:27017/ni-service")
   .then(() => {
     console.log("Connected to MongoDB");
   })
