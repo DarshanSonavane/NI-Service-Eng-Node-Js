@@ -376,7 +376,7 @@ function generateDate(state) {
             adjustedDate = addMonths(currentDate, 2);
             break;
         case 'mp':
-            adjustedDate = addMonths(currentDate, 3);
+            adjustedDate = addMonths(currentDate, 4);
             break;    
         default:
             console.log('Unknown state');
