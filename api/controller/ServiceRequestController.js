@@ -595,7 +595,8 @@ const deleteCustomerById = async(req,res)=>{
                 status: false,
             });
         }
-        await CustomerDetails.deleteOne({_id : req.body.custoemrId}).then((data)=>{
+        
+        await CustomerDetails.deleteOne({_id : req.body.customerId}).then((data)=>{
             if(data){
                 return res.status(200).json({ message: "Customer deleted successfully!!" });
             }
