@@ -587,6 +587,24 @@ const getAllCloseComplaints = async (req,res)=>{
     }
 }
 
+const deleteCustomerById = async(req,res)=>{
+    try{
+        if(!req.body.customerId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        await CustomerDetails.deleteOne({_id : req.body.custoemrId}).then((data)=>{
+            if(data){
+                return res.status(200).json({ message: "Customer deleted successfully!!" });
+            }
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createServiceRequest: createServiceRequest,
     getMyComplaints: getMyComplaints,
@@ -608,5 +626,6 @@ module.exports = {
     generateAndSendOTP : generateAndSendOTP,
     verifyOTP : verifyOTP,
     getAllOpenComplaints : getAllOpenComplaints,
-    getAllCloseComplaints : getAllCloseComplaints
+    getAllCloseComplaints : getAllCloseComplaints,
+    deleteCustomerById : deleteCustomerById
 }
