@@ -563,6 +563,30 @@ const verifyOTP = async(req,res)=>{
     }
 }
 
+const getAllOpenComplaints = async (req,res)=>{
+    try{
+        await ServiceRequest.find({status: { $in: [1, 2] }}).sort({_id : -1}).populate("complaintType").populate("customerId").populate("assignedTo").populate('ratings').then((data)=>{
+            if(data){
+                return res.status(200).json({ message: "Service Request List!!", data: data });
+            }
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const getAllCloseComplaints = async (req,res)=>{
+    try{
+        await ServiceRequest.find({ status: 2 }).sort({_id : -1}).populate("complaintType").populate("customerId").populate("assignedTo").populate('ratings').then((data)=>{
+            if(data){
+                return res.status(200).json({ message: "Service Request List!!", data: data });
+            }
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createServiceRequest: createServiceRequest,
     getMyComplaints: getMyComplaints,
@@ -582,5 +606,7 @@ module.exports = {
     trackComplaint : trackComplaint,
     reAssignComplaint : reAssignComplaint,
     generateAndSendOTP : generateAndSendOTP,
-    verifyOTP : verifyOTP
+    verifyOTP : verifyOTP,
+    getAllOpenComplaints : getAllOpenComplaints,
+    getAllCloseComplaints : getAllCloseComplaints
 }
