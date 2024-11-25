@@ -50,7 +50,7 @@ const login = async(req,res) =>{
                             const machineDetails = await MachineModel.find({ CUSTOMER_CODE  : customerCode})
                             return res.status(200).json({ code : "200",message: "Login Success!!", data: data , machineDetails : machineDetails  });
                         }else {
-                            return res.status(202).json({ message: "Login Success with no data found!!", data: data });
+                            return res.status(400).json({ message: "Login Failed!!", data: data });
                         }
                     }).catch((err)=>{
                         console.log(err)
@@ -65,7 +65,7 @@ const login = async(req,res) =>{
                             const machineDetails = await MachineModel.find({ CUSTOMER_CODE  : customerCode})
                             return res.status(200).json({ code : "200",message: "Login Success!!", data: data , machineDetails : machineDetails });
                         }else {
-                            return res.status(202).json({ message: "Login Success with no data found!!", data: data });
+                            return res.status(400).json({ message: "Login Failed!!", data: data });
                         }
                     }).catch((err)=>{
                         console.log(err)
@@ -84,7 +84,7 @@ const login = async(req,res) =>{
                     if(data && data != null){
                         return res.status(200).json({ message: "Login Success!!", data: data });
                     }else {
-                        return res.status(202).json({ message: "Login Success with no data found!!", data: data });
+                        return res.status(400).json({ message: "Login Failed!!", data: data });
                     }
                 }).catch((err)=>{
                     console.log(err)
