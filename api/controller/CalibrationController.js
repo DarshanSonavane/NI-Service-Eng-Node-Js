@@ -45,7 +45,7 @@ const generateCalibrationRequest = async(req,res)=>{
                             let customerDetails = await CustomerDetails.findOne({_id : req.body.customerId});
                             let employeeDetails = await Employee.findOne({_id : req.body.employeeId});
                             await CalibrationHistory.create({ requestId : data._id, status : '2'});
-                            // sendMail(customerDetails.customerName , customerDetails.customerCode , "Calibration" , type , employeeDetails.email , customerDetails.city , customerDetails.mobile , 'calibration')
+                            sendMail(customerDetails.customerName , customerDetails.customerCode , "Calibration" , type , employeeDetails.email , customerDetails.city , customerDetails.mobile , 'calibration')
                             return res.status(200).json({ code : "200" , message: "Calibration Request Raised Successfully!", data: data });
                         }).catch((err)=>{
                             console.log(err);
