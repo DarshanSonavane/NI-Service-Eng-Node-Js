@@ -24,46 +24,55 @@ const generateCalibrationRequest = async(req,res)=>{
         }
         if(req.body.version){
             const version = await AppVersion.find();
-            if(version && version.length > 0){
-                if(req.body.version == version[0].version){
-                    await CalibrationRequest.create({
-                        customerId : req.body.customerId,
-                        machineType : req.body.machineType,
-                        employeeId : req.body.employeeId,
-                        status : "2"
-                    }).then( async (data) => {
-                        let type = "";
-                        if(req.body.machineType == "0"){
-                            type = "Petrol"
-                        }else if(req.body.machineType == "1"){
-                            type = "Diesel";
-                        }else if(req.body.machineType == "2"){
-                            type = "Combo";
-                        }
-                        let customerDetails = await CustomerDetails.findOne({_id : req.body.customerId});
-                        let employeeDetails = await Employee.findOne({_id : req.body.employeeId});
-                        await CalibrationHistory.create({ requestId : data._id, status : '2'});
-                        sendMail(customerDetails.customerName , customerDetails.customerCode , "Calibration" , type , employeeDetails.email , customerDetails.city , customerDetails.mobile , 'calibration')
-                        return res.status(200).json({ code : "200" , message: "Calibration Request Raised Successfully!", data: data });
-                    }).catch((err)=>{
-                        console.log(err);
-                        return res.status(500).json({
-                            message: "Internal server error",
+            isValidCalibrationRequest = await validateCalibrationOnBackend(req.body.customerId , req.body.machineType );
+            if(isValidCalibrationRequest){
+                if(version && version.length > 0){
+                    if(req.body.version == version[0].version){
+                        await CalibrationRequest.create({
+                            customerId : req.body.customerId,
+                            machineType : req.body.machineType,
+                            employeeId : req.body.employeeId,
+                            status : "2"
+                        }).then( async (data) => {
+                            let type = "";
+                            if(req.body.machineType == "0"){
+                                type = "Petrol"
+                            }else if(req.body.machineType == "1"){
+                                type = "Diesel";
+                            }else if(req.body.machineType == "2"){
+                                type = "Combo";
+                            }
+                            let customerDetails = await CustomerDetails.findOne({_id : req.body.customerId});
+                            let employeeDetails = await Employee.findOne({_id : req.body.employeeId});
+                            await CalibrationHistory.create({ requestId : data._id, status : '2'});
+                            // sendMail(customerDetails.customerName , customerDetails.customerCode , "Calibration" , type , employeeDetails.email , customerDetails.city , customerDetails.mobile , 'calibration')
+                            return res.status(200).json({ code : "200" , message: "Calibration Request Raised Successfully!", data: data });
+                        }).catch((err)=>{
+                            console.log(err);
+                            return res.status(500).json({
+                                message: "Internal server error",
+                                status: false,
+                            });
+                        })
+                    }else {
+                        return res.status(400).json({
+                            message: "Please update the app to keep using it. If you don't update, the app might stop working.",
                             status: false,
                         });
-                    })
+                    }
                 }else {
                     return res.status(400).json({
-                        message: "Please update the app to keep using it. If you don't update, the app might stop working.",
+                        message: "Please update the latest app version in database.",
                         status: false,
                     });
                 }
             }else {
-                return res.status(400).json({
-                    message: "Please update the latest app version in database.",
+                return res.status(401).json({
+                    message: "Your calibration request already exist. Please get it resolved before raising new request!",
                     status: false,
                 });
             }
+            
         }else {
             return res.status(400).json({
                 message: "Please update the app to keep using it. If you don't update, the app might stop working.",
@@ -133,7 +142,6 @@ const validateCalibration = async(req,res)=>{
             });
         }
         const data = await CalibrationRequest.find({customerId : req.body.customerId , machineType : req.body.machineType}).sort({_id : -1}).limit(1);
-        console.log(data)
         if(data && data.length > 0){
             const createdDate = new Date(data[0]['createdAt']).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'}).split(',')[0];
 
@@ -150,7 +158,7 @@ const validateCalibration = async(req,res)=>{
             const currentYear =  currentDateArray[2];
             const newCurrentDate = `${currentYear}/${currentMonth}/${currentDay}`;
 
-            const diffTime = Math.abs(new Date(newCurrentDate) - new Date(newCreatedDate));
+            const diffTime = Math.abs(new Date(convertDateFormat(newCurrentDate)) - new Date(convertDateFormat(newCreatedDate)));
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
             return res.status(200).json({ code : "200" , message: "Calibration Request List!!", differenceDays: diffDays , isNewrecord : false });
         } else {
@@ -6305,6 +6313,48 @@ const getAllCloseCalibrationList = async(req,res)=>{
     }catch(err){
         console.log(err);
     }
+}
+
+const validateCalibrationOnBackend = async(customerId,machineType)=>{
+    try{
+        if(!customerId || !machineType){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        const data = await CalibrationRequest.find({customerId : customerId , machineType : machineType}).sort({_id : -1}).limit(1);
+        if(data && data.length > 0){
+            const createdDate = new Date(data[0]['createdAt']).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'}).split(',')[0];
+
+            const createdDateArray = createdDate.split('/');
+            const createdDay = createdDateArray[1];
+            const createdMonth = createdDateArray[0];
+            const createdYear =  createdDateArray[2];
+            const newCreatedDate = `${createdYear}/${createdMonth}/${createdDay}`
+
+            const currentDate = new Date().toLocaleString(undefined, {timeZone: 'Asia/Kolkata'}).split(',')[0];
+            const currentDateArray = currentDate.split('/');
+            const currentDay = currentDateArray[1];
+            const currentMonth = currentDateArray[0];
+            const currentYear =  currentDateArray[2];
+            const newCurrentDate = `${currentYear}/${currentMonth}/${currentDay}`;
+            
+            const diffTime = Math.abs(new Date(convertDateFormat(newCurrentDate)) - new Date(convertDateFormat(newCreatedDate)));
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            return diffDays > 10 ?  true : false;
+        } else {
+            return true;
+        }
+    }catch(err){
+        console.log(err);
+    }   
+}
+
+const convertDateFormat = (dateString)=>{
+    let parts = dateString.split('/');
+    return `${parts[0]}-${parts[2]}-${parts[1]}`; // Returns in YYYY-mm-dd format
 }
 
 module.exports = {
