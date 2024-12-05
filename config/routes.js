@@ -4,7 +4,7 @@ const express = require('express');
 
 const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer , getEmployeeDetails , deleteEmployee , updateCustomerDetails , getAllCustomers , createUpdateCustomerDetails , updateDetailsWithoutValidation , updateEmployeePassword , generateStateList , getStateList } = require('../api/controller/EmployeeController.js');
 const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion , trackComplaint , reAssignComplaint , generateAndSendOTP , verifyOTP , getAllOpenComplaints , getAllCloseComplaints , deleteCustomerById } = require('../api/controller/ServiceRequestController.js');
-const { generateCalibrationRequest , getCalibrationEmployeeList , getAllCalibrationList , getMyCalibrationRequestList , getCustomerCalibrationList , validateCalibration , updateCylinderDetails , generateAndSendCalibration , insertMachineModel , getCylinderDetails , insertNewMachineDetails , updateCalibrationStatusById , deletecalibrationRequestById } = require('../api/controller/CalibrationController.js');
+const { generateCalibrationRequest , getCalibrationEmployeeList , getAllCalibrationList , getMyCalibrationRequestList , getCustomerCalibrationList , validateCalibration , updateCylinderDetails , generateAndSendCalibration , insertMachineModel , getCylinderDetails , insertNewMachineDetails , updateCalibrationStatusById , deletecalibrationRequestById , getAllOpenCalibrationList , getAllCloseCalibrationList } = require('../api/controller/CalibrationController.js');
 const { saveNotification , fetchNotification , insertCustomerFCM , validateCustomerDeviceFCM } = require('../api/controller/NotificationController.js');
 
 const routes = express.Router();
@@ -68,4 +68,6 @@ routes.post("/verify-otp", verifyOTP);
 routes.get("/get-all-open-complaints" , getAllOpenComplaints);
 routes.get("/get-all-close-complaints" , getAllCloseComplaints);
 routes.post("/delete-customer-by-id" , deleteCustomerById);
+routes.get("/get-open-calibration-request-list" , getAllOpenCalibrationList);
+routes.get("/get-close-calibration-request-list" , getAllCloseCalibrationList);
 module.exports = routes;
