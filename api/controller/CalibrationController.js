@@ -6344,7 +6344,7 @@ const validateCalibrationOnBackend = async(customerId,machineType)=>{
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
             console.log("Calibration Request======== newCreatedDate : " , newCreatedDate , 'newCreatedDate' , newCurrentDate , 'difference' , diffTime ,"======" ,  diffDays)
             
-            return diffDays > 10 ?  true : false;
+            return diffDays > 10 ?  true : false; 
         } else {
             return true;
         }
