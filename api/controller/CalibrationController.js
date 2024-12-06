@@ -6342,7 +6342,7 @@ const validateCalibrationOnBackend = async(customerId,machineType)=>{
             
             const diffTime = Math.abs(new Date(convertDateFormat(newCurrentDate)) - new Date(convertDateFormat(newCreatedDate)));
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            console.log("Calibration Request======== newCreatedDate : " , newCreatedDate , 'newCreatedDate' , newCurrentDate , 'difference' , diffDays)
+            console.log("Calibration Request======== newCreatedDate : " , newCreatedDate , 'newCreatedDate' , newCurrentDate , 'difference' , diffTime ,"======" ,  diffDays)
             
             return diffDays > 10 ?  true : false;
         } else {
@@ -6355,6 +6355,7 @@ const validateCalibrationOnBackend = async(customerId,machineType)=>{
 
 const convertDateFormat = (dateString)=>{
     let parts = dateString.split('/');
+    console.log('Parts=====' , dateString , `${parts[0]}-${parts[2]}-${parts[1]}`);
     return `${parts[0]}-${parts[2]}-${parts[1]}`; // Returns in YYYY-mm-dd format
 }
 
