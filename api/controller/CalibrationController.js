@@ -158,8 +158,9 @@ const validateCalibration = async(req,res)=>{
             const currentYear =  currentDateArray[2];
             const newCurrentDate = `${currentYear}/${currentMonth}/${currentDay}`;
 
-            const diffTime = Math.abs(new Date(convertDateFormat(newCurrentDate)) - new Date(convertDateFormat(newCreatedDate)));
+            const diffTime = Math.abs(new Date(newCurrentDate) - new Date(newCreatedDate));
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            console.log("Calibration Request validateCalibration API======== newCreatedDate : " , newCreatedDate , 'newCreatedDate' , newCurrentDate , 'difference' , diffTime ,"======" ,  diffDays)
             return res.status(200).json({ code : "200" , message: "Calibration Request List!!", differenceDays: diffDays , isNewrecord : false });
         } else {
             return res.status(200).json({ code : "200" , message: "Calibration Request List!!", differenceDays: 0 , isNewrecord : true });
@@ -6342,7 +6343,7 @@ const validateCalibrationOnBackend = async(customerId,machineType)=>{
             
             const diffTime = Math.abs(new Date(newCurrentDate) - new Date(newCreatedDate));
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            console.log("Calibration Request======== newCreatedDate : " , newCreatedDate , 'newCreatedDate' , newCurrentDate , 'difference' , diffTime ,"======" ,  diffDays)
+            console.log("Calibration Request validateCalibrationOnBackend======== newCreatedDate : " , newCreatedDate , 'newCreatedDate' , newCurrentDate , 'difference' , diffTime ,"======" ,  diffDays)
             
             return diffDays > 10 ?  true : false; 
         } else {
