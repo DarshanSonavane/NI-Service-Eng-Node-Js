@@ -8,6 +8,7 @@ const CustomerDetails = require("../model/CustomerDetails.js");
 const AppVersion = require("../model/AppVersion.js");
 const ComplaintHistory = require("../model/ComplaintHistory.js");
 const CustomerOTP = require("../model/CustomerOTP.js");
+const AMCRequest = require("../model/AMCRequest.js");
 
 const createServiceRequest = async (req,res) =>{
     try{
@@ -606,6 +607,51 @@ const deleteCustomerById = async(req,res)=>{
     }
 }
 
+const raiseAMCRequest = async(req,res)=>{
+    try{
+        if(!req.body.customerId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        const custAMCRequestCount = await AMCRequest.count({customerId : req.body.customerId , status : '1'});
+        console.log('custAMCRequestCount',custAMCRequestCount)
+        if(custAMCRequestCount == 0){
+            await AMCRequest.create({
+                customerId : req.body.customerId,
+                status : '1'
+            }).then((data)=>{
+                return res.status(200).json({ code : 200 , message: "Your AMC Request has been raised successfully!!" });
+            })
+        }else {
+            return res.status(400).json({code : 400 ,  message: "You have already raised an AMC Request!! Please connect with admin" });
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const getCustomerDetails = async(req,res)=>{
+    try{
+        if(!req.body.customerId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        const data = await CustomerDetails.findOne({ _id : req.body.customerId}).select({ _id : 1 , customerCode : 1 , customerName : 1 , city : 1 , mobile : 1 , email : 1 , stateCode : 1});
+        if(data){
+            return res.status(200).json({ code : 200 , message: "Customer Details" , data : data });
+        }else {
+            return res.status(400).json({ code : 400 , message: "Customer Details not found for provided customer id" });
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createServiceRequest: createServiceRequest,
     getMyComplaints: getMyComplaints,
@@ -628,5 +674,7 @@ module.exports = {
     verifyOTP : verifyOTP,
     getAllOpenComplaints : getAllOpenComplaints,
     getAllCloseComplaints : getAllCloseComplaints,
-    deleteCustomerById : deleteCustomerById
+    deleteCustomerById : deleteCustomerById,
+    raiseAMCRequest : raiseAMCRequest,
+    getCustomerDetails : getCustomerDetails
 }

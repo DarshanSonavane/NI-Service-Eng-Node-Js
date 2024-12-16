@@ -68,7 +68,7 @@ const generateCalibrationRequest = async(req,res)=>{
                 }
             }else {
                 return res.status(401).json({
-                    message: "Your calibration request already exist. Please get it resolved before raising new request!",
+                    message: "You can't make a new request as 10 days have not passed since you sent last Calibration Request!",
                     status: false,
                 });
             }
