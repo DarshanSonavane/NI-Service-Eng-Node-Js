@@ -6301,7 +6301,7 @@ const deletecalibrationRequestById = async (req,res)=>{
 const getAllOpenCalibrationList = async(req,res)=>{
     try{
         let data = await CalibrationRequest.find({status: { $in: [1, 2] }}).sort({_id : -1}).populate('customerId').populate('employeeId');
-        return res.status(200).json({ code : "200" , message: "Calibration Request List!!", data: data });
+        return res.status(200).json({ code : "200" , message: "Calibration Request List!!", data: data , status:"Open" });
     }catch(err){
         console.log(err);
     }
@@ -6310,7 +6310,7 @@ const getAllOpenCalibrationList = async(req,res)=>{
 const getAllCloseCalibrationList = async(req,res)=>{
     try{
         let data = await CalibrationRequest.find({status: 0 }).sort({_id : -1}).populate('customerId').populate('employeeId');
-        return res.status(200).json({ code : "200" , message: "Calibration Request List!!", data: data });
+        return res.status(200).json({ code : "200" , message: "Calibration Request List!!", data: data , status:"Close" });
     }catch(err){
         console.log(err);
     }

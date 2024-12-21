@@ -568,7 +568,7 @@ const getAllOpenComplaints = async (req,res)=>{
     try{
         await ServiceRequest.find({status: { $in: [1, 2] }}).sort({_id : -1}).populate("complaintType").populate("customerId").populate("assignedTo").populate('ratings').then((data)=>{
             if(data){
-                return res.status(200).json({ message: "Service Request List!!", data: data });
+                return res.status(200).json({ message: "Service Request List!!", data: data , status:"Open" });
             }
         })
     }catch(err){
@@ -580,7 +580,7 @@ const getAllCloseComplaints = async (req,res)=>{
     try{
         await ServiceRequest.find({ status: 2 }).sort({_id : -1}).populate("complaintType").populate("customerId").populate("assignedTo").populate('ratings').then((data)=>{
             if(data){
-                return res.status(200).json({ message: "Service Request List!!", data: data });
+                return res.status(200).json({ message: "Service Request List!!", data: data , status:"Close" });
             }
         })
     }catch(err){
