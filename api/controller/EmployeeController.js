@@ -151,13 +151,14 @@ const createCustomer = async(req,res)=>{
 
 const getEmployeeDetails = async(req,res)=>{
     try{
-        if(!req.query.employeeId){
+        const employeeId = req.query.employeeId;
+        if(!employeeId){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,
             });
         }
-        let data = await EmployeeServiceRequest.find({employeeId : req.query.employeeId}).populate("employeeId",{firstName : 1 , lastName : 1 , dob : 1 , employeeCode : 1, email : 1 , phone : 1 , gender : 1 }).populate("serviceRequestId" , { status : 1 });
+        let data = await Employee.find({_id : employeeId}).select({firstName : 1 , lastName : 1 , dob : 1 , employeeCode : 1, email : 1 , phone : 1 , gender : 1 });
         return res.status(200).json({ message: "Employee Details!!", data: data });
     }catch(err){
         console.log(err);
