@@ -838,10 +838,10 @@ const genetrateAndSendAMCToCustomer = async(req,res)=>{
                         amcAmount : amcData.amount,
                         gstAmount : amcData.gstAmount,
                         totalAmount : amcData.totalAmount,
-                        logoPath : `${constants.LOCAL_FILE_PATH}logo.jpg`,
-                        sign : `${constants.LOCAL_FILE_PATH}sign.png`,
-                        stamp : `${constants.LOCAL_FILE_PATH}nistamplogo.png`,
-                        qrURL : `${constants.LOCAL_FILE_PATH}QR-Codes/amc/qr-code_${req.body.amcId}.png`
+                        logoPath : `${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg`,
+                        sign : `${constants.SERVER_FILE_PATH}sign.png`,
+                        stamp : `${constants.SERVER_FILE_PATH}nistamplogo.png`,
+                        qrURL : `${constants.SERVER_FILE_PATH}QR-Codes/amc/qr-code_${req.body.amcId}.png`
                     },async (err, newHtml) => {
                         if(err){
                             console.log(err);
@@ -864,7 +864,7 @@ const genetrateAndSendAMCToCustomer = async(req,res)=>{
                                     console.log(`PDF saved to ${res.filename}`);
                                     const htmlEmailContents = `<p>Your AMC request is been handled successfully!. Please find attachment for same</p>`;
                                     const subject = `Annual Maintainance Contract`;
-                                    const receiverEmail = 'darshansonavane24@gmail.com'//customerDetails['email'];
+                                    const receiverEmail = customerDetails['email'];
                                     const reqData = {
                                         status : '0'
                                     }
