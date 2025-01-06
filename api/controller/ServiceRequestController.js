@@ -708,7 +708,7 @@ const getCustomerDetails = async(req,res)=>{
 
 const getAllOpenAMCRequest = async(req,res)=>{
     try{
-        const data = await AMCRequest.find({status : '1'}).then(data=>{
+        await AMCRequest.find({status : '1'}).populate("customerId",{customerCode : 1 , customerName : 1 , city : 1 , stateCode : 1  }).then(data=>{
             if(data){
                 return res.status(200).json({ code : 200 , message: "All Open AMC Requests" , data : data , status : 'Open' });
             }
@@ -720,7 +720,7 @@ const getAllOpenAMCRequest = async(req,res)=>{
 
 const getAllCloseAMCRequest = async(req,res)=>{
     try{
-        const data = await AMCRequest.find({status : '0'}).then(data=>{
+        await AMCRequest.find({status : '0'}).populate("customerId",{customerCode : 1 , customerName : 1 , city : 1 , stateCode : 1  }).then(data=>{
             if(data){
                 return res.status(200).json({ code : 200 , message: "All Close AMC Requests" , data : data , status : 'Close' });
             }
