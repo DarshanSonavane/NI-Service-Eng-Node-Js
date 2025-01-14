@@ -815,6 +815,7 @@ const genetrateAndSendAMCToCustomer = async(req,res)=>{
             const customerName = customerDetails.customerName;
             await generateBarcodeForAMCRequest(req.body.amcId , customerName);
             const amcData = await AMCAmount.findOne({type : req.body.amcType});
+            console.log("amcData" , amcData);
             const currentDate = formatDate(new Date());
             const amcDueDate = generateDate();
             const companyName = 'NI SERVICES ENGINEERING PVT.LTD.';
