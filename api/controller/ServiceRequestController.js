@@ -625,7 +625,7 @@ const raiseAMCRequest = async(req,res)=>{
                 status: false,
             });
         }
-        const custAMCRequestCount = await AMCRequest.count({customerId : req.body.customerId , status : '1'});
+        const custAMCRequestCount = await AMCRequest.count({customerId : req.body.customerId , status : '1' , amcType : req.body.amcType});
         console.log('custAMCRequestCount',custAMCRequestCount)
         const isValidRequest = await validateAmcOnBackend(req.body.customerId , req.body.amcType);
         if(custAMCRequestCount == 0){
