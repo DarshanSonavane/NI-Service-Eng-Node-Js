@@ -695,7 +695,7 @@ const getCustomerDetails = async(req,res)=>{
                 status: false,
             });
         }
-        const data = await CustomerDetails.findOne({ _id : req.body.customerId}).select({ _id : 1 , customerCode : 1 , customerName : 1 , city : 1 , mobile : 1 , email : 1 , stateCode : 1});
+        const data = await CustomerDetails.findOne({ _id : req.body.customerId}).select({ _id : 1 , customerCode : 1 , customerName : 1 , city : 1 , mobile : 1 , email : 1 , stateCode : 1 , amcDue : 1});
         if(data){
             return res.status(200).json({ code : 200 , message: "Customer Details" , data : data });
         }else {
