@@ -249,6 +249,8 @@ const generateAndSendCalibration = async(req,res)=>{
             state = 'MAHARASHTRA'
         }else if(customerState == 'MP'){
             state = 'MADHYA PRADESH'
+        }else if(customerState == 'CH'){
+            state = 'CHHSTTISGARH'
         }
         console.log('machineModelDetails====' , machineModelDetails);
         if(machineModelDetails && machineModelDetails.MODEL && customerEmail){
@@ -385,6 +387,9 @@ function generateDate(state) {
             adjustedDate = addMonths(currentDate, 2);
             break;
         case 'mp':
+            adjustedDate = addMonths(currentDate, 4);
+            break;
+        case 'ch':
             adjustedDate = addMonths(currentDate, 4);
             break;    
         default:
