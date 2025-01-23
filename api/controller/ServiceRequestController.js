@@ -863,7 +863,22 @@ const genetrateAndSendAMCToCustomer = async(req,res)=>{
                             pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
                                 if (err) return console.log(err);
                                     console.log(`PDF saved to ${res.filename}`);
-                                    const htmlEmailContents = `<p>Your AMC request is been handled successfully!. Please find attachment for same</p>`;
+                                    const htmlEmailContents = `<html>
+      <body>
+        <p>Your AMC request is been handled successfully!. Please find attachment for same</p>
+
+        <!-- Footer content with an embedded image -->
+        <footer style="margin-top: 20px; font-size: 12px; color: gray; text-align: center;">
+          <p>Best Regards</p>
+	  <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
+          <p>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</p>
+          <p>Contact Us : 9892151843</p>
+          <p><a href="mailto:service@niserviceeng.com">support@yourcompany.com</a></p>
+          <p><a href="http://www.niserviceeng.com" style="color: gray;">Website</a></p>
+          
+        </footer>
+      </body>
+    </html>`;
                                     const subject = `Annual Maintainance Contract`;
                                     const receiverEmail = customerDetails['email'];
                                     const reqData = {
