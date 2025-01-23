@@ -868,7 +868,7 @@ const genetrateAndSendAMCToCustomer = async(req,res)=>{
         <p>Your AMC request is been handled successfully!. Please find attachment for same</p>
 
         <!-- Footer content with an embedded image -->
-        <footer style="margin-top: 20px; font-size: 12px; color: gray; text-align: center;">
+        <footer style="margin-top: 20px; font-size: 12px; color: gray; text-align: left;">
           <p>Best Regards</p>
 	  <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
           <p>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</p>
