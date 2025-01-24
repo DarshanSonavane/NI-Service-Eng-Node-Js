@@ -127,7 +127,7 @@ sendMailWithAttachment = (htmlEmailContents, toMail, subject , path) => {
 sendOneTimeVerificationEmail = (subject , data , otp) =>{
   console.log('data', data);
   var mailOptions = {
-    from: 'admin@niserviceeng.com',
+    from: 'service@niserviceeng.com',
     to: data.email,
     subject: subject,
     html: `
