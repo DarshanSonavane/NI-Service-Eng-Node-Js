@@ -8,7 +8,9 @@ let transporter = nodemailer.createTransport({
     auth: {
         user: 'admin@niserviceeng.com', // your domain email address
         pass: 'admin@12345' // your password
-    }
+    },
+    connectionTimeout: 10000,  // Set a higher connection timeout (milliseconds)
+    greetingTimeout: 5000, 
 });
 
 const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail , customerCity , customerMobile , requestType )=>{
