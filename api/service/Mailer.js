@@ -130,16 +130,11 @@ sendOneTimeVerificationEmail = (subject , data , otp) =>{
     from: 'admin@niserviceeng.com',
     to: data.email,
     subject: subject,
-    html: `<html><body><p>Dear Customer,</p><p>${data.customerName} , - ${data.customerCode}</p><p>${data.city} , ${data.stateCode}</p><p>Your one time verification password for initiating Service Request is : <b>${otp}</b></p> 
-      <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: center;">
-          <p><b>Best Regards</b></p>
-	        <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO-GIF.gif" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
-          <p><b>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</b></p>
-          <p><b>Contact Us : 9892151843</b></p>
-          <p><b>Email : <a href="mailto:service@niserviceeng.com">support@yourcompany.com</a></b></p>
-          <p><b><a href="http://www.niserviceeng.com" style="color: green;">Website</a></b></p>
-          
-        </footer>
+    html: `<html><body>
+    <p>Dear Customer,</p>
+    <p>${data.customerName} - ${data.customerCode}</p>
+    <p>${data.city} , ${data.stateCode}</p>
+    <p>Your one time verification password for initiating Service Request is : <b>${otp}</b></p>
     </body></html>`
 };
 
