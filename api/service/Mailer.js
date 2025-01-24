@@ -1,7 +1,7 @@
 const nodemailer =  require('nodemailer');
 const constants = require("../utility/constant")
 
-let transporter = nodemailer.createTransport({
+/* let transporter = nodemailer.createTransport({
     host: 'mail.niserviceeng.com',
     port: 465,
     secure: true, // true for 465, false for other ports
@@ -9,7 +9,17 @@ let transporter = nodemailer.createTransport({
         user: 'admin@niserviceeng.com', // your domain email address
         pass: 'admin@12345' // your password
     }
-}); 
+}); */
+
+let transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true, // true for 465, false for other ports
+  auth: {
+      user: 'darshansonavane45@gmail.com', // your domain email address
+      pass: 'D@rshan12345' // your password
+  }
+});
 
 const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail , customerCity , customerMobile , requestType )=>{
   console.log('Employee Email------',employeeEmail);
@@ -127,7 +137,7 @@ sendMailWithAttachment = (htmlEmailContents, toMail, subject , path) => {
 sendOneTimeVerificationEmail = (subject , data , otp) =>{
   console.log('data', data);
   var mailOptions = {
-    from: 'admin@niserviceeng.com',
+    from: 'darshansonavane45@gmail.com',
     to: data.email,
     subject: subject,
     html: `
