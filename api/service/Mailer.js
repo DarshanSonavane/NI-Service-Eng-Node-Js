@@ -3,7 +3,7 @@ const constants = require("../utility/constant")
 
 let transporter = nodemailer.createTransport({
     host: 'mail.niserviceeng.com',
-    port: 587,
+    port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
         user: 'admin@niserviceeng.com', // your domain email address
