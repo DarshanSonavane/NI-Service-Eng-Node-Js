@@ -82,11 +82,11 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
         
         <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: center;">
           <p>Best Regards</p>
-	  <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
-          <p>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</p>
-          <p>Contact Us : 9892151843</p>
-          <p><a href="mailto:service@niserviceeng.com">support@yourcompany.com</a></p>
-          <p><a href="http://www.niserviceeng.com" style="color: green;">Website</a></p>
+	        <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO-GIF.gif" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
+          <p><b>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</b></p>
+          <p><b>Contact Us : 9892151843</b></p>
+          <p><b>Email : <a href="mailto:service@niserviceeng.com">support@yourcompany.com</a></b></p>
+          <p><b><a href="http://www.niserviceeng.com" style="color: green;">Website</a></b></p>
           
         </footer>
 
@@ -132,12 +132,12 @@ sendOneTimeVerificationEmail = (subject , data , otp) =>{
     subject: subject,
     html: `<html><body><p>Dear Customer,</p><p>${data.customerName} , - ${data.customerCode}</p><p>${data.city} , ${data.stateCode}</p><p>Your one time verification password for initiating Service Request is : <b>${otp}</b></p> 
       <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: center;">
-          <p>Best Regards</p>
-	  <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
-          <p>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</p>
-          <p>Contact Us : 9892151843</p>
-          <p><a href="mailto:service@niserviceeng.com">support@yourcompany.com</a></p>
-          <p><a href="http://www.niserviceeng.com" style="color: green;">Website</a></p>
+          <p><b>Best Regards</b></p>
+	        <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO-GIF.gif" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
+          <p><b>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</b></p>
+          <p><b>Contact Us : 9892151843</b></p>
+          <p><b>Email : <a href="mailto:service@niserviceeng.com">support@yourcompany.com</a></b></p>
+          <p><b><a href="http://www.niserviceeng.com" style="color: green;">Website</a></b></p>
           
         </footer>
     </body></html>`
