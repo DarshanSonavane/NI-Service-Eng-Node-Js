@@ -2,14 +2,12 @@ const nodemailer =  require('nodemailer');
 const constants = require("../utility/constant")
 
 let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',//'mail.niserviceeng.com',
+    host: 'mail.niserviceeng.com',
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-        user: 'darshansonavane24@gmail.com', // your domain email address
-        pass: 'D@rshan12345'
-        /* user: 'admin@niserviceeng.com', // your domain email address
-        pass: 'admin@12345' */ // your password
+        user: 'admin@niserviceeng.com', // your domain email address
+        pass: 'admin@12345' // your password
     }
 });
 
