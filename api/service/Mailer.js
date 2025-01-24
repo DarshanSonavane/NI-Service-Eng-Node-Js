@@ -6,8 +6,10 @@ let transporter = nodemailer.createTransport({
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-        user: 'admin@niserviceeng.com', // your domain email address
-        pass: 'admin@12345' // your password
+        user: 'darshansonavane24@gmail.com', // your domain email address
+        pass: 'D@rshan12345'
+        /* user: 'admin@niserviceeng.com', // your domain email address
+        pass: 'admin@12345' */ // your password
     }
 });
 
