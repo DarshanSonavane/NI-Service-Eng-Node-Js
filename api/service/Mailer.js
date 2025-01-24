@@ -1,7 +1,7 @@
 const nodemailer =  require('nodemailer');
 const constants = require("../utility/constant")
 
-let transporter = nodemailer.createTransport({
+/* let transporter = nodemailer.createTransport({
     host: 'mail.niserviceeng.com',
     port: 465,
     secure: true, // true for 465, false for other ports
@@ -9,7 +9,17 @@ let transporter = nodemailer.createTransport({
         user: 'admin@niserviceeng.com', // your domain email address
         pass: 'admin@12345' // your password
     }
-});  
+}); */
+
+const transporter = nodemailer.createTransport({
+  host: 'mail.niserviceeng.com',
+  port: 465,  // or 587 if using TLS
+  secure: true, // true for 465, false for 587
+  auth: {
+    user: 'admin@niserviceeng.com',
+    pass: 'admin@12345',
+  },
+});
 
 const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail , customerCity , customerMobile , requestType )=>{
   console.log('Employee Email------',employeeEmail);
