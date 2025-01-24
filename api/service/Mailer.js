@@ -81,7 +81,7 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
         </table>
         
         <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: center;">
-          <p>Best Regards</p>
+          <p><b>Best Regards</b></p>
 	        <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO-GIF.gif" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
           <p><b>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</b></p>
           <p><b>Contact Us : 9892151843</b></p>
