@@ -3,11 +3,11 @@ const constants = require("../utility/constant")
 
 let transporter = nodemailer.createTransport({
     host: 'mail.niserviceeng.com',
-    port: 465,
+    port: 587,
     secure: true, // true for 465, false for other ports
     auth: {
-        user: 'service@niserviceeng.com', // your domain email address
-        pass: 'service@12345' // your password
+        user: 'admin@niserviceeng.com', // your domain email address
+        pass: 'admin@12345' // your password
     }
 }); 
 
@@ -127,7 +127,7 @@ sendMailWithAttachment = (htmlEmailContents, toMail, subject , path) => {
 sendOneTimeVerificationEmail = (subject , data , otp) =>{
   console.log('data', data);
   var mailOptions = {
-    from: 'service@niserviceeng.com',
+    from: 'admin@niserviceeng.com',
     to: data.email,
     subject: subject,
     html: `
