@@ -6,12 +6,12 @@ let transporter = nodemailer.createTransport({
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-        user: 'admin@niserviceeng.com', // your domain email address
-        pass: 'admin@12345' // your password
+        user: 'service@niserviceeng.com', // your domain email address
+        pass: 'Service@12345' // your password
     },
     connectionTimeout: 10000,  // Set a higher connection timeout (milliseconds)
-    greetingTimeout: 5000, 
-});
+    greetingTimeout: 5000,
+}); 
 
 const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail , customerCity , customerMobile , requestType )=>{
   console.log('Employee Email------',employeeEmail);
