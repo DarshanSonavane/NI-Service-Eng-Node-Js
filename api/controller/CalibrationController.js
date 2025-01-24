@@ -250,7 +250,7 @@ const generateAndSendCalibration = async(req,res)=>{
         }else if(customerState == 'MP'){
             state = 'MADHYA PRADESH'
         }else if(customerState == 'CH'){
-            state = 'CHHSTTISGARH'
+            state = 'CHHASTTISGARH'
         }
         console.log('machineModelDetails====' , machineModelDetails);
         if(machineModelDetails && machineModelDetails.MODEL && customerEmail){
@@ -297,7 +297,23 @@ const generateAndSendCalibration = async(req,res)=>{
                         pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
                             if (err) return console.log(err);
                             console.log(`PDF saved to ${res.filename}`);
-                            const htmlEmailContents = `<p>Your calibration request is been handled successfully!. Please find attachment for same</p>`;
+                            const htmlEmailContents = `<html>
+                                  <body>
+                                    <p>Your calibration request is been handled successfully!. Please find attachment for same</p>
+                            
+                                    <!-- Footer content with an embedded image -->
+                                    <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: left;">
+                                      <p>Best Regards</p>
+                                  <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
+                                      <p>NI SERVICE ENGINEERING PVT.LTD.</p>
+                                      <p>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</p>
+                                      <p>Contact Us : 9892151843</p>
+                                      <p><a href="mailto:service@niserviceeng.com">service@niserviceeng.com</a></p>
+                                      <p><a href="http://www.niserviceeng.com" style="color: green;">Website</a></p>
+                                      
+                                    </footer>
+                                  </body>
+                                </html>`;
                             const subject = `Calibration Certificate`;
                             const receiverEmail = calibrationrequestData['customerId']['email'];
                             const reqData = {

@@ -1,4 +1,5 @@
 const nodemailer =  require('nodemailer');
+const constants = require("../utility/constant")
 
 let transporter = nodemailer.createTransport({
     host: 'mail.niserviceeng.com',
@@ -79,6 +80,16 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
           </tr>
         </table>
         
+        <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: center;">
+          <p>Best Regards</p>
+	  <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
+          <p>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</p>
+          <p>Contact Us : 9892151843</p>
+          <p><a href="mailto:service@niserviceeng.com">support@yourcompany.com</a></p>
+          <p><a href="http://www.niserviceeng.com" style="color: green;">Website</a></p>
+          
+        </footer>
+
         </body>
         </html>`
 
@@ -119,7 +130,17 @@ sendOneTimeVerificationEmail = (subject , data , otp) =>{
     from: 'admin@niserviceeng.com',
     to: data.email,
     subject: subject,
-    html: `<p>Dear Customer,</p><p>${data.customerName} , - ${data.customerCode}</p><p>${data.city} , ${data.stateCode}</p><p>Your one time verification password for initiating Service Request is : <b>${otp}</b></p>`
+    html: `<html><body><p>Dear Customer,</p><p>${data.customerName} , - ${data.customerCode}</p><p>${data.city} , ${data.stateCode}</p><p>Your one time verification password for initiating Service Request is : <b>${otp}</b></p> 
+      <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: center;">
+          <p>Best Regards</p>
+	  <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
+          <p>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</p>
+          <p>Contact Us : 9892151843</p>
+          <p><a href="mailto:service@niserviceeng.com">support@yourcompany.com</a></p>
+          <p><a href="http://www.niserviceeng.com" style="color: green;">Website</a></p>
+          
+        </footer>
+    </body></html>`
 };
 
   transporter.sendMail(mailOptions, function (error, info) {

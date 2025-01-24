@@ -868,14 +868,14 @@ const genetrateAndSendAMCToCustomer = async(req,res)=>{
         <p>Your AMC request is been handled successfully!. Please find attachment for same</p>
 
         <!-- Footer content with an embedded image -->
-        <footer style="margin-top: 20px; font-size: 12px; color: gray; text-align: left;">
+        <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: left;">
           <p>Best Regards</p>
 	  <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
           <p>NI SERVICE ENGINEERING PVT.LTD.</p>
           <p>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</p>
           <p>Contact Us : 9892151843</p>
-          <p><a href="mailto:service@niserviceeng.com">servicet@niserviceeng.com</a></p>
-          <p><a href="http://www.niserviceeng.com" style="color: gray;">Website</a></p>
+          <p><a href="mailto:service@niserviceeng.com">service@niserviceeng.com</a></p>
+          <p><a href="http://www.niserviceeng.com" style="color: green;">Website</a></p>
           
         </footer>
       </body>
