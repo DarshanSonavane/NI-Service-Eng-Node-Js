@@ -130,12 +130,12 @@ sendOneTimeVerificationEmail = (subject , data , otp) =>{
     from: 'admin@niserviceeng.com',
     to: data.email,
     subject: subject,
-    html: `<html><body>
+    html: `
     <p>Dear Customer,</p>
     <p>${data.customerName} - ${data.customerCode}</p>
     <p>${data.city} , ${data.stateCode}</p>
     <p>Your one time verification password for initiating Service Request is : <b>${otp}</b></p>
-    </body></html>`
+    `
 };
 
   transporter.sendMail(mailOptions, function (error, info) {
