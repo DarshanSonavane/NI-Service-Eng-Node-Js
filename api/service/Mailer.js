@@ -13,8 +13,8 @@ const constants = require("../utility/constant")
 
 const transporter = nodemailer.createTransport({
   host: 'mail.niserviceeng.com',
-  port: 465,  // or 587 if using TLS
-  secure: true, // true for 465, false for 587
+  port: 587,  // or 587 if using TLS
+  secure: false, // true for 465, false for 587
   auth: {
     user: 'admin@niserviceeng.com',
     pass: 'admin@12345',
