@@ -777,7 +777,7 @@ function formatDate(date) {
 const generateBarcodeForAMCRequest =  async(amcId , customerName)=>{
     try{
         console.log("Here" , amcId);
-        const URL = `http://16.170.250.91:3000/uploads/amc/${customerName}_${amcId}.pdf`;
+        const URL = `http://13.49.111.133:3000/uploads/amc/${customerName}_${amcId}.pdf`;
         const qrSvg = qr.imageSync(URL, { type: 'png' });
         const filePath = `./assets/QR-Codes/amc/qr-code_${amcId}.png`
         // Save the image to a file
