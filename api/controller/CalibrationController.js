@@ -223,19 +223,22 @@ const generateAndSendCalibration = async(req,res)=>{
         const customerName = calibrationrequestData['customerId']['customerName'];
         await generateBarcodeForCalibrationRequest(req.body.calibrationId , customerName);
 
-        console.log('nextCalibrationDate', nextCalibrationDate);
+        console.log('nextCalibrationDate', nextCalibrationDate , calibrationrequestData['machineType'] , calibrationrequestData);
         let fileName = '';
         let machineModelDetails = '';
         let machineNumber = '';
-        if(calibrationrequestData && calibrationrequestData['machineType'] == '0'){
+        if(calibrationrequestData && ( calibrationrequestData['machineType'] == '0' || calibrationrequestData['machineType'] == 0)){
+            console.log("Here")
             fileName = await getFileName('Petrol' , customerState);
             machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['petrolMachineNumber'] , CUSTOMER_CODE : calibrationrequestData['customerId']['customerCode']});
             machineNumber = calibrationrequestData['customerId']['petrolMachineNumber'];
         }else if(calibrationrequestData && calibrationrequestData['machineType'] == '1'){
+            console.log("Here1")
             fileName = await getFileName('Diesel' , customerState);
             machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['dieselMachineNumber'] , CUSTOMER_CODE : calibrationrequestData['customerId']['customerCode']});
             machineNumber = calibrationrequestData['customerId']['dieselMachineNumber'];
         }else if(calibrationrequestData && calibrationrequestData['machineType'] == '2'){
+            console.log("Here2")
             fileName = await getFileName('Combo' , customerState);
             machineModelDetails = await MachineModel.findOne({MACHINE_NO : calibrationrequestData['customerId']['comboMachineNumber'] , CUSTOMER_CODE : calibrationrequestData['customerId']['customerCode']});
             machineNumber = calibrationrequestData['customerId']['comboMachineNumber'];
@@ -290,6 +293,7 @@ const generateAndSendCalibration = async(req,res)=>{
                             format: 'A4',
                             border: '0.5cm',
                             zoomFactor: '0.5',
+                            timeout : 60000
                             // other options
                         };
         
