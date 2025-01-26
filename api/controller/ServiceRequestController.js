@@ -855,8 +855,8 @@ const genetrateAndSendAMCToCustomer = async(req,res)=>{
                             format: 'A4',
                             border: '0.5cm',
                             zoomFactor: '0.5',
-                            timeout : 60000,
-                            renderDelay: 2000,
+                            timeout : 90000,
+                            renderDelay: 3000,
                             // other options
                         };
             

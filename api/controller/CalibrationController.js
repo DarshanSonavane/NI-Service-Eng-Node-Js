@@ -257,85 +257,83 @@ const generateAndSendCalibration = async(req,res)=>{
         }
         console.log('machineModelDetails====' , machineModelDetails);
         if(machineModelDetails && machineModelDetails.MODEL && customerEmail){
-            setTimeout(()=>{
-                ejs.renderFile(
-                    path.join(__dirname, fileName),{
-                        serialNumber : serialNumber,
-                        issueDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
-                        modelNumber : machineModelDetails.MODEL,
-                        machineNumber : machineNumber,
-                        centerName : calibrationrequestData['customerId']['customerName'],
-                        city : calibrationrequestData['customerId']['city'],
-                        state : state,
-                        coValue : cylinderDetails[0]['CO'],
-                        hcValue : cylinderDetails[0]['HC'] + " PPM",
-                        co2Value : cylinderDetails[0]['CO2'],
-                        cylinderNumber : cylinderDetails[0]['cylinderNumber'] ,
-                        cylinderMake : cylinderDetails[0]['cylinderMake'] ,
-                        validityDate : cylinderDetails[0]['validityDate'] ,
-                        nextCalibrationDate : nextCalibrationDate,
-                        logoPath : `${constants.SERVER_FILE_PATH}logo.jpg`,
-                        checked : `${constants.SERVER_FILE_PATH}checkmark.svg`,
-                        unChecked : `${constants.SERVER_FILE_PATH}close.svg`,
-                        sign : `${constants.SERVER_FILE_PATH}sign.png`,
-                        stamp : `${constants.SERVER_FILE_PATH}nistamplogo.png`,
-                        swacha : `${constants.SERVER_FILE_PATH}swach.jpg`,
-                        qrURL : `${constants.SERVER_FILE_PATH}QR-Codes/qr-code_${req.body.calibrationId}.png`
-                    },async (err, newHtml) => {
-                        if(err){
-                            console.log(err);
-                        }
-                        
-                        const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}_${req.body.calibrationId}.pdf`;
-                        // const options = { type: "A4" };
-                        // const options = { type: 'A4'};
-                        var options = {
-                            format: 'A4',
-                            border: '0.5cm',
-                            zoomFactor: '0.5',
-                            timeout : 60000,
-                            renderDelay: 2000,
-                            // other options
-                        };
-        
-                        try {
-                            // Generate the PDF
-                            pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
-                                if (err) return console.log(err);
-                                console.log(`PDF saved to ${res.filename}`);
-                                const htmlEmailContents = `<html>
-                                      <body>
-                                        <p>Your calibration request is been handled successfully!. Please find attachment for same</p>
-                                
-                                        <!-- Footer content with an embedded image -->
-                                        <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: left;">
-                                          <p><b>Best Regards</b></p>
-                                          <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
-                                          <p><b>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</b></p>
-                                          <p><b>Contact Us : 9892151843</b></p>
-                                          <p><b>Email : <a href="mailto:service@niserviceeng.com">service@niserviceeng.com</a></b></p>
-                                          <p><b><a href="http://www.niserviceeng.com" style="color: green;">Website</a></b></p>
-                                          
-                                        </footer>
-                                      </body>
-                                    </html>`;
-                                const subject = `Calibration Certificate`;
-                                const receiverEmail = calibrationrequestData['customerId']['email'];
-                                const reqData = {
-                                    status : '0'
-                                }
-                                await CalibrationRequest.where({_id : req.body.calibrationId}).updateOne({
-                                    $set : reqData
-                                }).then(async(data)=>{});
-                                await CalibrationHistory.create({ requestId : req.body.calibrationId, status : '0'})
-                                await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
-                            });
-                            return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});
-                        } catch (error) {
-                            console.error('Error generating PDF:', error);
-                        }
-                    })
-            },5000)
+            ejs.renderFile(
+                path.join(__dirname, fileName),{
+                    serialNumber : serialNumber,
+                    issueDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
+                    modelNumber : machineModelDetails.MODEL,
+                    machineNumber : machineNumber,
+                    centerName : calibrationrequestData['customerId']['customerName'],
+                    city : calibrationrequestData['customerId']['city'],
+                    state : state,
+                    coValue : cylinderDetails[0]['CO'],
+                    hcValue : cylinderDetails[0]['HC'] + " PPM",
+                    co2Value : cylinderDetails[0]['CO2'],
+                    cylinderNumber : cylinderDetails[0]['cylinderNumber'] ,
+                    cylinderMake : cylinderDetails[0]['cylinderMake'] ,
+                    validityDate : cylinderDetails[0]['validityDate'] ,
+                    nextCalibrationDate : nextCalibrationDate,
+                    logoPath : `${constants.SERVER_FILE_PATH}logo.jpg`,
+                    checked : `${constants.SERVER_FILE_PATH}checkmark.svg`,
+                    unChecked : `${constants.SERVER_FILE_PATH}close.svg`,
+                    sign : `${constants.SERVER_FILE_PATH}sign.png`,
+                    stamp : `${constants.SERVER_FILE_PATH}nistamplogo.png`,
+                    swacha : `${constants.SERVER_FILE_PATH}swach.jpg`,
+                    qrURL : `${constants.SERVER_FILE_PATH}QR-Codes/qr-code_${req.body.calibrationId}.png`
+                },async (err, newHtml) => {
+                    if(err){
+                        console.log(err);
+                    }
+                    
+                    const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}_${req.body.calibrationId}.pdf`;
+                    // const options = { type: "A4" };
+                    // const options = { type: 'A4'};
+                    var options = {
+                        format: 'A4',
+                        border: '0.5cm',
+                        zoomFactor: '0.5',
+                        timeout : 90000,
+                        renderDelay: 3000,
+                        // other options
+                    };
+    
+                    try {
+                        // Generate the PDF
+                        pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
+                            if (err) return console.log(err);
+                            console.log(`PDF saved to ${res.filename}`);
+                            const htmlEmailContents = `<html>
+                                  <body>
+                                    <p>Your calibration request is been handled successfully!. Please find attachment for same</p>
+                            
+                                    <!-- Footer content with an embedded image -->
+                                    <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: left;">
+                                      <p><b>Best Regards</b></p>
+                                      <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
+                                      <p><b>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</b></p>
+                                      <p><b>Contact Us : 9892151843</b></p>
+                                      <p><b>Email : <a href="mailto:service@niserviceeng.com">service@niserviceeng.com</a></b></p>
+                                      <p><b><a href="http://www.niserviceeng.com" style="color: green;">Website</a></b></p>
+                                      
+                                    </footer>
+                                  </body>
+                                </html>`;
+                            const subject = `Calibration Certificate`;
+                            const receiverEmail = calibrationrequestData['customerId']['email'];
+                            const reqData = {
+                                status : '0'
+                            }
+                            await CalibrationRequest.where({_id : req.body.calibrationId}).updateOne({
+                                $set : reqData
+                            }).then(async(data)=>{});
+                            await CalibrationHistory.create({ requestId : req.body.calibrationId, status : '0'})
+                            await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
+                        });
+                        return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});
+                    } catch (error) {
+                        console.error('Error generating PDF:', error);
+                    }
+                })
         }else {
             return res.status(400).json({ code : "400" , message: "Machine Details OR Customer Email Not Found!"});
         }
