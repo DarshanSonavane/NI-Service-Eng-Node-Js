@@ -1,25 +1,25 @@
 const nodemailer =  require('nodemailer');
 const constants = require("../utility/constant")
 
-/* let transporter = nodemailer.createTransport({
+let transporter = nodemailer.createTransport({
     host: 'mail.niserviceeng.com',
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-        user: 'info.niservice88@gmail.com', // your domain email address
+        user: 'admin@niserviceeng.com', // your domain email address
         pass: 'admin@12345' // your password
     }
-}); */
+});
 
-const transporter = nodemailer.createTransport({
+/* const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 587,  // or 587 if using TLS
-  secure: false, // true for 465, false for 587
+  port: 465,  // or 587 if using TLS
+  secure: true, // true for 465, false for 587
   auth: {
-    user: 'info.niservice88@gmail.com',
+    user: 'admin@niserviceeng.com',
     pass: 'frtg cdpx pgmy hmyx',
   },
-});
+}); */
 
 const sendMail = ( customerName,customercode, complaintType , machineType , employeeEmail , customerCity , customerMobile , requestType )=>{
   console.log('Employee Email------',employeeEmail);
@@ -34,7 +34,7 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
     console.log('mailList', mailList)
     let typeOfRequest = requestType === 'service' ? 'Service' : 'Calibration';
     let mailOptions = {
-        from: 'info.niservice88@gmail.com',
+        from: 'admin@niserviceeng.com',
         to: mailList,
         subject: `New ${typeOfRequest} Request Raised`,
         html : `<html>
@@ -118,7 +118,7 @@ sendMailWithAttachment = (htmlEmailContents, toMail, subject , path) => {
   console.log(path);
   let mailList = ['nilesh@niserviceeng.com', toMail]; 
   var mailOptions = {
-      from: 'info.niservice88@gmail.com',
+      from: 'admin@niserviceeng.com',
       to: mailList,
       subject: subject,
       html: htmlEmailContents,
@@ -137,7 +137,7 @@ sendMailWithAttachment = (htmlEmailContents, toMail, subject , path) => {
 sendOneTimeVerificationEmail = (subject , data , otp) =>{
   console.log('data', data);
   var mailOptions = {
-    from: 'info.niservice88@gmail.com',
+    from: 'admin@niserviceeng.com',
     to: data.email,
     subject: subject,
     html: `<html><body>
