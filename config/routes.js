@@ -6,7 +6,7 @@ const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmplo
 const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion , trackComplaint , reAssignComplaint , generateAndSendOTP , verifyOTP , getAllOpenComplaints , getAllCloseComplaints , deleteCustomerById , raiseAMCRequest , getCustomerDetails , genetrateAndSendAMCToCustomer , createUpdateGST , createUpdateAMCAmount , getAllOpenAMCRequest , getAllCloseAMCRequest } = require('../api/controller/ServiceRequestController.js');
 const { generateCalibrationRequest , getCalibrationEmployeeList , getAllCalibrationList , getMyCalibrationRequestList , getCustomerCalibrationList , validateCalibration , updateCylinderDetails , generateAndSendCalibration , insertMachineModel , getCylinderDetails , insertNewMachineDetails , updateCalibrationStatusById , deletecalibrationRequestById , getAllOpenCalibrationList , getAllCloseCalibrationList } = require('../api/controller/CalibrationController.js');
 const { saveNotification , fetchNotification , insertCustomerFCM , validateCustomerDeviceFCM } = require('../api/controller/NotificationController.js');
-
+const { insertMasterInventory , fetchMasterInventoryList , assignInventoryToEmployee , createFSR , fsrList } = require('../api/controller/FSRController.js')
 const routes = express.Router();
 
 routes.get("/test", (req, res) => {
@@ -76,5 +76,12 @@ routes.post("/generate-send-amc" , genetrateAndSendAMCToCustomer);
 routes.post("/create-update-gst" , createUpdateGST);
 routes.post("/create-update-amc-amount" , createUpdateAMCAmount);
 routes.get("/get-all-open-amc-request" , getAllOpenAMCRequest);
-routes.get("/get-all-close-amc-request" , getAllCloseAMCRequest)
+routes.get("/get-all-close-amc-request" , getAllCloseAMCRequest);
+
+// FSR , Toolkit & Inventory API's
+routes.post("/insert-master-inventory" , insertMasterInventory);
+routes.get("/fetch-master-inventory" , fetchMasterInventoryList);
+routes.post("/insert-update-employee-inventory" , assignInventoryToEmployee);
+routes.post("/create-fsr" , createFSR);
+routes.post("/fsr-list" , fsrList);
 module.exports = routes;
