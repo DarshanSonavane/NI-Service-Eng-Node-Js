@@ -929,7 +929,7 @@ const createFSR = async(req,res)=>{
             fsrLocation : req.body.fsrLocation,
             model : req.body.model,
             fsrStatus : '1'
-        }).then((data)=>{
+        }).then(async(data)=>{
             // write function to generate and send fsr to customer , employee and admin
             return res.status(200).json({
                 message: "FSR Created Successfully",
@@ -943,6 +943,8 @@ const createFSR = async(req,res)=>{
         console.log(err);
     }
 }
+
+
 
 const fsrList = async(req,res)=>{
     try{
@@ -1069,10 +1071,30 @@ const fsrList = async(req,res)=>{
     }
 }
 
+const employeeInventoryList = async(req,res)=>{
+    try{
+        if(!req.body.employeeId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                code : 400
+            });
+        }
+        const employeeInventory = await EmployeeInventory.find({ employeeId  : req.body.employeeId}).populate('employeeId',{_id : 1 , firstName : 1 , lastName : 1}).populate('productId',{_id : 1 , productName : 1 , price : 1});
+        return res.status(200).json({
+            message: "Employee Inventory List",
+            code : 200,
+            employeeInventory : employeeInventory
+        });
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     insertMasterInventory : insertMasterInventory,
     fetchMasterInventoryList : fetchMasterInventoryList,
     assignInventoryToEmployee : assignInventoryToEmployee,
     createFSR : createFSR,
     fsrList : fsrList,
+    employeeInventoryList : employeeInventoryList
 }
