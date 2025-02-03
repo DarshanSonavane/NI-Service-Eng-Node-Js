@@ -6,7 +6,7 @@ const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmplo
 const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion , trackComplaint , reAssignComplaint , generateAndSendOTP , verifyOTP , getAllOpenComplaints , getAllCloseComplaints , deleteCustomerById , raiseAMCRequest , getCustomerDetails , genetrateAndSendAMCToCustomer , createUpdateGST , createUpdateAMCAmount , getAllOpenAMCRequest , getAllCloseAMCRequest } = require('../api/controller/ServiceRequestController.js');
 const { generateCalibrationRequest , getCalibrationEmployeeList , getAllCalibrationList , getMyCalibrationRequestList , getCustomerCalibrationList , validateCalibration , updateCylinderDetails , generateAndSendCalibration , insertMachineModel , getCylinderDetails , insertNewMachineDetails , updateCalibrationStatusById , deletecalibrationRequestById , getAllOpenCalibrationList , getAllCloseCalibrationList } = require('../api/controller/CalibrationController.js');
 const { saveNotification , fetchNotification , insertCustomerFCM , validateCustomerDeviceFCM } = require('../api/controller/NotificationController.js');
-const { insertMasterInventory , fetchMasterInventoryList , assignInventoryToEmployee , createFSR , fsrList , employeeInventoryList } = require('../api/controller/FSRController.js')
+const { insertMasterInventory , fetchMasterInventoryList , assignInventoryToEmployee , createFSR , fsrList , employeeInventoryList , updateAdminMasterInventory } = require('../api/controller/FSRController.js')
 const routes = express.Router();
 
 routes.get("/test", (req, res) => {
@@ -84,5 +84,6 @@ routes.get("/fetch-master-inventory" , fetchMasterInventoryList);
 routes.post("/insert-update-employee-inventory" , assignInventoryToEmployee);
 routes.post("/create-fsr" , createFSR);
 routes.post("/fsr-list" , fsrList);
-routes.post("/employee-inventory-list" , employeeInventoryList)
+routes.post("/employee-inventory-list" , employeeInventoryList);
+routes.post("/insert-update-master-inventory" , updateAdminMasterInventory)
 module.exports = routes;

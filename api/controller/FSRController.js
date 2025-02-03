@@ -880,7 +880,7 @@ const assignInventoryToEmployee = async(req, res)=>{
 
 const createFSR = async(req,res)=>{
     try{
-        if(!req.body.customerCode || !req.body.contactPerson || !req.body.designation || !req.body.employeeCode || !req.body.employeeId || !req.body.complaintType || !req.body.natureOfCompliant || !req.body.productsUsed || !req.body.remark || !req.body.correctiveAction || !req.body.status || !req.body.serviceDetails || !req.body.employeeSignature || !req.body.customerSignature || !req.body.fsrLocation || !req.body.model){
+        if(!req.body.customerCode || !req.body.contactPerson || !req.body.designation || !req.body.employeeCode || !req.body.employeeId || !req.body.complaintType || !req.body.natureOfCompliant || !req.body.productsUsed || !req.body.remark || !req.body.correctiveAction || !req.body.status || !req.body.serviceDetails || !req.body.employeeSignature || !req.body.customerSignature || !req.body.fsrLocation || !req.body.model || !req.body.fsrStartTime || !req.body.fsrEndTime || !req.body.fsrFinalAmount){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 code : 400
@@ -928,7 +928,10 @@ const createFSR = async(req,res)=>{
             customerSignature : req.body.customerSignature,
             fsrLocation : req.body.fsrLocation,
             model : req.body.model,
-            fsrStatus : '1'
+            fsrStatus : '1',
+            fsrStartTime : req.body.fsrStartTime,
+            fsrEndTime : req.body.fsrEndTime,
+            fsrFinalAmount : req.body.fsrFinalAmount
         }).then(async(data)=>{
             // write function to generate and send fsr to customer , employee and admin
             return res.status(200).json({
@@ -1090,11 +1093,56 @@ const employeeInventoryList = async(req,res)=>{
     }
 }
 
+const updateAdminMasterInventory = async(req,res)=>{
+    try{
+        if(!req.body.productCode || !req.body.totalQuantity || !req.body.price || !req.body.productName){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                code : 400
+            });
+        }
+
+        const data = await MasterInventory.findOne({productCode : req.body.productCode});
+        if(data && data.productCode){
+            const reqBody = {
+                productName : req.body.productName,
+                price : req.body.price,
+                totalQuantity : req.body.totalQuantity
+            }
+
+            await MasterInventory.where({_id : data._id}).updateOne({
+                $set : reqBody
+            }).then((data)=>{
+                return res.status(200).json({
+                    message: "Product Details Updated Successfully!",
+                    code : 200
+                });
+            })
+        }else {
+            await MasterInventory.create({
+                productName : req.body.productName,
+                productCode : req.body.productCode,
+                price : req.body.price,
+                totalQuantity : req.body.totalQuantity
+            }).then((data)=>{
+                return res.status(200).json({
+                    message: "Product Details Created Successfully!",
+                    code : 200,
+                    data : data
+                });
+            })
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     insertMasterInventory : insertMasterInventory,
     fetchMasterInventoryList : fetchMasterInventoryList,
     assignInventoryToEmployee : assignInventoryToEmployee,
     createFSR : createFSR,
     fsrList : fsrList,
-    employeeInventoryList : employeeInventoryList
+    employeeInventoryList : employeeInventoryList,
+    updateAdminMasterInventory : updateAdminMasterInventory
 }

@@ -74,6 +74,18 @@ let fsrSchema = new Schema({
         enum: [null,'0', '1'], // 0 = Approved , 1 = Raised / Open
         default: null
     },
+    fsrStartTime : {
+        type: String,
+        default: null
+    },
+    fsrEndTime : {
+        type: String,
+        default: null
+    },
+    fsrFinalAmount : {
+        type: String,
+        default: null
+    },
 },{ timestamps: true })
 
 module.exports = mongoose.model('FSR', fsrSchema);
