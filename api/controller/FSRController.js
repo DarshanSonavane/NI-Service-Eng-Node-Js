@@ -880,7 +880,7 @@ const assignInventoryToEmployee = async(req, res)=>{
 
 const createFSR = async(req,res)=>{
     try{
-        if(!req.body.customerCode || !req.body.contactPerson || !req.body.designation || !req.body.employeeCode || !req.body.employeeId || !req.body.complaintType || !req.body.natureOfCompliant || !req.body.productsUsed || !req.body.remark || !req.body.correctiveAction || !req.body.status || !req.body.serviceDetails || !req.body.employeeSignature || !req.body.customerSignature || !req.body.fsrLocation || !req.body.model || !req.body.fsrStartTime || !req.body.fsrEndTime || !req.body.fsrFinalAmount){
+        if(!req.body.customerCode || !req.body.contactPerson || !req.body.designation || !req.body.employeeCode || !req.body.employeeId || !req.body.complaintType || !req.body.productsUsed || !req.body.remark || !req.body.correctiveAction || !req.body.status || !req.body.serviceDetails || !req.body.employeeSignature || !req.body.customerSignature || !req.body.fsrLocation || !req.body.model || !req.body.fsrStartTime || !req.body.fsrEndTime || !req.body.fsrFinalAmount || !req.body.complaint || !req.body.natureOfCall){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 code : 400
@@ -894,10 +894,10 @@ const createFSR = async(req,res)=>{
 
         for (let product of req.body.productsUsed) {
             console.log("product" , product);
-            const inventoryProduct = employeeInventory.find(p => p.productId.toString() === product.productId.toString());
+            const inventoryProduct = employeeInventory.find(p => p.productId.toString() === product._id.toString());
             
             if (!inventoryProduct || inventoryProduct.assignedQuantity < product.quantityUsed) {
-              return res.status(400).json({message : `Insufficient quantity for product ${product.product_id}`});
+              return res.status(400).json({message : `Insufficient quantity for product ${product._id}`});
             }else {
                 console.log("inventoryProduct" , inventoryProduct , employeeInventory.assignedQuantity , product.quantityUsed);
                 const availableQuantiity = parseInt(inventoryProduct.assignedQuantity) - parseInt(product.quantityUsed)
@@ -905,7 +905,7 @@ const createFSR = async(req,res)=>{
                     assignedQuantity : availableQuantiity
                 }
                 
-                await EmployeeInventory.where({productId : product.productId}).updateOne({
+                await EmployeeInventory.where({productId : product._id}).updateOne({
                     $set : updateData
                 }).then(async(data)=>{});
             }
@@ -918,7 +918,6 @@ const createFSR = async(req,res)=>{
             employeeCode : req.body.employeeCode,
             employeeId : req.body.employeeId,
             complaintType : req.body.complaintType,
-            natureOfCompliant : req.body.natureOfCompliant,
             productsUsed : req.body.productsUsed,
             remark : req.body.remark,
             correctiveAction : req.body.correctiveAction,
@@ -931,9 +930,13 @@ const createFSR = async(req,res)=>{
             fsrStatus : '1',
             fsrStartTime : req.body.fsrStartTime,
             fsrEndTime : req.body.fsrEndTime,
-            fsrFinalAmount : req.body.fsrFinalAmount
+            fsrFinalAmount : req.body.fsrFinalAmount,
+            isChargeable : req.body.isChargeable,
+            natureOfCall : req.body.natureOfCall,
+            complaint : req.body.complaint
         }).then(async(data)=>{
             // write function to generate and send fsr to customer , employee and admin
+            // await generateAndSendFSR(data._id);
             return res.status(200).json({
                 message: "FSR Created Successfully",
                 code : 200,
@@ -1135,6 +1138,123 @@ const updateAdminMasterInventory = async(req,res)=>{
     }catch(err){
         console.log(err);
     }
+}
+
+const generateAndSendFSR=async(fsrId)=>{
+    try{
+        const fsrData = await FSR.findOne({_id : fsrId});
+        if(fsrData){
+            const customerData = await CustomerDetails.findOne({customerCode : fsrData.customerCode}).select({customerName : 1 , city : 1 , stateCode : 1 , email : 1});
+            const employeeData = await Employee.findOne({employeeCode : fsrData.employeeCode}).select({firstName : 1 , lastName : 1 , employeeCode : 1 , email : 1});
+            const machineDetails = await MachineModel.findOne({CUSTOMER_CODE : fsrData.customerCode , MODEL : fsrData.model});
+            const fsrNumber = Math.floor(1000 + Math.random() * 9000);
+            const customerNameLocation = customerData.customerName + " ," + customerData.city + "," + customerData.stateCode;
+            const customerName = customerData.customerName;
+            const currentDate = new Date();
+            await generateBarcodeForFSRRequest(fsrId , customerData.customerName);
+            const fileName = '../templates/fsr.ejs' // need to create ejs file
+            ejs.renderFile(
+                path.join(__dirname, fileName),{
+                    serialNumber : fsrNumber,
+                    fsrDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
+                    customerNameLocation : customerNameLocation,
+                    customerName : customerName,
+                    contactPerson : fsrData.contactPerson,
+                    employeeName : employeeData.firstName + " " + employeeData.lastName,
+                    designation : fsrData.designation,
+                    fsrStartTime : epochToHumanReadable(fsrData.fsrStartTime),
+                    fsrEndTime : epochToHumanReadable(fsrData.fsrEndTime),
+                    model : fsrData.model,
+                    machineNumber : 123456,//machineDetails.MACHINE_NO,
+                    complaintType : fsrData.complaintType,
+                    natureOfCall : fsrData.natureOfCall,
+                    serviceDetails : fsrData.serviceDetails,
+                    correctiveAction : fsrData.correctiveAction,
+                    status : fsrData.status,
+                    productsUsed : fsrData.productsUsed,
+                    customerCode : fsrData.customerCode,
+                    remark : fsrData.remark,
+                    employeeSignature : fsrData.employeeSignature,
+                    customerSignature : fsrData.customerSignature,
+                    fsrLocation : fsrData.fsrLocation,
+                    fsrFinalAmount : fsrData.fsrFinalAmount,
+                    isChargeable : fsrData.isChargeable,
+                    employeeCode : fsrData.employeeCode,
+                    employeeId : fsrData.employeeId,
+                    logoPath : `${constants.LOCAL_FILE_PATH}ni-fsr-logo.jpg`,
+                    qrURL : `${constants.LOCAL_FILE_PATH}QR-Codes/FSR/qr-code_${fsrData._id}.png`
+                },async (err, newHtml) => {
+                    if(err){
+                        console.log(err);
+                        return;
+                    }
+
+                    const outputPath = `./assets/uploads/FSR/${customerName}_${fsrId}.pdf`;
+                    var options = {
+                        format: 'A4',
+                        border: '0.5cm',
+                        zoomFactor: '0.5',
+                        timeout : 90000,
+                        renderDelay: 3000,
+                        // other options
+                    };
+
+                    try {
+                        // Generate the PDF
+                        pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
+                            if (err) return console.log(err);
+                            console.log(`PDF saved to ${res.filename}`);
+                            const htmlEmailContents = 
+                            `<html>
+                                <body>
+                                    <p>Field Service Report generated for your complaint with following details</p>                
+                                    <!-- Footer content with an embedded image -->
+                                    <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: left;">
+                                        <p><b>Best Regards</b></p>
+                                            <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
+                                            <p><b>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</b></p>
+                                            <p><b>Contact Us : 9892151843</b></p>
+                                            <p><b>Email : <a href="mailto:service@niserviceeng.com">service@niserviceeng.com</a></b></p>
+                                            <p><b><a href="http://www.niserviceeng.com" style="color: green;">Website</a></b></p>                  
+                                    </footer>
+                                </body>
+                            </html>`;
+                            const subject = `Field Service Report`;
+                            let receiverEmail = [customerData.email , employeeData.email];
+                                                    
+                            await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
+                        });
+                        // return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});
+                    } catch (error) {
+                        console.error('Error generating PDF:', error);
+                    }
+                }
+            )
+            
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const generateBarcodeForFSRRequest =  async(fsrId , customerName)=>{
+    try{
+        const URL = `http://13.49.111.133:3000/uploads/FSR/${customerName}_${fsrId}.pdf`;
+        const qrSvg = qr.imageSync(URL, { type: 'png' });
+        const filePath = `./assets/QR-Codes/FSR/qr-code_${fsrId}.png`
+        // Save the image to a file
+        fs.writeFileSync(filePath, qrSvg);
+        console.log("QR Generated and saved successfully!" , filePath);
+    }catch(err){
+        console.log(err);
+    }
+}
+
+function epochToHumanReadable(epochTime) {
+    const date = new Date(epochTime * 1000);
+    const currentDateTime = date.toLocaleString();
+    const timeArr = currentDateTime.split(',')[1];
+    return timeArr;
 }
 
 module.exports = {

@@ -35,8 +35,19 @@ const createServiceRequest = async (req,res) =>{
                             if(status){
                                 await ServiceRequest.findOne({_id : data._id}).populate("customerId").populate("complaintType").then(async (res)=>{
                                     if(res){
-                                        let machineType = req.body.machineType == '0' ? 'Petrol' : 'Diesel';
+                                        if(req.body.machineType == '0'){
+                                            machineType = 'Petrol';
+                                        }else if(req.body.machineType == '1'){
+                                            machineType = 'Diesel';
+                                        }else if(req.body.machineType == '2'){
+                                            machineType = 'Combo';
+                                        }
                                         sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , null , res['customerId']['city'] , res['customerId']['mobile'] , 'service');
+                                        let obj = {
+                                            customerCode :  res['customerId']['customerCode'],
+                                            otpType : 'complaint'
+                                        }
+                                        await generateOTPForServiceRequest(obj);
                                     }
                                 })
                                 return res.status(200).json({ code : "200" , message: "Service Request Created Successfully!!", data: data });
@@ -508,13 +519,13 @@ const formatData = async(data , assignedData)=>{
 
 const generateAndSendOTP = async(req,res)=>{
     try{
-        if(!req.body.customerCode){
+        if(!req.body.customerCode || !req.body.otpType){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,
             });
         }
-        const customerOTPDetails = await CustomerOTP.findOne({ customerCode : req.body.customerCode});
+        const customerOTPDetails = await CustomerOTP.findOne({ customerCode : req.body.customerCode , otpType : req.body.otpType});
         console.log('customerOTPDetails' , customerOTPDetails);
         if(customerOTPDetails && customerOTPDetails.status == '1'){
             reqData = {
@@ -534,7 +545,7 @@ const generateAndSendOTP = async(req,res)=>{
             })
         }
         const otp = Math.floor(1000 + Math.random() * 9000);;
-        const otpType = 'Complaints';
+        const otpType = req.body.otpType;
         const status = '1';
         const data = await CustomerOTP.create({
             customerCode : req.body.customerCode,
@@ -544,7 +555,8 @@ const generateAndSendOTP = async(req,res)=>{
         }).then(async (data) =>{
             const customerDetails = await CustomerDetails.findOne({ customerCode : req.body.customerCode});
             if(customerDetails && customerDetails.email){
-                sendOneTimeVerificationEmail('One Time Verification code' , customerDetails , otp);
+                const text = 'Your one time verification password for initiating Service Request is :'
+                sendOneTimeVerificationEmail('One Time Verification code' , customerDetails , otp ,text);
                 return res.status(200).json({ code : "200" , message: "Verification email sent Successfully!!" });
             }
         })
@@ -555,14 +567,14 @@ const generateAndSendOTP = async(req,res)=>{
 
 const verifyOTP = async(req,res)=>{
     try{
-        if(!req.body.otp || !req.body.customerCode){
+        if(!req.body.otp || !req.body.customerCode || !req.body.otpType){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,
             });
         }
 
-        const otpData = await CustomerOTP.findOne({customerCode : req.body.customerCode , otp : req.body.otp , status : "1"});
+        const otpData = await CustomerOTP.findOne({customerCode : req.body.customerCode , otp : req.body.otp , status : "1" , otpType : req.body.otpType});
         if(otpData){
             return res.status(200).json({ code : "200" , message: "OTP verified Successfully!!" });
         }else {
@@ -998,6 +1010,42 @@ const createUpdateAMCAmount = async(req,res)=>{
                 message: "Internal server error",
                 status: false,
             });
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
+async function generateOTPForServiceRequest(obj){
+    try{
+        const customerOTPDetails = await CustomerOTP.findOne({ customerCode : obj.customerCode , otpType : obj.otpType});
+        if(customerOTPDetails && customerOTPDetails.status == '1'){
+            reqData = {
+                status : '0'
+            }
+
+            await CustomerOTP.where({
+                customerCode : obj.customerCode
+            }).updateOne({
+                $set : reqData
+            }).then(async(custUpdatedData)=>{}).catch((err)=>{
+                console.log(err);
+            })
+        }
+        const otp = Math.floor(1000 + Math.random() * 9000);;
+        const otpType = obj.customerCode;
+        const status = '1';
+        const data = await CustomerOTP.create({
+            customerCode : obj.customerCode,
+            status : status,
+            otp : otp,
+            otpType : otpType
+        }).then(async (data) =>{
+            const customerDetails = await CustomerDetails.findOne({ customerCode : obj.customerCode});
+            if(customerDetails && customerDetails.email){
+                const text = 'Please share this OTP with service engineer when he will visit your center before submiting FSR : '
+                sendOneTimeVerificationEmail('One Time Verification code' , customerDetails , otp , text);
+            }
         })
     }catch(err){
         console.log(err);

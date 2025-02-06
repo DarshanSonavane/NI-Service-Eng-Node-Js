@@ -333,7 +333,7 @@ const generateAndSendCalibration = async(req,res)=>{
                     } catch (error) {
                         console.error('Error generating PDF:', error);
                     }
-                })
+            })
         }else {
             return res.status(400).json({ code : "400" , message: "Machine Details OR Customer Email Not Found!"});
         }

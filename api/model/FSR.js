@@ -23,10 +23,6 @@ let fsrSchema = new Schema({
         type: String,
         default: null
     },
-    natureOfCompliant : {
-        type: String,
-        default: null
-    },
     productsUsed: [
         {
           productName: { type: String, required: true },
@@ -35,6 +31,7 @@ let fsrSchema = new Schema({
           rate: { type: String, required: true },
           amount: { type: String, required: true },
           gstAmount: { type: String, required: true },
+          _id : { type: String, required: true },
         }
     ],
     remark : {
@@ -86,6 +83,16 @@ let fsrSchema = new Schema({
         type: String,
         default: null
     },
+    isChargeable : {
+        type: String,
+        enum: [null,'0', '1'], // 0 = Not Chargeable , 1 = Chargeable
+        default: null
+    },
+    complaint : {type: Schema.Types.ObjectId, ref: 'ServiceRequest'},
+    natureOfCall : {
+        type: String,
+        default: null
+    }
 },{ timestamps: true })
 
 module.exports = mongoose.model('FSR', fsrSchema);

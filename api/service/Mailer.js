@@ -116,7 +116,7 @@ const sendMail = ( customerName,customercode, complaintType , machineType , empl
 
 sendMailWithAttachment = (htmlEmailContents, toMail, subject , path) => {
   console.log(path);
-  let mailList = ['nilesh@niserviceeng.com', toMail.trim()]; 
+  let mailList = ['nilesh@niserviceeng.com', toMail]; 
   var mailOptions = {
       from: 'admin@niserviceeng.com',
       to: mailList,
@@ -134,7 +134,7 @@ sendMailWithAttachment = (htmlEmailContents, toMail, subject , path) => {
   });
 }
 
-sendOneTimeVerificationEmail = (subject , data , otp) =>{
+sendOneTimeVerificationEmail = (subject , data , otp , text) =>{
   console.log('data', data);
   var mailOptions = {
     from: 'admin@niserviceeng.com',
@@ -144,7 +144,7 @@ sendOneTimeVerificationEmail = (subject , data , otp) =>{
     <p>Dear Customer,</p>
     <p>${data.customerName} - ${data.customerCode}</p>
     <p>${data.city} , ${data.stateCode}</p>
-    <p>Your one time verification password for initiating Service Request is : <b>${otp}</b></p>
+    <p>${text}<b>${otp}</b></p>
     <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: left;">
           <p><b>Best Regards</b></p>
 	        <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO-GIF.gif" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
@@ -153,8 +153,7 @@ sendOneTimeVerificationEmail = (subject , data , otp) =>{
           <p><b>Email : <a href="mailto:service@niserviceeng.com">service@niserviceeng.com</a></b></p>
           <p><b><a href="http://www.niserviceeng.com" style="color: green;">Website</a></b></p>
         </footer>
-    </body></html>
-    `
+    </body></html>`
 };
 
   transporter.sendMail(mailOptions, function (error, info) {
