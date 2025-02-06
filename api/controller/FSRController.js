@@ -895,9 +895,9 @@ const createFSR = async(req,res)=>{
         for (let product of req.body.productsUsed) {
             console.log("product" , product);
             const inventoryProduct = employeeInventory.find(p => p.productId.toString() === product._id.toString());
-            
+            console.log("Inventory Product" , inventoryProduct);
             if (!inventoryProduct || inventoryProduct.assignedQuantity < product.quantityUsed) {
-              return res.status(400).json({message : `Insufficient quantity for product ${product._id}`});
+              return res.status(400).json({message : `Insufficient quantity for product ${product._id}-${product.productName}`});
             }else {
                 console.log("inventoryProduct" , inventoryProduct , employeeInventory.assignedQuantity , product.quantityUsed);
                 const availableQuantiity = parseInt(inventoryProduct.assignedQuantity) - parseInt(product.quantityUsed)
