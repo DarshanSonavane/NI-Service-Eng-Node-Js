@@ -883,7 +883,7 @@ const createFSR = async(req,res)=>{
         if(!req.body.customerCode || !req.body.contactPerson || !req.body.designation || !req.body.employeeCode || !req.body.employeeId || !req.body.complaintType || !req.body.productsUsed || !req.body.remark || !req.body.correctiveAction || !req.body.status || !req.body.serviceDetails || !req.body.employeeSignature || !req.body.customerSignature || !req.body.fsrLocation || !req.body.model || !req.body.fsrStartTime || !req.body.fsrEndTime || !req.body.fsrFinalAmount || !req.body.complaint || !req.body.natureOfCall){
             return res.status(400).json({
                 message: "Required Fields are missing",
-                code : 400
+                code : "400"
             });
         }
         const employeeInventory = await EmployeeInventory.find({ employeeId : req.body.employeeId });
@@ -939,7 +939,7 @@ const createFSR = async(req,res)=>{
             // await generateAndSendFSR(data._id);
             return res.status(200).json({
                 message: "FSR Created Successfully",
-                code : 200,
+                code : "200",
                 data : data
             });
         }).catch((err)=>{
