@@ -519,13 +519,13 @@ const formatData = async(data , assignedData)=>{
 
 const generateAndSendOTP = async(req,res)=>{
     try{
-        if(!req.body.customerCode || !req.body.otpType){
+        if(!req.body.customerCode ){ //|| !req.body.otpType
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,
             });
         }
-        const customerOTPDetails = await CustomerOTP.findOne({ customerCode : req.body.customerCode , otpType : req.body.otpType});
+        const customerOTPDetails = await CustomerOTP.findOne({ customerCode : req.body.customerCode }); //, otpType : req.body.otpType
         console.log('customerOTPDetails' , customerOTPDetails);
         if(customerOTPDetails && customerOTPDetails.status == '1'){
             reqData = {
@@ -545,7 +545,7 @@ const generateAndSendOTP = async(req,res)=>{
             })
         }
         const otp = Math.floor(1000 + Math.random() * 9000);;
-        const otpType = req.body.otpType;
+        const otpType = 'complaint';//req.body.otpType;
         const status = '1';
         const data = await CustomerOTP.create({
             customerCode : req.body.customerCode,
@@ -567,14 +567,14 @@ const generateAndSendOTP = async(req,res)=>{
 
 const verifyOTP = async(req,res)=>{
     try{
-        if(!req.body.otp || !req.body.customerCode || !req.body.otpType){
+        if(!req.body.otp || !req.body.customerCode){ //|| !req.body.otpType
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,
             });
         }
 
-        const otpData = await CustomerOTP.findOne({customerCode : req.body.customerCode , otp : req.body.otp , status : "1" , otpType : req.body.otpType});
+        const otpData = await CustomerOTP.findOne({customerCode : req.body.customerCode , otp : req.body.otp , status : "1" }); //, otpType : req.body.otpType
         if(otpData){
             return res.status(200).json({ code : "200" , message: "OTP verified Successfully!!" });
         }else {
