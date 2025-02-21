@@ -25,6 +25,7 @@ let fsrSchema = new Schema({
     },
     productsUsed: [
         {
+          productCode: { type: String, required: true },  
           productName: { type: String, required: true },
           quantityUsed: { type: Number, required: true },
           chargeable: { type: String, required: false },

@@ -936,7 +936,7 @@ const createFSR = async(req,res)=>{
             complaint : req.body.complaint
         }).then(async(data)=>{
             // write function to generate and send fsr to customer , employee and admin
-            // await generateAndSendFSR(data._id);
+            await generateAndSendFSR(data._id);
             return res.status(200).json({
                 message: "FSR Created Successfully",
                 code : "200",
@@ -1085,7 +1085,7 @@ const employeeInventoryList = async(req,res)=>{
                 code : 400
             });
         }
-        const employeeInventory = await EmployeeInventory.find({ employeeId  : req.body.employeeId}).populate('employeeId',{_id : 1 , firstName : 1 , lastName : 1}).populate('productId',{_id : 1 , productName : 1 , price : 1});
+        const employeeInventory = await EmployeeInventory.find({ employeeId  : req.body.employeeId}).populate('employeeId',{_id : 1 , firstName : 1 , lastName : 1}).populate('productId',{_id : 1 , productName : 1 , price : 1 , productCode : 1});
         return res.status(200).json({
             message: "Employee Inventory List",
             code : 200,
@@ -1182,7 +1182,9 @@ const generateAndSendFSR=async(fsrId)=>{
                     employeeCode : fsrData.employeeCode,
                     employeeId : fsrData.employeeId,
                     logoPath : `${constants.LOCAL_FILE_PATH}ni-fsr-logo.jpg`,
-                    qrURL : `${constants.LOCAL_FILE_PATH}QR-Codes/FSR/qr-code_${fsrData._id}.png`
+                    qrURL : `${constants.LOCAL_FILE_PATH}QR-Codes/FSR/qr-code_${fsrData._id}.png`,
+                    maxLimit : 10,
+                    gstPercent : '18%'
                 },async (err, newHtml) => {
                     if(err){
                         console.log(err);
