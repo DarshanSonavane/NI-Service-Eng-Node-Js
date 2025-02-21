@@ -1042,7 +1042,7 @@ const fsrList = async(req,res)=>{
             .populate('employeeId', 'firstName lastName')
 
             if (fsrData.length === 0) {
-                return res.status(404).json({message : "No FSR data found for this employee."});
+                return res.status(204).json({message : "No FSR data found for this employee."});
             }
 
             const customerCodes = fsrData.map(fsr => fsr.customerCode);  // Get all customerCodes from the FSR data
@@ -1085,7 +1085,7 @@ const employeeInventoryList = async(req,res)=>{
                 code : 400
             });
         }
-        const employeeInventory = await EmployeeInventory.find({ employeeId  : req.body.employeeId}).populate('employeeId',{_id : 1 , firstName : 1 , lastName : 1}).populate('productId',{_id : 1 , productName : 1 , price : 1 , productCode : 1});
+        const employeeInventory = await EmployeeInventory.find({ employeeId  : req.body.employeeId, assignedQuantity: { $gt: 0 }}).populate('employeeId',{_id : 1 , firstName : 1 , lastName : 1}).populate('productId',{_id : 1 , productName : 1 , price : 1 , productCode : 1});
         return res.status(200).json({
             message: "Employee Inventory List",
             code : 200,
