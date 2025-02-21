@@ -936,7 +936,7 @@ const createFSR = async(req,res)=>{
             complaint : req.body.complaint
         }).then(async(data)=>{
             // write function to generate and send fsr to customer , employee and admin
-            await generateAndSendFSR(data._id);
+            // await generateAndSendFSR(data._id);
             return res.status(200).json({
                 message: "FSR Created Successfully",
                 code : "200",
