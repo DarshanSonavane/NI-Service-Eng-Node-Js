@@ -93,7 +93,11 @@ let fsrSchema = new Schema({
     natureOfCall : {
         type: String,
         default: null
-    }
+    },
+    totalGSTAmount : {
+        type: String,
+        default: null
+    },
 },{ timestamps: true })
 
 module.exports = mongoose.model('FSR', fsrSchema);
