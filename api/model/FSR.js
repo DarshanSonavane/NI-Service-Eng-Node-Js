@@ -28,7 +28,7 @@ let fsrSchema = new Schema({
           productCode: { type: String, required: true },  
           productName: { type: String, required: true },
           quantityUsed: { type: Number, required: true },
-          chargeable: { type: String, required: false },
+          chargeable: { type: String, required: true },
           rate: { type: String, required: true },
           amount: { type: String, required: true },
           gstAmount: { type: String, required: true },

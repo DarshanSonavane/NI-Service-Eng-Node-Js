@@ -1042,7 +1042,7 @@ const fsrList = async(req,res)=>{
             .populate('employeeId', 'firstName lastName')
 
             if (fsrData.length === 0) {
-                return res.status(204).json({message : "No FSR data found for this employee."});
+                return res.status(200).json({code: 200, message : "No FSR data found for this employee.", fsrData: fsrData});
             }
 
             const customerCodes = fsrData.map(fsr => fsr.customerCode);  // Get all customerCodes from the FSR data
