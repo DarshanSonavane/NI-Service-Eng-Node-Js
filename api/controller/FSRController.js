@@ -933,7 +933,8 @@ const createFSR = async(req,res)=>{
             fsrFinalAmount : req.body.fsrFinalAmount,
             isChargeable : req.body.isChargeable,
             natureOfCall : req.body.natureOfCall,
-            complaint : req.body.complaint
+            complaint : req.body.complaint,
+            totalGSTAmount : req.body.totalGSTAmount
         }).then(async(data)=>{
             // write function to generate and send fsr to customer , employee and admin
             // await generateAndSendFSR(data._id);
