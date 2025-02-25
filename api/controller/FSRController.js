@@ -910,7 +910,14 @@ const createFSR = async(req,res)=>{
                 }).then(async(data)=>{});
             }
         }
-
+        let finalAmount;
+        let serviceVisitCharge = 0;
+        if(req.body.natureOfCall == 'Service Visit'){
+            serviceVisitCharge = 2950;
+            finalAmount=  parseFloat(req.body.fsrFinalAmount) + parseFloat(req.body.totalGSTAmount) + 2950
+        }else {
+            finalAmount =parseFloat(req.body.fsrFinalAmount) + parseFloat(req.body.totalGSTAmount)
+        }
         await FSR.create({
             customerCode : req.body.customerCode,
             contactPerson : req.body.contactPerson,
@@ -930,14 +937,15 @@ const createFSR = async(req,res)=>{
             fsrStatus : '1',
             fsrStartTime : req.body.fsrStartTime,
             fsrEndTime : req.body.fsrEndTime,
-            fsrFinalAmount : req.body.fsrFinalAmount,
             isChargeable : req.body.isChargeable,
             natureOfCall : req.body.natureOfCall,
             complaint : req.body.complaint,
-            totalGSTAmount : req.body.totalGSTAmount
+            totalGSTAmount : req.body.totalGSTAmount,
+            serviceVisit: serviceVisitCharge,
+            fsrFinalAmount : finalAmount
         }).then(async(data)=>{
             // write function to generate and send fsr to customer , employee and admin
-            // await generateAndSendFSR(data._id);
+            await generateAndSendFSR(data._id);
             return res.status(200).json({
                 message: "FSR Created Successfully",
                 code : "200",
@@ -1185,7 +1193,9 @@ const generateAndSendFSR=async(fsrId)=>{
                     logoPath : `${constants.LOCAL_FILE_PATH}ni-fsr-logo.jpg`,
                     qrURL : `${constants.LOCAL_FILE_PATH}QR-Codes/FSR/qr-code_${fsrData._id}.png`,
                     maxLimit : 10,
-                    gstPercent : '18%'
+                    gstPercent : '18%',
+                    serviceVisit : fsrData.serviceVisit,
+                    totalGSTAmount : fsrData.totalGSTAmount
                 },async (err, newHtml) => {
                     if(err){
                         console.log(err);
