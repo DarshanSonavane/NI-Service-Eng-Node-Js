@@ -1028,7 +1028,8 @@ const fsrList = async(req,res)=>{
                     status: 1,
                     serviceDetails: 1,
                     fsrLocation : 1,
-                    fsrStatus: 1
+                    fsrStatus: 1,
+                    serviceVisit: 1
                   }
                 }
               ]);
