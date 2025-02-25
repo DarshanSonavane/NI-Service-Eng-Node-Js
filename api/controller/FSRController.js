@@ -1190,8 +1190,8 @@ const generateAndSendFSR=async(fsrId)=>{
                     isChargeable : fsrData.isChargeable,
                     employeeCode : fsrData.employeeCode,
                     employeeId : fsrData.employeeId,
-                    logoPath : `${constants.LOCAL_FILE_PATH}ni-fsr-logo.jpg`,
-                    qrURL : `${constants.LOCAL_FILE_PATH}QR-Codes/FSR/qr-code_${fsrData._id}.png`,
+                    logoPath : `${constants.SERVER_FILE_PATH}ni-fsr-logo.jpg`,
+                    qrURL : `${constants.SERVER_FILE_PATH}QR-Codes/fsr/qr-code_${fsrData._id}.png`,
                     maxLimit : 10,
                     gstPercent : '18%',
                     serviceVisit : fsrData.serviceVisit,
@@ -1202,7 +1202,7 @@ const generateAndSendFSR=async(fsrId)=>{
                         return;
                     }
 
-                    const outputPath = `./assets/uploads/FSR/${customerName}_${fsrId}.pdf`;
+                    const outputPath = `./assets/uploads/fsr/${customerName}_${fsrId}.pdf`;
                     var options = {
                         format: 'A4',
                         border: '0.5cm',
