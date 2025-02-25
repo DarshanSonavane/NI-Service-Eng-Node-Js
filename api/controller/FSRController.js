@@ -912,7 +912,7 @@ const createFSR = async(req,res)=>{
         }
         let finalAmount;
         let serviceVisitCharge = 0;
-        if(req.body.natureOfCall == 'Service Visit'){
+        if(req.body.natureOfCall == 'Service Call'){
             serviceVisitCharge = 2950;
             finalAmount=  parseFloat(req.body.fsrFinalAmount) + parseFloat(req.body.totalGSTAmount) + 2950
         }else {
