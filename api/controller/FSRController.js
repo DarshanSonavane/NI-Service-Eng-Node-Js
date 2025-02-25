@@ -1252,9 +1252,9 @@ const generateAndSendFSR=async(fsrId)=>{
 
 const generateBarcodeForFSRRequest =  async(fsrId , customerName)=>{
     try{
-        const URL = `http://13.49.111.133:3000/uploads/FSR/${customerName}_${fsrId}.pdf`;
+        const URL = `http://13.49.111.133:3000/uploads/fsr/${customerName}_${fsrId}.pdf`;
         const qrSvg = qr.imageSync(URL, { type: 'png' });
-        const filePath = `./assets/QR-Codes/FSR/qr-code_${fsrId}.png`
+        const filePath = `./assets/QR-Codes/fsr/qr-code_${fsrId}.png`
         // Save the image to a file
         fs.writeFileSync(filePath, qrSvg);
         console.log("QR Generated and saved successfully!" , filePath);
