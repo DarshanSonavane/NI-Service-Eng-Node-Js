@@ -279,13 +279,13 @@ const generateAndSendCalibration = async(req,res)=>{
                     sign : `${constants.SERVER_FILE_PATH}sign.png`,
                     stamp : `${constants.SERVER_FILE_PATH}nistamplogo.png`,
                     swacha : `${constants.SERVER_FILE_PATH}swach.jpg`,
-                    qrURL : `${constants.SERVER_FILE_PATH}QR-Codes/qr-code_${req.body.calibrationId}.png`
+                    qrURL : `${constants.SERVER_FILE_PATH}QR-Codes/calibration/qr-code_${req.body.calibrationId}.png`
                 },async (err, newHtml) => {
                     if(err){
                         console.log(err);
                     }
                     
-                    const outputPath = `./assets/uploads/${calibrationrequestData['customerId']['customerName']}_${req.body.calibrationId}.pdf`;
+                    const outputPath = `./assets/uploads/calibration/${calibrationrequestData['customerId']['customerName']}_${req.body.calibrationId}.pdf`;
                     // const options = { type: "A4" };
                     // const options = { type: 'A4'};
                     var options = {
@@ -440,7 +440,7 @@ function getFileName(type , state){
 
 const generateBarcodeForCalibrationRequest =  async(calibrationId , customerName)=>{
     try{
-        const URL = `http://13.49.111.133:3000/uploads/${customerName}_${calibrationId}.pdf`;
+        const URL = `http://13.49.111.133:3000/uploads/calibration/${customerName}_${calibrationId}.pdf`;
         const qrSvg = qr.imageSync(URL, { type: 'png' });
         const filePath = `./assets/QR-Codes/qr-code_${calibrationId}.png`
         // Save the image to a file
