@@ -1262,11 +1262,28 @@ const generateBarcodeForFSRRequest =  async(fsrId , customerName)=>{
     }
 }
 
-function epochToHumanReadable(epochTime) {
+/* function epochToHumanReadable(epochTime) {
     const date = new Date(epochTime * 1000);
     const currentDateTime = date.toLocaleString(undefined, {timeZone: 'Asia/Kolkata'});
     const timeArr = currentDateTime.split(',')[1];
     return timeArr;
+} */
+
+function epochToHumanReadable(epochTime) {
+    // Assuming epochTime is in milliseconds
+    const date = new Date(epochTime);
+
+    const options = {
+        timeZone: 'Asia/Kolkata',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true, // 12-hour clock with AM/PM
+    };
+
+    // Format the time based on the given options
+    const formattedTime = new Intl.DateTimeFormat('en-IN', options).format(date);
+    return formattedTime;
 }
 
 module.exports = {
