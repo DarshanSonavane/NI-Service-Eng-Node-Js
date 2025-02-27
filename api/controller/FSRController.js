@@ -1262,12 +1262,54 @@ const generateBarcodeForFSRRequest =  async(fsrId , customerName)=>{
     }
 }
 
-function epochToHumanReadable(epochTime) {
+/* function epochToHumanReadable(epochTime) {
     const date = new Date(epochTime * 1000);
     const currentDateTime = date.toLocaleString();
     const timeArr = currentDateTime.split(',')[1];
     return timeArr;
+} */
+
+function epochToHumanReadable(epochTime) {
+    // Assuming epochTime is in milliseconds
+    const date = new Date(epochTime);  
+
+    // Get the time in UTC
+    let hours = date.getUTCHours();
+    let minutes = date.getUTCMinutes();
+    let seconds = date.getUTCSeconds();
+
+    // Adjust for Asia/Kolkata timezone (UTC +5:30)
+    hours += 5;
+    minutes += 30;
+
+    // Handle overflow of minutes
+    if (minutes >= 60) {
+        minutes -= 60;
+        hours += 1;
+    }
+
+    // Handle overflow of hours
+    if (hours >= 24) {
+        hours -= 24;
+    }
+
+    // Format the date manually
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1; // Months are zero-indexed in JS
+    const year = date.getUTCFullYear();
+
+    // Format time with AM/PM
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours > 12 ? hours - 12 : hours;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+    // Final formatted string
+    const formattedTime = `${formattedHours}:${formattedMinutes}:${formattedSeconds} ${ampm}`;
+
+    return formattedTime;
 }
+
 
 module.exports = {
     insertMasterInventory : insertMasterInventory,
