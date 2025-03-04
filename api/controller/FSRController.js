@@ -1170,10 +1170,10 @@ const generateAndSendFSR=async(fsrId)=>{
                     contactPerson : fsrData.contactPerson,
                     employeeName : employeeData.firstName + " " + employeeData.lastName,
                     designation : fsrData.designation,
-                    fsrStartTime : epochToHumanReadable(fsrData.fsrStartTime),
-                    fsrEndTime : epochToHumanReadable(fsrData.fsrEndTime),
+                    fsrStartTime : fsrData.fsrStartTime,
+                    fsrEndTime : fsrData.fsrEndTime,
                     model : fsrData.model,
-                    machineNumber : 123456,//machineDetails.MACHINE_NO,
+                    machineNumber : machineDetails.MACHINE_NO,
                     complaintType : fsrData.complaintType,
                     natureOfCall : fsrData.natureOfCall,
                     serviceDetails : fsrData.serviceDetails,
@@ -1236,7 +1236,7 @@ const generateAndSendFSR=async(fsrId)=>{
                                                     
                             await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
                         });
-                        // return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});
+                        // return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});   
                     } catch (error) {
                         console.error('Error generating PDF:', error);
                     }
@@ -1260,31 +1260,7 @@ const generateBarcodeForFSRRequest =  async(fsrId , customerName)=>{
     }catch(err){
         console.log(err);
     }
-}
-
-/* function epochToHumanReadable(epochTime) {
-    const date = new Date(epochTime * 1000);
-    const currentDateTime = date.toLocaleString(undefined, {timeZone: 'Asia/Kolkata'});
-    const timeArr = currentDateTime.split(',')[1];
-    return timeArr;
-} */
-
-function epochToHumanReadable(epochTime) {
-    // Assuming epochTime is in milliseconds
-    const date = new Date(epochTime);
-
-    const options = {
-        timeZone: 'Asia/Kolkata',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: true, // 12-hour clock with AM/PM
-    };
-
-    // Format the time based on the given options
-    const formattedTime = new Intl.DateTimeFormat('en-IN', options).format(date);
-    return formattedTime;
-}
+}    
 
 module.exports = {
     insertMasterInventory : insertMasterInventory,
