@@ -880,7 +880,6 @@ const assignInventoryToEmployee = async(req, res)=>{
 
 const createFSR = async(req,res)=>{
     try{
-        console.log("Req body", req.body);
         if(!req.body.customerCode ||
             !req.body.contactPerson ||
             !req.body.designation ||
@@ -1184,6 +1183,7 @@ const generateAndSendFSR=async(fsrId)=>{
             const currentDate = new Date();
             await generateBarcodeForFSRRequest(fsrId , customerData.customerName);
             const fileName = '../templates/fsr.ejs' // need to create ejs file
+            console.log("machineDetails", machineDetails)
             ejs.renderFile(
                 path.join(__dirname, fileName),{
                     serialNumber : fsrNumber,
@@ -1196,7 +1196,7 @@ const generateAndSendFSR=async(fsrId)=>{
                     fsrStartTime : fsrData.fsrStartTime,
                     fsrEndTime : fsrData.fsrEndTime,
                     model : fsrData.model,
-                    machineNumber : machineDetails.MACHINE_NO,
+                    machineNumber : 123456, //machineDetails.MACHINE_NO,
                     complaintType : fsrData.complaintType,
                     natureOfCall : fsrData.natureOfCall,
                     serviceDetails : fsrData.serviceDetails,
