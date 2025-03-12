@@ -1257,7 +1257,7 @@ const generateAndSendFSR=async(fsrId)=>{
                             const subject = `Field Service Report`;
                             let receiverEmail = [customerData.email , employeeData.email];
                                                     
-                            await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
+                            // await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
                         });
                         // return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});   
                     } catch (error) {
