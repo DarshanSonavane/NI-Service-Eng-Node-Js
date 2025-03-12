@@ -1,5 +1,6 @@
 const mongoose =  require('mongoose');
 const Schema = mongoose.Schema;
+const Types = mongoose;
 
 let fsrSchema = new Schema({
     customerCode : {
@@ -23,18 +24,11 @@ let fsrSchema = new Schema({
         type: String,
         default: null
     },
-    productsUsed: [
-        {
-          productCode: { type: String, required: false },  
-          productName: { type: String, required: false },
-          quantityUsed: { type: Number, required: false },
-          chargeable: { type: String, required: false },
-          rate: { type: String, required: false },
-          amount: { type: String, required: false },
-          gstAmount: { type: String, required: false },
-          _id : { type: String, required: false },
-        }
-    ],
+    productsUsed: {
+        type: [Types.Mixed], // Any data structure is allowed
+        required: false,     // Optional field
+        default: [],         // Defaults to empty array if not provided
+    },
     remark : {
         type: String,
         default: null

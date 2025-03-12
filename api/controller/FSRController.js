@@ -881,7 +881,27 @@ const assignInventoryToEmployee = async(req, res)=>{
 const createFSR = async(req,res)=>{
     try{
         console.log("Req body", req.body);
-        if(!req.body.customerCode || !req.body.contactPerson || !req.body.designation || !req.body.employeeCode || !req.body.employeeId || !req.body.complaintType || !req.body.remark || !req.body.correctiveAction || !req.body.status || !req.body.serviceDetails || !req.body.employeeSignature || !req.body.customerSignature || !req.body.fsrLocation || !req.body.model || !req.body.fsrStartTime || !req.body.fsrEndTime || !req.body.fsrFinalAmount || !req.body.complaint || !req.body.natureOfCall || !req.body.totalGSTAmount){
+        if(!req.body.customerCode ||  // customerCode
+            !req.body.contactPerson || // contactPerson
+            !req.body.designation ||  // designation
+            !req.body.employeeCode || // employeeCode
+            !req.body.employeeId ||  // employeeId
+            !req.body.complaintType || // complaintType
+            !req.body.remark || // remark
+            !req.body.correctiveAction || // correctiveAction
+            !req.body.status || // status
+            !req.body.serviceDetails || // serviceDetails
+            !req.body.employeeSignature || // employeeSignature
+            !req.body.customerSignature || // customerSignature
+            !req.body.fsrLocation || // fsrLocation
+            !req.body.model || // model
+            !req.body.fsrStartTime || // fsrStartTime
+            !req.body.fsrEndTime || // fsrEndTime
+            !req.body.fsrFinalAmount || // fsrFinalAmount
+            !req.body.complaint ||  // complaint
+            !req.body.natureOfCall || // natureOfCall
+            !req.body.totalGSTAmount ){ // totalGSTAmount
+                //productsUsed
             return res.status(400).json({
                 message: "Required Fields are missing",
                 code : "400"
