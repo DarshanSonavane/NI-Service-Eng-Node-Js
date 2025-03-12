@@ -881,27 +881,26 @@ const assignInventoryToEmployee = async(req, res)=>{
 const createFSR = async(req,res)=>{
     try{
         console.log("Req body", req.body);
-        if(!req.body.customerCode ||  // customerCode
-            !req.body.contactPerson || // contactPerson
-            !req.body.designation ||  // designation
-            !req.body.employeeCode || // employeeCode
-            !req.body.employeeId ||  // employeeId
-            !req.body.complaintType || // complaintType
-            !req.body.remark || // remark
-            !req.body.correctiveAction || // correctiveAction
-            !req.body.status || // status
-            !req.body.serviceDetails || // serviceDetails
-            !req.body.employeeSignature || // employeeSignature
-            !req.body.customerSignature || // customerSignature
-            !req.body.fsrLocation || // fsrLocation
-            !req.body.model || // model
-            !req.body.fsrStartTime || // fsrStartTime
-            !req.body.fsrEndTime || // fsrEndTime
-            !req.body.fsrFinalAmount || // fsrFinalAmount
-            !req.body.complaint ||  // complaint
-            !req.body.natureOfCall || // natureOfCall
-            !req.body.totalGSTAmount ){ // totalGSTAmount
-                //productsUsed
+        if(!req.body.customerCode ||
+            !req.body.contactPerson ||
+            !req.body.designation ||
+            !req.body.employeeCode ||
+            !req.body.employeeId ||  
+            !req.body.complaintType ||
+            !req.body.remark ||
+            !req.body.correctiveAction || 
+            !req.body.status ||
+            !req.body.serviceDetails || 
+            !req.body.employeeSignature || 
+            !req.body.customerSignature || 
+            !req.body.fsrLocation || 
+            !req.body.model || 
+            !req.body.fsrStartTime || 
+            !req.body.fsrEndTime || 
+            !req.body.fsrFinalAmount ||
+            !req.body.complaint ||  
+            !req.body.natureOfCall || 
+            !req.body.totalGSTAmount ){ 
             return res.status(400).json({
                 message: "Required Fields are missing",
                 code : "400"
@@ -913,24 +912,27 @@ const createFSR = async(req,res)=>{
             return res.status(400).json({message : 'Employee inventory not found'});
         }
 
-        for (let product of req.body.productsUsed) {
-            console.log("product" , product);
-            const inventoryProduct = employeeInventory.find(p => p.productId.toString() === product._id.toString());
-            console.log("Inventory Product" , inventoryProduct);
-            if (!inventoryProduct || inventoryProduct.assignedQuantity < product.quantityUsed) {
-              return res.status(400).json({message : `Insufficient quantity for product ${product._id}-${product.productName}`});
-            }else {
-                console.log("inventoryProduct" , inventoryProduct , employeeInventory.assignedQuantity , product.quantityUsed);
-                const availableQuantiity = parseInt(inventoryProduct.assignedQuantity) - parseInt(product.quantityUsed)
-                updateData = { 
-                    assignedQuantity : availableQuantiity
+        if(req.body.productsUsed && req.body.productsUsed.length > 0){
+            for (let product of req.body.productsUsed) {
+                console.log("product" , product);
+                const inventoryProduct = employeeInventory.find(p => p.productId.toString() === product._id.toString());
+                console.log("Inventory Product" , inventoryProduct);
+                if (!inventoryProduct || inventoryProduct.assignedQuantity < product.quantityUsed) {
+                  return res.status(400).json({message : `Insufficient quantity for product ${product._id}-${product.productName}`});
+                }else {
+                    console.log("inventoryProduct" , inventoryProduct , employeeInventory.assignedQuantity , product.quantityUsed);
+                    const availableQuantiity = parseInt(inventoryProduct.assignedQuantity) - parseInt(product.quantityUsed)
+                    updateData = { 
+                        assignedQuantity : availableQuantiity
+                    }
+                    
+                    await EmployeeInventory.where({productId : product._id}).updateOne({
+                        $set : updateData
+                    }).then(async(data)=>{});
                 }
-                
-                await EmployeeInventory.where({productId : product._id}).updateOne({
-                    $set : updateData
-                }).then(async(data)=>{});
             }
         }
+        
         let finalAmount;
         let serviceVisitCharge = 0;
         if(req.body.natureOfCall == 'Service Call'){
