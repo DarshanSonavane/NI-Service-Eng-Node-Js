@@ -24,11 +24,18 @@ let fsrSchema = new Schema({
         type: String,
         default: null
     },
-    productsUsed: {
-        type: [Types.Mixed], // Any data structure is allowed
-        required: false,     // Optional field
-        default: [],         // Defaults to empty array if not provided
-    },
+    productsUsed: [
+        {
+          productCode: { type: String, required: false },  
+          productName: { type: String, required: false },
+          quantityUsed: { type: Number, required: false },
+          chargeable: { type: String, required: false },
+          rate: { type: String, required: false },
+          amount: { type: String, required: false },
+          gstAmount: { type: String, required: false },
+          _id : { type: String, required: false },
+        }
+    ],
     remark : {
         type: String,
         default: null
