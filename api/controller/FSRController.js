@@ -1183,89 +1183,90 @@ const generateAndSendFSR=async(fsrId)=>{
             const currentDate = new Date();
             await generateBarcodeForFSRRequest(fsrId , customerData.customerName);
             const fileName = '../templates/fsr.ejs' // need to create ejs file
-            console.log("machineDetails", machineDetails , fsrData)
-            ejs.renderFile(
-                path.join(__dirname, fileName),{
-                    serialNumber : fsrNumber,
-                    fsrDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
-                    customerNameLocation : customerNameLocation,
-                    customerName : customerName,
-                    contactPerson : fsrData.contactPerson,
-                    employeeName : employeeData.firstName + " " + employeeData.lastName,
-                    designation : fsrData.designation,
-                    fsrStartTime : fsrData.fsrStartTime,
-                    fsrEndTime : fsrData.fsrEndTime,
-                    model : fsrData.model,
-                    machineNumber : 123456, //machineDetails.MACHINE_NO,
-                    complaintType : fsrData.complaintType,
-                    natureOfCall : fsrData.natureOfCall,
-                    serviceDetails : fsrData.serviceDetails,
-                    correctiveAction : fsrData.correctiveAction,
-                    status : fsrData.status,
-                    productsUsed : fsrData.productsUsed,
-                    customerCode : fsrData.customerCode,
-                    remark : fsrData.remark,
-                    employeeSignature : fsrData.employeeSignature,
-                    customerSignature : fsrData.customerSignature,
-                    fsrLocation : fsrData.fsrLocation,
-                    fsrFinalAmount : fsrData.fsrFinalAmount,
-                    isChargeable : fsrData.isChargeable,
-                    employeeCode : fsrData.employeeCode,
-                    employeeId : fsrData.employeeId,
-                    logoPath : `${constants.SERVER_FILE_PATH}ni-fsr-logo.jpg`,
-                    qrURL : `${constants.SERVER_FILE_PATH}QR-Codes/fsr/qr-code_${fsrData._id}.png`,
-                    maxLimit : 10,
-                    gstPercent : '18%',
-                    serviceVisit : fsrData.serviceVisit,
-                    totalGSTAmount : fsrData.totalGSTAmount
-                },async (err, newHtml) => {
-                    if(err){
-                        console.log(err);
-                        return;
+            console.log("machineDetails", machineDetails)
+            if(machineDetails && machineDetails.MACHINE_NO){
+                ejs.renderFile(
+                    path.join(__dirname, fileName),{
+                        serialNumber : fsrNumber,
+                        fsrDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
+                        customerNameLocation : customerNameLocation,
+                        customerName : customerName,
+                        contactPerson : fsrData.contactPerson,
+                        employeeName : employeeData.firstName + " " + employeeData.lastName,
+                        designation : fsrData.designation,
+                        fsrStartTime : fsrData.fsrStartTime,
+                        fsrEndTime : fsrData.fsrEndTime,
+                        model : fsrData.model,
+                        machineNumber : machineDetails.MACHINE_NO,
+                        complaintType : fsrData.complaintType,
+                        natureOfCall : fsrData.natureOfCall,
+                        serviceDetails : fsrData.serviceDetails,
+                        correctiveAction : fsrData.correctiveAction,
+                        status : fsrData.status,
+                        productsUsed : fsrData.productsUsed,
+                        customerCode : fsrData.customerCode,
+                        remark : fsrData.remark,
+                        employeeSignature : fsrData.employeeSignature,
+                        customerSignature : fsrData.customerSignature,
+                        fsrLocation : fsrData.fsrLocation,
+                        fsrFinalAmount : fsrData.fsrFinalAmount,
+                        isChargeable : fsrData.isChargeable,
+                        employeeCode : fsrData.employeeCode,
+                        employeeId : fsrData.employeeId,
+                        logoPath : `${constants.SERVER_FILE_PATH}ni-fsr-logo.jpg`,
+                        qrURL : `${constants.SERVER_FILE_PATH}QR-Codes/fsr/qr-code_${fsrData._id}.png`,
+                        maxLimit : 10,
+                        gstPercent : '18%',
+                        serviceVisit : fsrData.serviceVisit,
+                        totalGSTAmount : fsrData.totalGSTAmount
+                    },async (err, newHtml) => {
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+    
+                        const outputPath = `./assets/uploads/fsr/${customerName}_${fsrId}.pdf`;
+                        var options = {
+                            format: 'A4',
+                            border: '0.5cm',
+                            zoomFactor: '0.5',
+                            timeout : 90000,
+                            renderDelay: 3000,
+                            // other options
+                        };
+    
+                        try {
+                            // Generate the PDF
+                            pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
+                                if (err) return console.log(err);
+                                console.log(`PDF saved to ${res.filename}`);
+                                const htmlEmailContents = 
+                                `<html>
+                                    <body>
+                                        <p>Field Service Report generated for your complaint with following details</p>                
+                                        <!-- Footer content with an embedded image -->
+                                        <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: left;">
+                                            <p><b>Best Regards</b></p>
+                                                <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
+                                                <p><b>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</b></p>
+                                                <p><b>Contact Us : 9892151843</b></p>
+                                                <p><b>Email : <a href="mailto:service@niserviceeng.com">service@niserviceeng.com</a></b></p>
+                                                <p><b><a href="http://www.niserviceeng.com" style="color: green;">Website</a></b></p>                  
+                                        </footer>
+                                    </body>
+                                </html>`;
+                                const subject = `Field Service Report`;
+                                let receiverEmail = [customerData.email , employeeData.email];
+                                                        
+                                await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
+                            });
+                            // return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});   
+                        } catch (error) {
+                            console.error('Error generating PDF:', error);
+                        }
                     }
-
-                    const outputPath = `./assets/uploads/fsr/${customerName}_${fsrId}.pdf`;
-                    var options = {
-                        format: 'A4',
-                        border: '0.5cm',
-                        zoomFactor: '0.5',
-                        timeout : 90000,
-                        renderDelay: 3000,
-                        // other options
-                    };
-
-                    try {
-                        // Generate the PDF
-                        pdf.create(newHtml, options).toFile(outputPath, async function(err, res) {
-                            if (err) return console.log(err);
-                            console.log(`PDF saved to ${res.filename}`);
-                            const htmlEmailContents = 
-                            `<html>
-                                <body>
-                                    <p>Field Service Report generated for your complaint with following details</p>                
-                                    <!-- Footer content with an embedded image -->
-                                    <footer style="margin-top: 20px; font-size: 12px; color: green; text-align: left;">
-                                        <p><b>Best Regards</b></p>
-                                            <img src="${constants.SERVER_FILE_PATH}NI-SERVICE-LOGO.jpg" alt="Company Logo" style="width: 100px; margin-top: 10px;" />
-                                            <p><b>Office No.18,2nd Floor, GNP Gallaria  MIDC Road , Dombivali (E) 421202</b></p>
-                                            <p><b>Contact Us : 9892151843</b></p>
-                                            <p><b>Email : <a href="mailto:service@niserviceeng.com">service@niserviceeng.com</a></b></p>
-                                            <p><b><a href="http://www.niserviceeng.com" style="color: green;">Website</a></b></p>                  
-                                    </footer>
-                                </body>
-                            </html>`;
-                            const subject = `Field Service Report`;
-                            let receiverEmail = [customerData.email , employeeData.email];
-                                                    
-                            // await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
-                        });
-                        // return res.status(200).json({ code : "200" , message: "Calibration certificate generated and sent on registered email!"});   
-                    } catch (error) {
-                        console.error('Error generating PDF:', error);
-                    }
-                }
-            )
-            
+                )
+            }
         }
     }catch(err){
         console.log(err);
