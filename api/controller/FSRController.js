@@ -1183,7 +1183,7 @@ const generateAndSendFSR=async(fsrId)=>{
             const currentDate = new Date();
             await generateBarcodeForFSRRequest(fsrId , customerData.customerName);
             const fileName = '../templates/fsr.ejs' // need to create ejs file
-            console.log("machineDetails", machineDetails)
+            console.log("machineDetails", machineDetails , fsrData)
             ejs.renderFile(
                 path.join(__dirname, fileName),{
                     serialNumber : fsrNumber,
