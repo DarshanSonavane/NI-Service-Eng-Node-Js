@@ -71,54 +71,54 @@
     <% for (let i = 0; i < maxLimit; i++) { %>
         <% if (productsUsed && productsUsed.length > 0 && productsUsed[i]) { %>
     <div style="width:100%; display: table; float: left;">
-    <div style="width:20%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"><%= productsUsed[i].productCode %></div>
-    <div style="width:40%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"><%=productsUsed[i].productName%></div>
-    <div style="width:5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"><%=productsUsed[i].quantityUsed%></div>
-    <div style="width:5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"><%=productsUsed[i].chargeable%></div>
-    <div style="width:8%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"><%=productsUsed[i].rate%></div>
-    <div style="width:8%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"><%=productsUsed[i].amount%></div>
+    <div style="width:20%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"><%= productsUsed[i].productCode %></div>
+    <div style="width:40%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"><%=productsUsed[i].productName%></div>
+    <div style="width:5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"><%=productsUsed[i].quantityUsed%></div>
+    <div style="width:5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"><%=productsUsed[i].chargeable%></div>
+    <div style="width:8%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"><%=productsUsed[i].rate%></div>
+    <div style="width:8%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"><%=productsUsed[i].amount%></div>
     </div>
     <% } else { %>
     <div style="width:100%; display: table; float: left;">
-    <div style="width:20%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
-    <div style="width:40%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
-    <div style="width:5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
-    <div style="width:5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
-    <div style="width:8%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
-    <div style="width:8%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
+    <div style="width:20%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
+    <div style="width:40%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
+    <div style="width:5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
+    <div style="width:5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
+    <div style="width:8%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
+    <div style="width:8%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
     </div>
     <% } %>
     <% } %>
     
     <div style="width:100%; display: table; float: left;">
-    <div style="width:62%; border:1px solid #000; border-bottom:0px; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:left; float: left; min-height:17px; min-height:100px;"> Remarks : <br/> <%= remark %></div>
+    <div style="width:62%; border:1px solid #000; border-bottom:0px; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:left; float: left; min-height:16px; min-height:100px;"> Remarks : <br/> <%= remark %></div>
     <div style="width:35%; display: table; float: left;">
-    <div style="width:18.5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
-    <div style="width:18.5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
-    <div style="width:26%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
-	<div style="width:25%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
+    <div style="width:18.5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
+    <div style="width:18.5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
+    <div style="width:26%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
+	<div style="width:25%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
     </div>
     <div style="width:35%; display: table; float: left;">
-    <div style="width:18.5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
-    <div style="width:18.5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
-    <div style="width:26%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
-	<div style="width:25%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px;"></div>
+    <div style="width:18.5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
+    <div style="width:18.5%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
+    <div style="width:26%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
+	<div style="width:25%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px;"></div>
     </div>
     <div style="width:35.7%; display: table; float: left;">
-    <div style="width:38%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px; line-height:17px;">Service Visit</div>
-    <div style="width:26%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px; line-height:17px;"></div>
-    <div style="width:27%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px; line-height:17px;"><%= serviceVisit %></div>
+    <div style="width:38%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px; line-height:16px;">Service Visit</div>
+    <div style="width:26%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px; line-height:16px;"></div>
+    <div style="width:27%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px; line-height:16px;"><%= serviceVisit %></div>
     </div>
     <div style="width:35.7%; display: table; float: left;">
-    <div style="width:38%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px; line-height:17px;">GST</div>
-    <div style="width:26%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px; line-height:17px;"><%= gstPercent %></div>
-    <div style="width:27%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px; line-height:17px;"><%= totalGSTAmount %></div>
+    <div style="width:38%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px; line-height:16px;">GST</div>
+    <div style="width:26%; border:1px solid #000; border-top:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px; line-height:16px;"><%= gstPercent %></div>
+    <div style="width:27%; border:1px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px; line-height:16px;"><%= totalGSTAmount %></div>
     </div>
    
     <div style="width:35.7%; display: table; float: left;">
-    <div style="width:38%; border:1px solid #000; border-top:0px; border-bottom:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px; line-height:17px;">Total</div>
-    <div style="width:26%; border:1px solid #000; border-top:0px; border-bottom:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px; line-height:17px;"></div>
-    <div style="width:27%; border:0px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:17px; line-height:17px;"><%= fsrFinalAmount %></div>
+    <div style="width:38%; border:1px solid #000; border-top:0px; border-bottom:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px; line-height:16px;">Total</div>
+    <div style="width:26%; border:1px solid #000; border-top:0px; border-bottom:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px; line-height:16px;"></div>
+    <div style="width:27%; border:0px solid #000; border-top:0px; border-right:0px; border-left:0px; padding:1%; display: inline-block;  text-align:center; float: left; min-height:16px; line-height:16px;"><%= fsrFinalAmount %></div>
     </div>
     </div>
     </div>
@@ -144,7 +144,7 @@
     <div style="width:46%; padding:1%; border-left:1px solid #000; height:20px; float:left; text-align:left;"><%= customerCode %></div>
     </div>
     </div>
-    <div style="width:66.8%; padding:0%; display: inline-block; border-left:1px solid #000; float: left;  line-height:17px; color: #000;">
+    <div style="width:66.8%; padding:0%; display: inline-block; border-left:1px solid #000; float: left;  line-height:16px; color: #000;">
     <div style="width:96%; display: table; padding:1% 2%; float: left;">
     Declaration, <br/>
     <div style="float:left; width:100%;"><span style="float:left;">I,Mr.</span> <span style="width:45%; float:left; border-bottom:1px solid;"> <%= customerName %> </span> <span style="float:left; width:50%">do hereby certify that the instrument has</span> </div>
