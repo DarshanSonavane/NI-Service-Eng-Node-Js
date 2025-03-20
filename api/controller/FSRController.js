@@ -1051,7 +1051,15 @@ const fsrList = async(req,res)=>{
                     serviceDetails: 1,
                     fsrLocation : 1,
                     fsrStatus: 1,
-                    serviceVisit: 1
+                    serviceVisit: 1,
+                    employeeSignature:1,
+                    customerSignature:1,
+                    fsrStatus:1,
+                    fsrStartTime:1,
+                    fsrEndTime:1,
+                    fsrFinalAmount:1,
+                    isChargeable:1,
+                    totalGSTAmount:1
                   }
                 }
               ]);
