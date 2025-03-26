@@ -21,754 +21,1146 @@ const insertMasterInventory=async(req,res)=>{
     try{
         const data = [
             {
-                "Sr. No.": "1",
-                "productCode": "NI0067",
-                "productName": "PU PIPE 4.5 MM/6 MM",
-                "price": "400",
-                "totalQuantity": "33"
-            },
-            {
-                "Sr. No.": "2",
+                "Sr. No": "1",
                 "productCode": "111F800A4",
                 "productName": "Silicon Tube 4mm ID X 8mm OD",
-                "price": "300",
-                "totalQuantity": "18"
+                "totalQuantity": "14",
+                "price": "300"
             },
             {
-                "Sr. No.": "3",
+                "Sr. No": "2",
                 "productCode": "11230F210",
                 "productName": "WI FI MODULE FINEX MAKE",
-                "price": "6500",
-                "totalQuantity": "0"
+                "totalQuantity": "0",
+                "price": "6500"
             },
             {
-                "Sr. No.": "4",
+                "Sr. No": "3",
                 "productCode": "1143000K2",
                 "productName": "3/2 Way Direct Acting Solenoid",
-                "price": "2800",
-                "totalQuantity": "0"
+                "totalQuantity": "1",
+                "price": "2800"
             },
             {
-                "Sr. No.": "5",
+                "Sr. No": "4",
                 "productCode": "114400010",
                 "productName": "Filter Airmatic Type MF-10-02",
-                "price": "1400",
-                "totalQuantity": "20"
+                "totalQuantity": "19",
+                "price": "1400"
             },
             {
-                "Sr. No.": "6",
+                "Sr. No": "5",
                 "productCode": "114400012",
                 "productName": "Sintered Bronze Element",
-                "price": "650",
-                "totalQuantity": "15"
+                "totalQuantity": "21",
+                "price": "675"
             },
             {
-                "Sr. No.": "7",
+                "Sr. No": "6",
                 "productCode": "114400014",
                 "productName": "Plastic Bowl Part No. MFC - 07",
-                "price": "550",
-                "totalQuantity": "8"
+                "totalQuantity": "5",
+                "price": "400"
             },
             {
-                "Sr. No.": "8",
+                "Sr. No": "7",
+                "productCode": "114400022",
+                "productName": "Filter Element for Midi Water",
+                "totalQuantity": "0",
+                "price": "650"
+            },
+            {
+                "Sr. No": "8",
                 "productCode": "1144000I0",
                 "productName": "Pick UP Probe Filter",
-                "price": "400",
-                "totalQuantity": "119"
+                "totalQuantity": "83",
+                "price": "400"
             },
             {
-                "Sr. No.": "9",
+                "Sr. No": "9",
                 "productCode": "1146000G0",
                 "productName": "Sampling Probe for MGA",
-                "price": "1250",
-                "totalQuantity": "0"
+                "totalQuantity": "0",
+                "price": "1250"
             },
             {
-                "Sr. No.": "10",
+                "Sr. No": "10",
                 "productCode": "1146000g0",
                 "productName": "SS Breaded Teflon Hose Pipe",
-                "price": "1250",
-                "totalQuantity": "6"
+                "totalQuantity": "0",
+                "price": "1250"
             },
             {
-                "Sr. No.": "11",
+                "Sr. No": "11",
                 "productCode": "1210AD508",
                 "productName": "IC ADG508",
-                "price": "770",
-                "totalQuantity": "12"
+                "totalQuantity": "12",
+                "price": "250"
             },
             {
-                "Sr. No.": "12",
+                "Sr. No": "12",
                 "productCode": "1210AD574",
-                "productName": " IC AD 574",
-                "price": "2600",
-                "totalQuantity": "11"
+                "productName": "IC AD 574",
+                "totalQuantity": "10",
+                "price": "2600"
             },
             {
-                "Sr. No.": "13",
+                "Sr. No": "13",
                 "productCode": "1210IC4017",
                 "productName": "CD4017",
-                "price": "200",
-                "totalQuantity": "100"
+                "totalQuantity": "100",
+                "price": "250"
             },
             {
-                "Sr. No.": "14",
+                "Sr. No": "14",
                 "productCode": "1210IC555",
                 "productName": "NE555",
-                "price": "100",
-                "totalQuantity": "14"
+                "totalQuantity": "14",
+                "price": "100"
             },
             {
-                "Sr. No.": "15",
+                "Sr. No": "15",
                 "productCode": "1210L4234",
                 "productName": "5MM Green LED, P/N LTL - 4234",
-                "price": "100",
-                "totalQuantity": "0"
+                "totalQuantity": "0",
+                "price": "20"
             },
             {
-                "Sr. No.": "16",
+                "Sr. No": "16",
                 "productCode": "1210LM324",
                 "productName": "IC LM 324, 14 PIN, DIP ST MAKE",
-                "price": "150",
-                "totalQuantity": "32"
+                "totalQuantity": "28",
+                "price": "180"
             },
             {
-                "Sr. No.": "17",
+                "Sr. No": "17",
                 "productCode": "1210LM358",
-                "productName": " IC LM 358,8 PIN (MINI-DIP) NAT",
-                "price": "150",
-                "totalQuantity": "25"
+                "productName": "IC LM 358,8 PIN (MINI-DIP) NAT",
+                "totalQuantity": "23",
+                "price": "180"
             },
             {
-                "Sr. No.": "18",
+                "Sr. No": "18",
                 "productCode": "1210LM741",
                 "productName": "IC LM 741, 8 PIN MINI DIP SIGNA",
-                "price": "150",
-                "totalQuantity": "2"
+                "totalQuantity": "2",
+                "price": "180"
             },
             {
-                "Sr. No.": "19",
+                "Sr. No": "19",
                 "productCode": "1230LM338",
                 "productName": "REGULATOR LM338K, TO-3 PACKAGE",
-                "price": "1095",
-                "totalQuantity": "4"
+                "totalQuantity": "3",
+                "price": "900"
             },
             {
-                "Sr. No.": "20",
+                "Sr. No": "20",
                 "productCode": "12601244Y",
                 "productName": "IC DS1244Y-120Dallas Make",
-                "price": "3800",
-                "totalQuantity": "0"
+                "totalQuantity": "0",
+                "price": "3800"
             },
             {
-                "Sr. No.": "21",
+                "Sr. No": "21",
                 "productCode": "12874LS04",
                 "productName": "IC HD74LS04P",
-                "price": "100",
-                "totalQuantity": "11"
+                "totalQuantity": "11",
+                "price": "200"
             },
             {
-                "Sr. No.": "22",
+                "Sr. No": "22",
                 "productCode": "12ACD4013",
                 "productName": "IC HEF4013BP PHILIPS/ST MAKE",
-                "price": "100",
-                "totalQuantity": "23"
+                "totalQuantity": "18",
+                "price": "200"
             },
             {
-                "Sr. No.": "23",
+                "Sr. No": "23",
                 "productCode": "12ACD4052",
                 "productName": "IC TC4052BP TOSHIBA OR HCF4052",
-                "price": "125",
-                "totalQuantity": "16"
+                "totalQuantity": "12",
+                "price": "250"
             },
             {
-                "Sr. No.": "24",
+                "Sr. No": "24",
                 "productCode": "12ACD4066",
                 "productName": "IC CD 4066 ST MAKE.",
-                "price": "125",
-                "totalQuantity": "22"
+                "totalQuantity": "16",
+                "price": "250"
             },
             {
-                "Sr. No.": "25",
+                "Sr. No": "25",
                 "productCode": "12ACD4098",
                 "productName": "IC CD 4098",
-                "price": "125",
-                "totalQuantity": "34"
+                "totalQuantity": "34",
+                "price": "250"
             },
             {
-                "Sr. No.": "26",
+                "Sr. No": "26",
                 "productCode": "12D008031",
-                "productName": "  IC8031 (SAB-C-501-LP SIEMENS",
-                "price": "900",
-                "totalQuantity": "17"
+                "productName": "IC8031 (SAB-C-501-LP SIEMENS",
+                "totalQuantity": "15",
+                "price": "900"
             },
             {
-                "Sr. No.": "27",
+                "Sr. No": "27",
                 "productCode": "12D008255",
-                "productName": " IC8255 MITSUBISHI MAKE",
-                "price": "850",
-                "totalQuantity": "15"
+                "productName": "IC8255 MITSUBISHI MAKE",
+                "totalQuantity": "17",
+                "price": "850"
             },
             {
-                "Sr. No.": "28",
+                "Sr. No": "28",
                 "productCode": "12D00OP07",
                 "productName": "IC OP07 8 Pin Mini DIP Texas",
-                "price": "150",
-                "totalQuantity": "9"
+                "totalQuantity": "6",
+                "price": "150"
             },
             {
-                "Sr. No.": "29",
+                "Sr. No": "29",
                 "productCode": "12D00OPT",
-                "productName": " IC OPT 211",
-                "price": "3500",
-                "totalQuantity": "0"
+                "productName": "IC OPT 211",
+                "totalQuantity": "0",
+                "price": "3500"
             },
             {
-                "Sr. No.": "30",
+                "Sr. No": "30",
                 "productCode": "12D020K",
                 "productName": "20k Trimming Pot",
-                "price": "50",
-                "totalQuantity": "16"
+                "totalQuantity": "15",
+                "price": "50"
             },
             {
-                "Sr. No.": "31",
+                "Sr. No": "31",
                 "productCode": "12D027512",
-                "productName": "  IC 27C512 ST MAKE",
-                "price": "5650",
-                "totalQuantity": "40"
+                "productName": "IC 27C512 ST MAKE",
+                "totalQuantity": "5",
+                "price": "5650"
             },
             {
-                "Sr. No.": "32",
+                "Sr. No": "32",
                 "productCode": "12D074245",
                 "productName": "IC SN 74LS245N TEXAS MAKE",
-                "price": "180",
-                "totalQuantity": "17"
+                "totalQuantity": "9",
+                "price": "180"
             },
             {
-                "Sr. No.": "33",
+                "Sr. No": "33",
                 "productCode": "12D074573",
                 "productName": "IC DM 74ALS573BN FAIRCHILD MAKE",
-                "price": "180",
-                "totalQuantity": "26"
+                "totalQuantity": "20",
+                "price": "165"
             },
             {
-                "Sr. No.": "34",
-                "productCode": "12DS12320",
-                "productName": "IC DS 1232",
-                "price": "400",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "35",
-                "productCode": "12E0L16L8",
-                "productName": "IC PAL16L8ACN 20 PIN DIP",
-                "price": "4250",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "36",
-                "productCode": "NI0001",
-                "productName": "12V DC Adaptor",
-                "price": "200",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "37",
-                "productCode": "12Z000050",
-                "productName": "CRYSTAL 11.0592 MHZ KDS MAKE",
-                "price": "750",
-                "totalQuantity": "19"
-            },
-            {
-                "Sr. No.": "38",
-                "productCode": "133016216",
-                "productName": "LCD  DSM Display 16 CharachtersX2 LINES LED ",
-                "price": "1000",
-                "totalQuantity": "5"
-            },
-            {
-                "Sr. No.": "39",
-                "productCode": "133016217",
-                "productName": " LCD DISPLAY TFT COLOUR 3.5\"\"",
-                "price": "7500",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "40",
-                "productCode": "133S16216",
-                "productName": "DISPLAY FOR DSM REMOTE",
-                "price": "1000",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "41",
-                "productCode": "133WH2005",
-                "productName": "LCD MGA Display Model No.",
-                "price": "3000",
-                "totalQuantity": "10"
-            },
-            {
-                "Sr. No.": "42",
-                "productCode": "1A3001048",
-                "productName": "ELCOM SWITCH",
-                "price": "400",
-                "totalQuantity": "85"
-            },
-            {
-                "Sr. No.": "43",
-                "productCode": "1B5060002",
-                "productName": "PIRI CONNECTOR 6 WAY",
-                "price": "300",
-                "totalQuantity": "3"
-            },
-            {
-                "Sr. No.": "44",
-                "productCode": "1B6080704",
-                "productName": "8+8 PIN BOTH ENDED FEMALE",
-                "price": "250",
-                "totalQuantity": "40"
-            },
-            {
-                "Sr. No.": "45",
-                "productCode": "1B6150402",
-                "productName": "16 + 16 PIN BOTH ENDED FEMALE",
-                "price": "350",
-                "totalQuantity": "31"
-            },
-            {
-                "Sr. No.": "46",
-                "productCode": "1C3000C2",
-                "productName": "COOLING FAN DSM 120 MM X120 MM X",
-                "price": "950",
-                "totalQuantity": "2"
-            },
-            {
-                "Sr. No.": "47",
-                "productCode": "1C31000E0",
-                "productName": "COOLING FAN 12 VDC Size 60X60",
-                "price": "625",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "48",
-                "productCode": "1C42100F9",
-                "productName": "12VDC 2 Head-Pump",
-                "price": "18000",
-                "totalQuantity": "3"
-            },
-            {
-                "Sr. No.": "49",
-                "productCode": "1D3000114",
-                "productName": "Cable for GASBOARD 8220",
-                "price": "22500",
-                "totalQuantity": "1"
-            },
-            {
-                "Sr. No.": "50",
-                "productCode": "1X403004A",
-                "productName": "OXYGEN SENSOR",
-                "price": "3700",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "51",
-                "productCode": "1X4030092",
-                "productName": "Engine Tachometer",
-                "price": "70000",
-                "totalQuantity": "1"
-            },
-            {
-                "Sr. No.": "52",
-                "productCode": "1X40300A5",
-                "productName": "CABLE FOR MGT - 300 ST UNIVERSAL",
-                "price": "13000",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "53",
-                "productCode": "1X40300L0",
-                "productName": "RPM Magnetic Dual Channel Sensor",
-                "price": "76000",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "54",
-                "productCode": "201262010",
-                "productName": "Probe Handles For Smoke Meter",
-                "price": "1500",
-                "totalQuantity": "1"
-            },
-            {
-                "Sr. No.": "55",
-                "productCode": "201N10095",
-                "productName": "SMPS I/P 230 VAC, O/P:-+12VDC",
-                "price": "2000",
-                "totalQuantity": "15"
-            },
-            {
-                "Sr. No.": "56",
-                "productCode": "201N20010",
-                "productName": "DC TO DC CON. 1/PO 12 VDC",
-                "price": "4500",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "57",
-                "productCode": "2023000L1",
-                "productName": "KEYBOARD SIZE : 9 CM X 4 CM AS",
-                "price": "550",
-                "totalQuantity": "46"
-            },
-            {
-                "Sr. No.": "58",
-                "productCode": "2023000LA",
-                "productName": " Keyboard for Multigas Analyse (MGA)",
-                "price": "550",
-                "totalQuantity": "138"
-            },
-            {
-                "Sr. No.": "59",
-                "productCode": "2023000LC",
-                "productName": "KEYPAD FOR DSM REMOTE SIZE",
-                "price": "550",
-                "totalQuantity": "59"
-            },
-            {
-                "Sr. No.": "60",
-                "productCode": "202300296",
-                "productName": "FT232 USB TO RS232 CONVERTER",
-                "price": "950",
-                "totalQuantity": "44"
-            },
-            {
-                "Sr. No.": "61",
-                "productCode": "202400168",
-                "productName": "CAP3300 IR GAS BENCH",
-                "price": "88000",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "62",
-                "productCode": "202700095",
-                "productName": "ADC Card for DSM STM32",
-                "price": "15000",
-                "totalQuantity": "1"
-            },
-            {
-                "Sr. No.": "63",
-                "productCode": "202700132",
-                "productName": "Ripple Assembled Cable",
-                "price": "1200",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "64",
-                "productCode": "202700138",
-                "productName": "MGT RPM CABLE",
-                "price": "1200",
-                "totalQuantity": "4"
-            },
-            {
-                "Sr. No.": "65",
-                "productCode": "202700139",
-                "productName": "CUBIC RPM CABLE",
-                "price": "1200",
-                "totalQuantity": "11"
-            },
-            {
-                "Sr. No.": "66",
-                "productCode": "202800037",
-                "productName": "WI FI Upgradation KIT",
-                "price": "10000",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "67",
-                "productCode": "20280015A",
-                "productName": "DSM REMOTE CABLE ASSEMBLY",
-                "price": "3300",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "68",
-                "productCode": "205200152",
-                "productName": "CPU PCB Assembly for DSMSTM",
-                "price": "12000",
-                "totalQuantity": "1"
-            },
-            {
-                "Sr. No.": "69",
-                "productCode": "205200156",
-                "productName": "INDUCTION RPM PCB ASSY MGA",
-                "price": "1000",
-                "totalQuantity": "3"
-            },
-            {
-                "Sr. No.": "70",
-                "productCode": "NI0006",
-                "productName": "25PIN  D TYPE CONNECTOR FEMALE",
-                "price": "100",
-                "totalQuantity": "23"
-            },
-            {
-                "Sr. No.": "71",
-                "productCode": "NI0007",
-                "productName": "25PIN D TYPE CONNECTOR MALE",
-                "price": "100",
-                "totalQuantity": "133"
-            },
-            {
-                "Sr. No.": "72",
-                "productCode": "NI0008",
-                "productName": "25 PIN PLASTIC HOOD",
-                "price": "100",
-                "totalQuantity": "159"
-            },
-            {
-                "Sr. No.": "73",
-                "productCode": "4030120BA",
-                "productName": "SG-20 Sensor for MGT - 300",
-                "price": "27500",
-                "totalQuantity": "3"
-            },
-            {
-                "Sr. No.": "74",
-                "productCode": "4030120BB",
-                "productName": " C.S.ASS. EA 1135-02-2 SCHEDA PCB",
-                "price": "48000",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "75",
-                "productCode": "NI0016",
-                "productName": "5+5 PIN BOTH ENDED FEMALE",
-                "price": "250",
-                "totalQuantity": "36"
-            },
-            {
-                "Sr. No.": "76",
-                "productCode": "7050400X1",
-                "productName": "7 Key Flexibale Keypad",
-                "price": "800",
-                "totalQuantity": "12"
-            },
-            {
-                "Sr. No.": "77",
-                "productCode": "NI0017",
-                "productName": "DISPLAY MALE ST 16 Pin CONNECTOR",
-                "price": "100",
-                "totalQuantity": "92"
-            },
-            {
-                "Sr. No.": "78",
-                "productCode": "NI0019",
-                "productName": "9 PIN D TYPE CONNECTOR FEMALE",
-                "price": "150",
-                "totalQuantity": "92"
-            },
-            {
-                "Sr. No.": "79",
-                "productCode": "NI0020",
-                "productName": "9 PIN D TYPE CONNECTOR MALE",
-                "price": "150",
-                "totalQuantity": "70"
-            },
-            {
-                "Sr. No.": "80",
-                "productCode": "NI0021",
-                "productName": "9 PIN PLASTIC HOOD",
-                "price": "150",
-                "totalQuantity": "146"
-            },
-            {
-                "Sr. No.": "81",
-                "productCode": "NI0023",
-                "productName": "Alen Key",
-                "price": "100",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "82",
-                "productCode": "NI0024",
-                "productName": "CALIPORT-34 (0.5 LTR)",
-                "price": "4250",
-                "totalQuantity": "3"
-            },
-            {
-                "Sr. No.": "83",
-                "productCode": "NI0025",
-                "productName": "Chlam Multimeter MS 2101",
-                "price": "1200",
-                "totalQuantity": "2"
-            },
-            {
-                "Sr. No.": "84",
-                "productCode": "NI0027",
-                "productName": "Cutter",
-                "price": "200",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "85",
-                "productCode": "NI0028",
-                "productName": "Detector PCB Cable Assembly",
-                "price": "3500",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "86",
-                "productCode": "NI0029",
-                "productName": "Diesel Rubber Hose Pipe",
-                "price": "1500",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "87",
-                "productCode": "NI0032",
-                "productName": "Fuse 3AMP",
-                "price": "50",
-                "totalQuantity": "65"
-            },
-            {
-                "Sr. No.": "88",
-                "productCode": "NI0035",
-                "productName": "JST FEMALE WITH WIRE 3 PIN",
-                "price": "200",
-                "totalQuantity": "46"
-            },
-            {
-                "Sr. No.": "89",
-                "productCode": "NI0037",
-                "productName": "MGT Battery 7.4 V",
-                "price": "800",
-                "totalQuantity": "1"
-            },
-            {
-                "Sr. No.": "90",
-                "productCode": "NI0039",
-                "productName": "Multimeter Probe",
-                "price": "250",
-                "totalQuantity": "2"
-            },
-            {
-                "Sr. No.": "91",
-                "productCode": "NI0040",
-                "productName": "OXYGEN SENSOR CABLE (O2)",
-                "price": "300",
-                "totalQuantity": "16"
-            },
-            {
-                "Sr. No.": "92",
-                "productCode": "NI0041",
-                "productName": "Power Cord 1.8Mtr 5AMP",
-                "price": "250",
-                "totalQuantity": "17"
-            },
-            {
-                "Sr. No.": "93",
-                "productCode": "NI0042",
-                "productName": "REMOTE DISPLAY CONNECTOR",
-                "price": "550",
-                "totalQuantity": "49"
-            },
-            {
-                "Sr. No.": "94",
-                "productCode": "NI0043",
-                "productName": "Roker Switch",
-                "price": "200",
-                "totalQuantity": "30"
-            },
-            {
-                "Sr. No.": "95",
-                "productCode": "NI0046",
-                "productName": "Screw Driver Set",
-                "price": "500",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "96",
-                "productCode": "NI0047",
-                "productName": "Solidering Iron",
-                "price": "300",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "97",
-                "productCode": "NI0048",
-                "productName": "Spanner 14/15",
-                "price": "100",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "98",
-                "productCode": "NI0049",
-                "productName": "Spanner 16/17",
-                "price": "100",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "99",
-                "productCode": "NI0050",
-                "productName": "Spanner 6/7",
-                "price": "100",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "100",
-                "productCode": "NI0052",
-                "productName": "STM Programmer",
-                "price": "2000",
-                "totalQuantity": "4"
-            },
-            {
-                "Sr. No.": "101",
-                "productCode": "NI0053",
-                "productName": "Thumb Player",
-                "price": "200",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "102",
-                "productCode": "NI0054",
-                "productName": "Toggle Switch CE101",
-                "price": "200",
-                "totalQuantity": "48"
-            },
-            {
-                "Sr. No.": "103",
-                "productCode": "NI0055",
-                "productName": "Toggle Switch CE201",
-                "price": "200",
-                "totalQuantity": "34"
-            },
-            {
-                "Sr. No.": "104",
-                "productCode": "NI0058",
-                "productName": "USB Cable",
-                "price": "300",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "105",
-                "productCode": "NI0059",
-                "productName": "Wire Stripper",
-                "price": "200",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "106",
-                "productCode": "NI0060",
-                "productName": "Wiring Harness",
-                "price": "3000",
-                "totalQuantity": "0"
-            },
-            {
-                "Sr. No.": "107",
+                "Sr. No": "34",
                 "productCode": "12D0MX232",
                 "productName": "IC MAX232 MAXIM MAKE",
-                "price": "300",
-                "totalQuantity": "0"
-            }
+                "totalQuantity": "14",
+                "price": "300"
+            },
+            {
+                "Sr. No": "35",
+                "productCode": "12DS12320",
+                "productName": "IC DS 1232",
+                "totalQuantity": "0",
+                "price": "180"
+            },
+            {
+                "Sr. No": "36",
+                "productCode": "12E0L16L8",
+                "productName": "IC PAL16L8ACN 20 PIN DIP",
+                "totalQuantity": "0",
+                "price": "4250"
+            },
+            {
+                "Sr. No": "37",
+                "productCode": "12Z000050",
+                "productName": "CRYSTAL 11.0592 MHZ KDS MAKE",
+                "totalQuantity": "18",
+                "price": "190"
+            },
+            {
+                "Sr. No": "38",
+                "productCode": "133016216",
+                "productName": "LCD Display 16 CharachtersX2 LINES LED",
+                "totalQuantity": "3",
+                "price": "3520"
+            },
+            {
+                "Sr. No": "39",
+                "productCode": "133016217",
+                "productName": "LCD DISPLAY TFT COLOUR 3.5\"\"",
+                "totalQuantity": "2",
+                "price": "7500"
+            },
+            {
+                "Sr. No": "40",
+                "productCode": "133S16216",
+                "productName": "DISPLAY FOR DSM REMOTE",
+                "totalQuantity": "5",
+                "price": "1000"
+            },
+            {
+                "Sr. No": "41",
+                "productCode": "133WH2005",
+                "productName": "LCD Display Model No.",
+                "totalQuantity": "7",
+                "price": "2500"
+            },
+            {
+                "Sr. No": "42",
+                "productCode": "16P 2510",
+                "productName": "16P 2510 FEMALE W/WIRE",
+                "totalQuantity": "0",
+                "price": "100"
+            },
+            {
+                "Sr. No": "43",
+                "productCode": "1A3001048",
+                "productName": "ELCOM SWITCH",
+                "totalQuantity": "85",
+                "price": "300"
+            },
+            {
+                "Sr. No": "44",
+                "productCode": "1B5060002",
+                "productName": "PIRI CONNECTOR 6 WAY",
+                "totalQuantity": "0",
+                "price": "300"
+            },
+            {
+                "Sr. No": "45",
+                "productCode": "1B6080702",
+                "productName": "UNI.CON.8 PIN FEMALE WITH 500",
+                "totalQuantity": "1",
+                "price": "150"
+            },
+            {
+                "Sr. No": "46",
+                "productCode": "1B6080703",
+                "productName": "CONNECTOR 8+8 PIN BOTH ENDED",
+                "totalQuantity": "2",
+                "price": "150"
+            },
+            {
+                "Sr. No": "47",
+                "productCode": "1B6080704",
+                "productName": "8+8 PIN BOTH ENDED FEMALE",
+                "totalQuantity": "37",
+                "price": "150"
+            },
+            {
+                "Sr. No": "48",
+                "productCode": "1B6150401",
+                "productName": "UNICON CONNECTOR 16 PIN MALE",
+                "totalQuantity": "0",
+                "price": "150"
+            },
+            {
+                "Sr. No": "49",
+                "productCode": "1B6150402",
+                "productName": "16 + 16 PIN BOTH ENDED FEMALE",
+                "totalQuantity": "22",
+                "price": "180"
+            },
+            {
+                "Sr. No": "50",
+                "productCode": "1B8090102",
+                "productName": "CABLE CONNECTOR D TYPE FEMALE 9 Pin",
+                "totalQuantity": "0",
+                "price": "100"
+            },
+            {
+                "Sr. No": "51",
+                "productCode": "1B8090104",
+                "productName": "9 PIN D TYPE CONN (SOCKET) R/A",
+                "totalQuantity": "0",
+                "price": "100"
+            },
+            {
+                "Sr. No": "52",
+                "productCode": "1B8250101",
+                "productName": "25 PIN D TYPE CABLE CONNECTOR",
+                "totalQuantity": "0",
+                "price": "150"
+            },
+            {
+                "Sr. No": "53",
+                "productCode": "1B8250103",
+                "productName": "PLASTIC HOOD (DUST COVER) SCREW",
+                "totalQuantity": "0",
+                "price": "75"
+            },
+            {
+                "Sr. No": "54",
+                "productCode": "1C3000C2",
+                "productName": "COOLING FAN DSM 120 MM X120 MM X",
+                "totalQuantity": "0",
+                "price": "950"
+            },
+            {
+                "Sr. No": "55",
+                "productCode": "1C31000E0",
+                "productName": "COOLING FAN 12 VDC Size 60X60",
+                "totalQuantity": "1",
+                "price": "575"
+            },
+            {
+                "Sr. No": "56",
+                "productCode": "1C42100F9",
+                "productName": "12VDC 2 Head-Pump",
+                "totalQuantity": "0",
+                "price": "18000"
+            },
+            {
+                "Sr. No": "57",
+                "productCode": "1D3000113",
+                "productName": "New design complete sensor",
+                "totalQuantity": "0",
+                "price": "76700"
+            },
+            {
+                "Sr. No": "58",
+                "productCode": "1D3000114",
+                "productName": "Cable for GASBOARD 8220",
+                "totalQuantity": "1",
+                "price": "22500"
+            },
+            {
+                "Sr. No": "59",
+                "productCode": "1X403004A",
+                "productName": "OXYGEN SENSOR",
+                "totalQuantity": "5",
+                "price": "3700"
+            },
+            {
+                "Sr. No": "60",
+                "productCode": "1X4030092",
+                "productName": "Engine Tachometer",
+                "totalQuantity": "0",
+                "price": "70000"
+            },
+            {
+                "Sr. No": "61",
+                "productCode": "1X40300A5",
+                "productName": "CABLE FOR MGT - 300 ST UNIVERSAL",
+                "totalQuantity": "0",
+                "price": "13000"
+            },
+            {
+                "Sr. No": "62",
+                "productCode": "1X40300L0",
+                "productName": "RPM Magnetic Dual Channel Sensor",
+                "totalQuantity": "0",
+                "price": "27500"
+            },
+            {
+                "Sr. No": "63",
+                "productCode": "201262010",
+                "productName": "Probe Handles For Smoke Meter",
+                "totalQuantity": "1",
+                "price": "1500"
+            },
+            {
+                "Sr. No": "64",
+                "productCode": "201N10095",
+                "productName": "SMPS I/P 230 VAC, O/P:-+12VDC",
+                "totalQuantity": "7",
+                "price": "2000"
+            },
+            {
+                "Sr. No": "65",
+                "productCode": "201N20010",
+                "productName": "DC TO DC CON. 1/PO 12 VDC",
+                "totalQuantity": "0",
+                "price": "4500"
+            },
+            {
+                "Sr. No": "66",
+                "productCode": "2023000L1",
+                "productName": "KEYBOARD SIZE : 9 CM X 4 CM AS",
+                "totalQuantity": "35",
+                "price": "550"
+            },
+            {
+                "Sr. No": "67",
+                "productCode": "2023000LA",
+                "productName": "Keyboard for Multigas Analyse (MGA)",
+                "totalQuantity": "132",
+                "price": "550"
+            },
+            {
+                "Sr. No": "68",
+                "productCode": "2023000LC",
+                "productName": "KEYPAD FOR DSM REMOTE SIZE",
+                "totalQuantity": "50",
+                "price": "550"
+            },
+            {
+                "Sr. No": "69",
+                "productCode": "202300296",
+                "productName": "FT232 USB TO RS232 CONVERTER",
+                "totalQuantity": "49",
+                "price": "950"
+            },
+            {
+                "Sr. No": "70",
+                "productCode": "202400168",
+                "productName": "CAP3300 IR GAS BENCH",
+                "totalQuantity": "0",
+                "price": "88000"
+            },
+            {
+                "Sr. No": "71",
+                "productCode": "202700095",
+                "productName": "ADC Card for DSM STM32",
+                "totalQuantity": "0",
+                "price": "15000"
+            },
+            {
+                "Sr. No": "72",
+                "productCode": "202700132",
+                "productName": "Ripple Assembled Cable",
+                "totalQuantity": "0",
+                "price": "1200"
+            },
+            {
+                "Sr. No": "73",
+                "productCode": "202700138",
+                "productName": "MGT RPM CABLE",
+                "totalQuantity": "1",
+                "price": "1200"
+            },
+            {
+                "Sr. No": "74",
+                "productCode": "202700139",
+                "productName": "CUBIC RPM CABLE",
+                "totalQuantity": "7",
+                "price": "1200"
+            },
+            {
+                "Sr. No": "75",
+                "productCode": "202700141",
+                "productName": "Viabration RPM Sensor Assy",
+                "totalQuantity": "0",
+                "price": "10000"
+            },
+            {
+                "Sr. No": "76",
+                "productCode": "20280015A",
+                "productName": "DSM REMOTE CABLE ASSEMBLY",
+                "totalQuantity": "21",
+                "price": "3300"
+            },
+            {
+                "Sr. No": "77",
+                "productCode": "205200152",
+                "productName": "CPU PCB Assembly for DSMSTM",
+                "totalQuantity": "1",
+                "price": "12000"
+            },
+            {
+                "Sr. No": "78",
+                "productCode": "205200156",
+                "productName": "INDUCTION RPM PCB ASSY MGA",
+                "totalQuantity": "0",
+                "price": "450"
+            },
+            {
+                "Sr. No": "79",
+                "productCode": "2308112PFWR",
+                "productName": "2P CPU C/L Female W/Wire",
+                "totalQuantity": "10",
+                "price": "200"
+            },
+            {
+                "Sr. No": "80",
+                "productCode": "230811FRC16",
+                "productName": "16 PIN FRC Cable",
+                "totalQuantity": "16",
+                "price": "350"
+            },
+            {
+                "Sr. No": "81",
+                "productCode": "230811FRC26",
+                "productName": "26 PIN FRC Cable",
+                "totalQuantity": "6",
+                "price": "450"
+            },
+            {
+                "Sr. No": "82",
+                "productCode": "4030120BA",
+                "productName": "SG-20 Sensor for MGT - 300",
+                "totalQuantity": "2",
+                "price": "27500"
+            },
+            {
+                "Sr. No": "83",
+                "productCode": "4030120BB",
+                "productName": "C.S.ASS. EA 1135-02-2 SCHEDA PCB",
+                "totalQuantity": "0",
+                "price": "48000"
+            },
+            {
+                "Sr. No": "84",
+                "productCode": "7050400X1",
+                "productName": "7 Key Flexibale Keypad",
+                "totalQuantity": "2",
+                "price": "750"
+            },
+            {
+                "Sr. No": "85",
+                "productCode": "NI0079",
+                "productName": "ANA BOND 652-C10",
+                "totalQuantity": "1",
+                "price": "1"
+            },
+            {
+                "Sr. No": "86",
+                "productCode": "NI0080",
+                "productName": "Blank FT Pcb",
+                "totalQuantity": "9",
+                "price": "1"
+            },
+            {
+                "Sr. No": "87",
+                "productCode": "NI0081",
+                "productName": "BT Solder Wire",
+                "totalQuantity": "0",
+                "price": "1"
+            },
+            {
+                "Sr. No": "88",
+                "productCode": "NI0082",
+                "productName": "MGA & DSM RPM Cable Assembly (CUBIC)",
+                "totalQuantity": "0",
+                "price": "2500"
+            },
+            {
+                "Sr. No": "89",
+                "productCode": "NI0083",
+                "productName": "MGA Z Pipe",
+                "totalQuantity": "0",
+                "price": "1200"
+            },
+            {
+                "Sr. No": "90",
+                "productCode": "NI0001",
+                "productName": "12VDC Adaptor",
+                "totalQuantity": "1",
+                "price": "200"
+            },
+            {
+                "Sr. No": "91",
+                "productCode": "NI0002",
+                "productName": "14*60 Flexible Wire",
+                "totalQuantity": "2",
+                "price": "1"
+            },
+            {
+                "Sr. No": "92",
+                "productCode": "NI0003",
+                "productName": "20 Core Cable",
+                "totalQuantity": "133",
+                "price": "3300"
+            },
+            {
+                "Sr. No": "93",
+                "productCode": "NI0004",
+                "productName": "20x4 LCD Jumbo",
+                "totalQuantity": "0",
+                "price": "3300"
+            },
+            {
+                "Sr. No": "94",
+                "productCode": "NI0005",
+                "productName": "2510 FEMALE WITH WIRE 8 PIN",
+                "totalQuantity": "1",
+                "price": "100"
+            },
+            {
+                "Sr. No": "95",
+                "productCode": "NI0006",
+                "productName": "25PIN D TYPE CONNECTOR FEMALE",
+                "totalQuantity": "21",
+                "price": "100"
+            },
+            {
+                "Sr. No": "96",
+                "productCode": "NI0007",
+                "productName": "25PIN D TYPE CONNECTOR MALE",
+                "totalQuantity": "79",
+                "price": "100"
+            },
+            {
+                "Sr. No": "97",
+                "productCode": "NI0008",
+                "productName": "25 PIN PLASTIC HOOD",
+                "totalQuantity": "132",
+                "price": "100"
+            },
+            {
+                "Sr. No": "98",
+                "productCode": "NI0009",
+                "productName": "2*6P Minifit 5150 Female W/Wire",
+                "totalQuantity": "5",
+                "price": "150"
+            },
+            {
+                "Sr. No": "99",
+                "productCode": "NI0010",
+                "productName": "2 Core Shield Cable 14/38",
+                "totalQuantity": "90",
+                "price": "1200"
+            },
+            {
+                "Sr. No": "100",
+                "productCode": "NI0011",
+                "productName": "3 Core Shielded Wire",
+                "totalQuantity": "0",
+                "price": "1200"
+            },
+            {
+                "Sr. No": "101",
+                "productCode": "NI0012",
+                "productName": "3P 2510 Female W/ WIRE",
+                "totalQuantity": "24",
+                "price": "100"
+            },
+            {
+                "Sr. No": "102",
+                "productCode": "NI0013",
+                "productName": "4.2mm Housing FEMALE 4505 RT 2 X 6P 12 PIN MINI FIT",
+                "totalQuantity": "15",
+                "price": "300"
+            },
+            {
+                "Sr. No": "103",
+                "productCode": "NI0014",
+                "productName": "4 Core Shielded Teflon Wire 100M",
+                "totalQuantity": "199",
+                "price": "1200"
+            },
+            {
+                "Sr. No": "104",
+                "productCode": "NI0015",
+                "productName": "4 x 4 Plastic Box",
+                "totalQuantity": "0",
+                "price": "500"
+            },
+            {
+                "Sr. No": "105",
+                "productCode": "NI0016",
+                "productName": "5+5 PIN BOTH ENDED FEMALE",
+                "totalQuantity": "32",
+                "price": "150"
+            },
+            {
+                "Sr. No": "106",
+                "productCode": "NI0017",
+                "productName": "712 SERIES 25102.54mm MALE ST 16 Pin",
+                "totalQuantity": "63",
+                "price": "750"
+            },
+            {
+                "Sr. No": "107",
+                "productCode": "NI0019",
+                "productName": "9 PIN D TYPE CONNECTOR FEMALE",
+                "totalQuantity": "85",
+                "price": "150"
+            },
+            {
+                "Sr. No": "108",
+                "productCode": "NI0020",
+                "productName": "9 PIN D TYPE CONNECTOR MALE",
+                "totalQuantity": "56",
+                "price": "150"
+            },
+            {
+                "Sr. No": "109",
+                "productCode": "NI0021",
+                "productName": "9 PIN PLASTIC HOOD",
+                "totalQuantity": "134",
+                "price": "150"
+            },
+            {
+                "Sr. No": "110",
+                "productCode": "NI0022",
+                "productName": "Ad1885JST - Qfp48",
+                "totalQuantity": "8",
+                "price": "150"
+            },
+            {
+                "Sr. No": "111",
+                "productCode": "NI0023",
+                "productName": "Alen Key",
+                "totalQuantity": "1",
+                "price": "100"
+            },
+            {
+                "Sr. No": "112",
+                "productCode": "NI0024",
+                "productName": "CALIPORT-34 (0.5 LTR)",
+                "totalQuantity": "0",
+                "price": "4250"
+            },
+            {
+                "Sr. No": "113",
+                "productCode": "NI0025",
+                "productName": "Chlam Multimeter MS 2101",
+                "totalQuantity": "1",
+                "price": "1200"
+            },
+            {
+                "Sr. No": "114",
+                "productCode": "NI0026",
+                "productName": "Clamp Miter MS 2101",
+                "totalQuantity": "0",
+                "price": "300"
+            },
+            {
+                "Sr. No": "115",
+                "productCode": "NI0027",
+                "productName": "Cutter",
+                "totalQuantity": "1",
+                "price": "200"
+            },
+            {
+                "Sr. No": "116",
+                "productCode": "NI0028",
+                "productName": "Detector PCB Cable Assembly",
+                "totalQuantity": "0",
+                "price": "3500"
+            },
+            {
+                "Sr. No": "117",
+                "productCode": "NI0030",
+                "productName": "D-SUB Solder Full Gold 9 Pin Female",
+                "totalQuantity": "20",
+                "price": "200"
+            },
+            {
+                "Sr. No": "118",
+                "productCode": "NI0031",
+                "productName": "D-SUB Solder Full Gold 9 Pin Male",
+                "totalQuantity": "20",
+                "price": "300"
+            },
+            {
+                "Sr. No": "119",
+                "productCode": "NI0032",
+                "productName": "Fuse 3AMP",
+                "totalQuantity": "65",
+                "price": "50"
+            },
+            {
+                "Sr. No": "120",
+                "productCode": "NI0033",
+                "productName": "IC FT 232 RL",
+                "totalQuantity": "0",
+                "price": "300"
+            },
+            {
+                "Sr. No": "121",
+                "productCode": "NI0035",
+                "productName": "JST FEMALE WITH WIRE 3 PIN",
+                "totalQuantity": "41",
+                "price": "200"
+            },
+            {
+                "Sr. No": "122",
+                "productCode": "NI0036",
+                "productName": "JST XH 2.5MM MALE ST 3 PIN",
+                "totalQuantity": "10",
+                "price": "200"
+            },
+            {
+                "Sr. No": "123",
+                "productCode": "NI0037",
+                "productName": "MGT Battery 7.4 V",
+                "totalQuantity": "6",
+                "price": "800"
+            },
+            {
+                "Sr. No": "124",
+                "productCode": "NI0038",
+                "productName": "Midy Filter Candle.",
+                "totalQuantity": "0",
+                "price": "800"
+            },
+            {
+                "Sr. No": "125",
+                "productCode": "NI0039",
+                "productName": "Multimeter Probe",
+                "totalQuantity": "1",
+                "price": "250"
+            },
+            {
+                "Sr. No": "126",
+                "productCode": "NI0040",
+                "productName": "OXYGEN SENSOR CABLE (O2)",
+                "totalQuantity": "7",
+                "price": "400"
+            },
+            {
+                "Sr. No": "127",
+                "productCode": "NI0041",
+                "productName": "Power Cord 1.8Mtr 5AMP",
+                "totalQuantity": "13",
+                "price": "250"
+            },
+            {
+                "Sr. No": "128",
+                "productCode": "NI0042",
+                "productName": "REMOTE DISPLAY CONNECTOR",
+                "totalQuantity": "32",
+                "price": "200"
+            },
+            {
+                "Sr. No": "129",
+                "productCode": "NI0043",
+                "productName": "Roker Switch",
+                "totalQuantity": "24",
+                "price": "200"
+            },
+            {
+                "Sr. No": "130",
+                "productCode": "NI0046",
+                "productName": "Screw Driver Set",
+                "totalQuantity": "1",
+                "price": "500"
+            },
+            {
+                "Sr. No": "131",
+                "productCode": "NI0047",
+                "productName": "Solidering Iron",
+                "totalQuantity": "1",
+                "price": "300"
+            },
+            {
+                "Sr. No": "132",
+                "productCode": "NI0048",
+                "productName": "Spanner 14/15",
+                "totalQuantity": "1",
+                "price": "100"
+            },
+            {
+                "Sr. No": "133",
+                "productCode": "NI0049",
+                "productName": "Spanner 16/17",
+                "totalQuantity": "1",
+                "price": "100"
+            },
+            {
+                "Sr. No": "134",
+                "productCode": "NI0050",
+                "productName": "Spanner 6/7",
+                "totalQuantity": "1",
+                "price": "100"
+            },
+            {
+                "Sr. No": "135",
+                "productCode": "NI0051",
+                "productName": "Stm32f446",
+                "totalQuantity": "7",
+                "price": "500"
+            },
+            {
+                "Sr. No": "136",
+                "productCode": "NI0052",
+                "productName": "STM Programmer",
+                "totalQuantity": "4",
+                "price": "2000"
+            },
+            {
+                "Sr. No": "137",
+                "productCode": "NI0053",
+                "productName": "Thumb Player",
+                "totalQuantity": "1",
+                "price": "200"
+            },
+            {
+                "Sr. No": "138",
+                "productCode": "NI0054",
+                "productName": "Toggle Switch CE101",
+                "totalQuantity": "37",
+                "price": "200"
+            },
+            {
+                "Sr. No": "139",
+                "productCode": "NI0055",
+                "productName": "Toggle Switch CE201",
+                "totalQuantity": "30",
+                "price": "200"
+            },
+            {
+                "Sr. No": "140",
+                "productCode": "NI0056",
+                "productName": "TOYO 726 CPU MALE",
+                "totalQuantity": "100",
+                "price": "200"
+            },
+            {
+                "Sr. No": "141",
+                "productCode": "NI0057",
+                "productName": "USB B Female Solder Right Angle",
+                "totalQuantity": "48",
+                "price": "200"
+            },
+            {
+                "Sr. No": "142",
+                "productCode": "NI0058",
+                "productName": "USB Cable",
+                "totalQuantity": "0",
+                "price": "300"
+            },
+            {
+                "Sr. No": "143",
+                "productCode": "NI0059",
+                "productName": "Wire Stripper",
+                "totalQuantity": "1",
+                "price": "200"
+            },
+            {
+                "Sr. No": "144",
+                "productCode": "NI0060",
+                "productName": "Wiring Harness",
+                "totalQuantity": "0",
+                "price": "3000"
+            },
+            {
+                "Sr. No": "145",
+                "productCode": "NI0061",
+                "productName": "FIXED FLOW REGULATOR - BRASS-C10",
+                "totalQuantity": "0",
+                "price": "3250"
+            },
+            {
+                "Sr. No": "146",
+                "productCode": "NI0062",
+                "productName": "MGA & DSM RPM Cable Assembly (MGT)",
+                "totalQuantity": "0",
+                "price": "2500"
+            },
+            {
+                "Sr. No": "147",
+                "productCode": "NI0064",
+                "productName": "MGT-300 EVO/ST UNIVERSAL RPM",
+                "totalQuantity": "0",
+                "price": "12500"
+            },
+            {
+                "Sr. No": "148",
+                "productCode": "NI0066",
+                "productName": "P U Pipe 6mm (6 * 4mm)",
+                "totalQuantity": "22",
+                "price": "400"
+            },
+            {
+                "Sr. No": "149",
+                "productCode": "NI0069",
+                "productName": "SMD IC ADS 1115 IDGSR",
+                "totalQuantity": "7",
+                "price": "1"
+            },
+            {
+                "Sr. No": "150",
+                "productCode": "NI0070",
+                "productName": "SMD IC HCF 4052 MO 13 TR",
+                "totalQuantity": "23",
+                "price": "1"
+            },
+            {
+                "Sr. No": "151",
+                "productCode": "NI0071",
+                "productName": "SMD IC HCF 4098 MO 13 TR",
+                "totalQuantity": "25",
+                "price": "1"
+            },
+            {
+                "Sr. No": "152",
+                "productCode": "NI0072",
+                "productName": "SMD IC HEF 4013 BT",
+                "totalQuantity": "24",
+                "price": "1"
+            },
+            {
+                "Sr. No": "153",
+                "productCode": "NI0073",
+                "productName": "SMD IC HEF 4066 BT",
+                "totalQuantity": "24",
+                "price": "1"
+            },
+            {
+                "Sr. No": "154",
+                "productCode": "NI0074",
+                "productName": "SMD IC LM 324 DT",
+                "totalQuantity": "24",
+                "price": "1"
+            },
+            {
+                "Sr. No": "155",
+                "productCode": "NI0075",
+                "productName": "SMD IC LM 358 DT-04",
+                "totalQuantity": "22",
+                "price": "1"
+            },
+            {
+                "Sr. No": "156",
+                "productCode": "NI0076",
+                "productName": "SMD IC MAX 232 IDR",
+                "totalQuantity": "22",
+                "price": "1"
+            },
+            {
+                "Sr. No": "157",
+                "productCode": "NI0077",
+                "productName": "SMD IC MAX 481",
+                "totalQuantity": "25",
+                "price": "1"
+            },
+            {
+                "Sr. No": "158",
+                "productCode": "NI0078",
+                "productName": "SMD IC OP 07 CDR",
+                "totalQuantity": "24",
+                "price": "1"
+            },
+            {
+                "Sr. No": "159",
+                "productCode": "NI1001",
+                "productName": "Dummy Product 1",
+                "totalQuantity": "1000",
+                "price": "500"
+            },
+            {
+                "Sr. No": "160",
+                "productCode": "NI1002",
+                "productName": "Dummy Product 2",
+                "totalQuantity": "1000",
+                "price": "600"
+            },
+            {
+                "Sr. No": "161",
+                "productCode": "NI1003",
+                "productName": "Dummy Product 3",
+                "totalQuantity": "1000",
+                "price": "700"
+            },
+            {
+                "Sr. No": "162",
+                "productCode": "NI1004",
+                "productName": "Dummy Product 4",
+                "totalQuantity": "1000",
+                "price": "800"
+            },
+            {
+                "Sr. No": "163",
+                "productCode": "NI1005",
+                "productName": "Dummy Product 5",
+                "totalQuantity": "1000",
+                "price": "900"
+            },
         ];
         await MasterInventory.insertMany(data);
         return res.status(200).json({ code : "200" , message: "Master Inventory Created Successfully!!" });
