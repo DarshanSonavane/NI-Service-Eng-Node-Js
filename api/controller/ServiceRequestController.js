@@ -43,11 +43,11 @@ const createServiceRequest = async (req,res) =>{
                                             machineType = 'Combo';
                                         }
                                         sendMail(res['customerId']['customerName'] , res['customerId']['customerCode'] , res['complaintType']['name'] , machineType , null , res['customerId']['city'] , res['customerId']['mobile'] , 'service');
-                                        let obj = {
+                                        /* let obj = {
                                             customerCode :  res['customerId']['customerCode'],
                                             otpType : 'complaint'
-                                        }
-                                        await generateOTPForServiceRequest(obj);
+                                        } 
+                                        await generateOTPForServiceRequest(obj); */
                                     }
                                 })
                                 return res.status(200).json({ code : "200" , message: "Service Request Created Successfully!!", data: data });

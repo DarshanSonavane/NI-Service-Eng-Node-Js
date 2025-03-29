@@ -16,6 +16,8 @@ const AppVersion = require("../model/AppVersion.js");
 const MasterInventory = require("../model/MasterInventory.js");
 const EmployeeInventory = require('../model/EmployeeInventory.js');
 const FSR = require('../model/FSR.js');
+const ServiceRequest = require('../model/ServiceRequest.js');
+const ComplaintHistory = require('../model/ComplaintHistory.js');
 
 const insertMasterInventory=async(req,res)=>{
     try{
@@ -1356,6 +1358,7 @@ const createFSR = async(req,res)=>{
             serviceVisit: serviceVisitCharge,
             fsrFinalAmount : finalAmount
         }).then(async(data)=>{
+            await closeServiceRequest(req.body.complaint, req.body.employeeId)
             // write function to generate and send fsr to customer , employee and admin
             await generateAndSendFSR(data._id);
             return res.status(200).json({
@@ -1656,7 +1659,7 @@ const generateAndSendFSR=async(fsrId)=>{
                                     </body>
                                 </html>`;
                                 const subject = `Field Service Report`;
-                                let receiverEmail = [customerData.email , employeeData.email];
+                                let receiverEmail = [customerData.email , employeeData.email , 'service@niserviceeng.com'];
                                                         
                                 await sendMailWithAttachment(htmlEmailContents, receiverEmail, subject , outputPath);
                             });
@@ -1666,6 +1669,8 @@ const generateAndSendFSR=async(fsrId)=>{
                         }
                     }
                 )
+            }else {
+                return res.status(400).json({ code : "400" , message: "Machine Details Not Found For The User!"});   
             }
         }
     }catch(err){
@@ -1684,7 +1689,30 @@ const generateBarcodeForFSRRequest =  async(fsrId , customerName)=>{
     }catch(err){
         console.log(err);
     }
-}    
+}
+
+const closeServiceRequest = async(complaintId,employeeId)=>{
+    try{
+        let reqData = {
+            status : "0",
+            updatedBy : employeeId
+        };
+        await ServiceRequest.where({_id : complaintId}).updateOne({
+            $set : reqData
+        }).then(async(assignedData)=>{
+            // await EmployeeServiceRequest.deleteOne({serviceRequestId : req.body.complaintId})
+            await ComplaintHistory.create({
+                requestId : complaintId,
+                status : "0"
+            });
+            
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
 
 module.exports = {
     insertMasterInventory : insertMasterInventory,
