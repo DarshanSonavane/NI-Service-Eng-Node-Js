@@ -1693,6 +1693,7 @@ const generateBarcodeForFSRRequest =  async(fsrId , customerName)=>{
 
 const closeServiceRequest = async(complaintId,employeeId)=>{
     try{
+        console.log("complaintId=====", complaintId,"employeeId======", employeeId);
         let reqData = {
             status : "0",
             updatedBy : employeeId
