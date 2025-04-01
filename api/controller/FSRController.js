@@ -1360,7 +1360,7 @@ const createFSR = async(req,res)=>{
         }).then(async(data)=>{
             await closeServiceRequest(req.body.complaint, req.body.employeeId)
             // write function to generate and send fsr to customer , employee and admin
-            await generateAndSendFSR(data._id);
+            await generateAndSendFSR(data._id,res);
             return res.status(200).json({
                 message: "FSR Created Successfully",
                 code : "200",
@@ -1573,7 +1573,7 @@ const updateAdminMasterInventory = async(req,res)=>{
     }
 }
 
-const generateAndSendFSR=async(fsrId)=>{
+const generateAndSendFSR=async(fsrId,res)=>{
     try{
         const fsrData = await FSR.findOne({_id : fsrId});
         if(fsrData){
