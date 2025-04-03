@@ -1332,7 +1332,26 @@ const createFSR = async(req,res)=>{
             serviceVisitCharge = 2950;
         }
         finalAmount = parseFloat(req.body.fsrFinalAmount) + parseFloat(req.body.totalGSTAmount);
-        const machineDetails = await MachineModel.findOne({CUSTOMER_CODE : req.body.customerCode , MODEL : req.body.model});
+        const reqModel = req.body.model;
+        let alrenetModel;
+        if(model == "NPM MGA1"){
+            alrenetModel = "MGA1";
+        }else if(model == "NPM MGA2"){
+            alrenetModel = "MGA2";
+        }else if(model == "NPM SMIIIB"){
+            alrenetModel = "DSM";
+        }else if(model == "NUVO 10"){
+            alrenetModel = "NUVO10";
+        }else if(model == "NUVO 20"){
+            alrenetModel = "NUVO20";
+        }
+        const machineDetails = await MachineModel.findOne({
+            CUSTOMER_CODE : req.body.customerCode,
+            $or: [
+                {MODEL : req.body.model},
+                {MODEL : alrenetModel}
+            ]
+        });
         console.log("Machine Details1=====", machineDetails)
         if(machineDetails && machineDetails.MACHINE_NO){
             await FSR.create({
@@ -1363,7 +1382,7 @@ const createFSR = async(req,res)=>{
             }).then(async(data)=>{
                 await closeServiceRequest(req.body.complaint, req.body.employeeId)
                 // write function to generate and send fsr to customer , employee and admin
-                await generateAndSendFSR(data._id,res);
+                await generateAndSendFSR(data._id,machineDetails,res);
                 return res.status(200).json({
                     message: "FSR Created Successfully",
                     code : "200",
@@ -1583,13 +1602,12 @@ const updateAdminMasterInventory = async(req,res)=>{
     }
 }
 
-const generateAndSendFSR=async(fsrId,res)=>{
+const generateAndSendFSR=async(fsrId,machineDetails,res)=>{
     try{
         const fsrData = await FSR.findOne({_id : fsrId});
         if(fsrData){
             const customerData = await CustomerDetails.findOne({customerCode : fsrData.customerCode}).select({customerName : 1 , city : 1 , stateCode : 1 , email : 1});
             const employeeData = await Employee.findOne({employeeCode : fsrData.employeeCode}).select({firstName : 1 , lastName : 1 , employeeCode : 1 , email : 1});
-            const machineDetails = await MachineModel.findOne({CUSTOMER_CODE : fsrData.customerCode , MODEL : fsrData.model});
             const fsrNumber = Math.floor(1000 + Math.random() * 9000);
             const customerNameLocation = customerData.customerName + " ," + customerData.city + "," + customerData.stateCode;
             const customerName = customerData.customerName;
