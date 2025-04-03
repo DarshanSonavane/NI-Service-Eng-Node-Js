@@ -1331,44 +1331,53 @@ const createFSR = async(req,res)=>{
         if(req.body.natureOfCall == 'Service Call'){
             serviceVisitCharge = 2950;
         }
-        finalAmount = parseFloat(req.body.fsrFinalAmount) + parseFloat(req.body.totalGSTAmount)
-        await FSR.create({
-            customerCode : req.body.customerCode,
-            contactPerson : req.body.contactPerson,
-            designation : req.body.designation,
-            employeeCode : req.body.employeeCode,
-            employeeId : req.body.employeeId,
-            complaintType : req.body.complaintType,
-            productsUsed : req.body.productsUsed,
-            remark : req.body.remark,
-            correctiveAction : req.body.correctiveAction,
-            status : req.body.status,
-            serviceDetails : req.body.serviceDetails,
-            employeeSignature : req.body.employeeSignature,
-            customerSignature : req.body.customerSignature,
-            fsrLocation : req.body.fsrLocation,
-            model : req.body.model,
-            fsrStatus : '1',
-            fsrStartTime : req.body.fsrStartTime,
-            fsrEndTime : req.body.fsrEndTime,
-            isChargeable : req.body.isChargeable,
-            natureOfCall : req.body.natureOfCall,
-            complaint : req.body.complaint,
-            totalGSTAmount : req.body.totalGSTAmount,
-            serviceVisit: serviceVisitCharge,
-            fsrFinalAmount : finalAmount
-        }).then(async(data)=>{
-            await closeServiceRequest(req.body.complaint, req.body.employeeId)
-            // write function to generate and send fsr to customer , employee and admin
-            await generateAndSendFSR(data._id,res);
-            return res.status(200).json({
-                message: "FSR Created Successfully",
-                code : "200",
-                data : data
+        finalAmount = parseFloat(req.body.fsrFinalAmount) + parseFloat(req.body.totalGSTAmount);
+        const machineDetails = await MachineModel.findOne({CUSTOMER_CODE : req.body.customerCode , MODEL : req.body.model});
+        if(machineDetails && machineDetails.MACHINE_NO){
+            await FSR.create({
+                customerCode : req.body.customerCode,
+                contactPerson : req.body.contactPerson,
+                designation : req.body.designation,
+                employeeCode : req.body.employeeCode,
+                employeeId : req.body.employeeId,
+                complaintType : req.body.complaintType,
+                productsUsed : req.body.productsUsed,
+                remark : req.body.remark,
+                correctiveAction : req.body.correctiveAction,
+                status : req.body.status,
+                serviceDetails : req.body.serviceDetails,
+                employeeSignature : req.body.employeeSignature,
+                customerSignature : req.body.customerSignature,
+                fsrLocation : req.body.fsrLocation,
+                model : req.body.model,
+                fsrStatus : '1',
+                fsrStartTime : req.body.fsrStartTime,
+                fsrEndTime : req.body.fsrEndTime,
+                isChargeable : req.body.isChargeable,
+                natureOfCall : req.body.natureOfCall,
+                complaint : req.body.complaint,
+                totalGSTAmount : req.body.totalGSTAmount,
+                serviceVisit: serviceVisitCharge,
+                fsrFinalAmount : finalAmount
+            }).then(async(data)=>{
+                await closeServiceRequest(req.body.complaint, req.body.employeeId)
+                // write function to generate and send fsr to customer , employee and admin
+                await generateAndSendFSR(data._id,res);
+                return res.status(200).json({
+                    message: "FSR Created Successfully",
+                    code : "200",
+                    data : data
+                });
+            }).catch((err)=>{
+                console.log(err)
+            })
+        } else {
+            return res.status(400).json({
+                message: "Machine Details Not Found",
+                code : "400"
             });
-        }).catch((err)=>{
-            console.log(err)
-        })
+        }
+        
     }catch(err){
         console.log(err);
     }
