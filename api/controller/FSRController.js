@@ -1333,6 +1333,7 @@ const createFSR = async(req,res)=>{
         }
         finalAmount = parseFloat(req.body.fsrFinalAmount) + parseFloat(req.body.totalGSTAmount);
         const machineDetails = await MachineModel.findOne({CUSTOMER_CODE : req.body.customerCode , MODEL : req.body.model});
+        console.log("Machine Details1=====", machineDetails)
         if(machineDetails && machineDetails.MACHINE_NO){
             await FSR.create({
                 customerCode : req.body.customerCode,
