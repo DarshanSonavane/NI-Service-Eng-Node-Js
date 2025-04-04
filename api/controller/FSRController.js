@@ -1334,15 +1334,15 @@ const createFSR = async(req,res)=>{
         finalAmount = parseFloat(req.body.fsrFinalAmount) + parseFloat(req.body.totalGSTAmount);
         const reqModel = req.body.model;
         let alrenetModel;
-        if(model == "NPM MGA1"){
+        if(reqModel == "NPM MGA1"){
             alrenetModel = "MGA1";
-        }else if(model == "NPM MGA2"){
+        }else if(reqModel == "NPM MGA2"){
             alrenetModel = "MGA2";
-        }else if(model == "NPM SMIIIB"){
+        }else if(reqModel == "NPM SMIIIB"){
             alrenetModel = "DSM";
-        }else if(model == "NUVO 10"){
+        }else if(reqModel == "NUVO 10"){
             alrenetModel = "NUVO10";
-        }else if(model == "NUVO 20"){
+        }else if(reqModel == "NUVO 20"){
             alrenetModel = "NUVO20";
         }
         const machineDetails = await MachineModel.findOne({
