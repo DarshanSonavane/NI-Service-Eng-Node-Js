@@ -1338,7 +1338,7 @@ const createFSR = async(req,res)=>{
             alrenetModel = "MGA1";
         }else if(reqModel == "NPM MGA2"){
             alrenetModel = "MGA2";
-        }else if(reqModel == "NPM SMIIB"){
+        }else if(reqModel == "NPM SMIIB" || reqModel == "NPM SMIIIB"){
             alrenetModel = "DSM";
         }else if(reqModel == "NUVO 10"){
             alrenetModel = "NUVO10";
