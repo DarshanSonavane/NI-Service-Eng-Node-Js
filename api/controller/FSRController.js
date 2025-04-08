@@ -1352,6 +1352,7 @@ const createFSR = async(req,res)=>{
                 {MODEL : alrenetModel}
             ]
         });
+        console.log("Query===", req.body.customerCode,req.body.model,alrenetModel);
         console.log("Machine Details1=====", machineDetails)
         if(machineDetails && machineDetails.MACHINE_NO){
             await FSR.create({
