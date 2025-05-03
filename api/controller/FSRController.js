@@ -1572,7 +1572,7 @@ const updateAdminMasterInventory = async(req,res)=>{
             const reqBody = {
                 productName : req.body.productName,
                 price : req.body.price,
-                totalQuantity : req.body.totalQuantity
+                totalQuantity : parseInt(data.totalQuantity) + parseInt(req.body.totalQuantity)
             }
 
             await MasterInventory.where({_id : data._id}).updateOne({
