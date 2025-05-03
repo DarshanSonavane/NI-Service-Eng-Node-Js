@@ -1173,8 +1173,7 @@ const insertMasterInventory=async(req,res)=>{
 
 const fetchMasterInventoryList = async(req,res)=>{
     try{
-        const query = { totalQuantity: { $gt: 0 } };
-        const data = await MasterInventory.find(query)
+        const data = await MasterInventory.find()
         return res.status(200).json({ code : "200" , message: "Master Inventory List!!" , data : data});
     }catch(err){
         console.log(err);
