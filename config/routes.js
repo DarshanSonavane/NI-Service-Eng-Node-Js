@@ -3,10 +3,10 @@ const express = require('express');
 // const authenticate = authentication.authenticateToken;
 
 const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer , getEmployeeDetails , deleteEmployee , updateCustomerDetails , getAllCustomers , createUpdateCustomerDetails , updateDetailsWithoutValidation , updateEmployeePassword , generateStateList , getStateList } = require('../api/controller/EmployeeController.js');
-const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion , trackComplaint , reAssignComplaint , generateAndSendOTP , verifyOTP , getAllOpenComplaints , getAllCloseComplaints , deleteCustomerById , raiseAMCRequest , getCustomerDetails , genetrateAndSendAMCToCustomer , createUpdateGST , createUpdateAMCAmount , getAllOpenAMCRequest , getAllCloseAMCRequest } = require('../api/controller/ServiceRequestController.js');
+const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion , trackComplaint , reAssignComplaint , generateAndSendOTP , verifyOTP , getAllOpenComplaints , getAllCloseComplaints , deleteCustomerById , raiseAMCRequest , getCustomerDetails , genetrateAndSendAMCToCustomer , createUpdateGST , createUpdateAMCAmount , getAllOpenAMCRequest , getAllCloseAMCRequest , updateMachineDetails , getMachineDetailsByCustomerId } = require('../api/controller/ServiceRequestController.js');
 const { generateCalibrationRequest , getCalibrationEmployeeList , getAllCalibrationList , getMyCalibrationRequestList , getCustomerCalibrationList , validateCalibration , updateCylinderDetails , generateAndSendCalibration , insertMachineModel , getCylinderDetails , insertNewMachineDetails , updateCalibrationStatusById , deletecalibrationRequestById , getAllOpenCalibrationList , getAllCloseCalibrationList } = require('../api/controller/CalibrationController.js');
 const { saveNotification , fetchNotification , insertCustomerFCM , validateCustomerDeviceFCM } = require('../api/controller/NotificationController.js');
-const { insertMasterInventory , fetchMasterInventoryList , assignInventoryToEmployee , createFSR , fsrList , employeeInventoryList , updateAdminMasterInventory } = require('../api/controller/FSRController.js')
+const { insertMasterInventory , fetchMasterInventoryList , assignInventoryToEmployee , createFSR , fsrList , employeeInventoryList , updateAdminMasterInventory, getLatestFSRS } = require('../api/controller/FSRController.js')
 const routes = express.Router();
 
 routes.get("/test", (req, res) => {
@@ -85,5 +85,11 @@ routes.post("/insert-update-employee-inventory" , assignInventoryToEmployee);
 routes.post("/create-fsr" , createFSR);
 routes.post("/fsr-list" , fsrList);
 routes.post("/employee-inventory-list" , employeeInventoryList);
-routes.post("/insert-update-master-inventory" , updateAdminMasterInventory)
+routes.post("/insert-update-master-inventory" , updateAdminMasterInventory);
+routes.post("/fetch-latest-fsrs", getLatestFSRS);
+
+// Machine Model API's
+routes.post('/machine-list-by-customer-code', getMachineDetailsByCustomerId);
+routes.post('/update-machine-list-by-customer-code', updateMachineDetails);
+
 module.exports = routes;

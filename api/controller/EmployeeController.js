@@ -323,7 +323,7 @@ const updateDetailsWithoutValidation = async(req,res)=>{
 
 const updateEmployeePassword = async(req,res) => {
     try{
-        if( !req.body.employeeCode || !req.body.password){
+        if(!req.body.employeeCode || !req.body.password){
             return res.status(400).json({
                 message: "Required Fields are missing",
                 status: false,

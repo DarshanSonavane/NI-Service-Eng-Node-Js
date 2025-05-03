@@ -1052,6 +1052,41 @@ async function generateOTPForServiceRequest(obj){
     }
 }
 
+const getMachineDetailsByCustomerId = async (req,res) =>{
+    if(!req.body.customerCode){
+        return res.status(400).json({
+            message: "Required Fields are missing",
+            status: false,
+        });
+    }
+
+    const data = await MachineModel.find({ CUSTOMER_CODE  : req.body.customerCode });
+    return res.status(200).json({ code : "200" , message: "Machine Data!!", data: data });
+}
+
+const updateMachineDetails = async(req,res)=>{
+    if(!req.body.model || !req.body.id){
+        return res.status(400).json({
+            message: "Required Fields are missing",
+            status: false,
+        });
+    }
+
+    reqData = {
+        MODEL : req.body.model
+    }
+    
+    await MachineModel.where({
+        _id : req.body.id
+    }).updateOne({
+        $set : reqData
+    }).then(async(custUpdatedData)=>{
+        return res.status(200).json({ code : "200" , message: "Machine Data Updated Successfully!!", data: data });
+    }).catch((err)=>{
+        console.log(err);
+    })
+}
+
 module.exports = {
     createServiceRequest: createServiceRequest,
     getMyComplaints: getMyComplaints,
@@ -1081,5 +1116,7 @@ module.exports = {
     createUpdateGST : createUpdateGST,
     createUpdateAMCAmount : createUpdateAMCAmount,
     getAllOpenAMCRequest : getAllOpenAMCRequest,
-    getAllCloseAMCRequest : getAllCloseAMCRequest
+    getAllCloseAMCRequest : getAllCloseAMCRequest,
+    getMachineDetailsByCustomerId : getMachineDetailsByCustomerId,
+    updateMachineDetails : updateMachineDetails
 }
