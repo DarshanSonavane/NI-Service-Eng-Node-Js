@@ -1483,7 +1483,8 @@ const fsrList = async(req,res)=>{
                     fsrEndTime:1,
                     fsrFinalAmount:1,
                     isChargeable:1,
-                    totalGSTAmount:1
+                    totalGSTAmount:1,
+                    createdAt:1
                   }
                 }
               ]).sort({_id : -1});
