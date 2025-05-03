@@ -1743,6 +1743,33 @@ const closeServiceRequest = async(complaintId,employeeId)=>{
     }
 }
 
+const getLatestFSRS = async(req,res)=>{
+    try{
+        if(!req.body.role){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                code : 400
+            });
+        }
+        if(req.body.role == '0'){
+            const data = await FSR.find().sort({ createdAt: -1 }).limit(3);
+            return res.status(200).json({message: "Latest FSR List!", code : 200, data : data});
+        }else if(req.body.role == '1'){
+            if(!req.body.employeeId){
+                return res.status(400).json({
+                    message: "Required Fields are missing",
+                    code : 400
+                });
+            }
+            const data = await FSR.find({ employeeId: req.body.employeeId }).sort({ createdAt: -1 }).limit(3)
+            return res.status(200).json({message: "Latest FSR List!", code : 200, data : data});
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     insertMasterInventory : insertMasterInventory,
     fetchMasterInventoryList : fetchMasterInventoryList,
@@ -1750,5 +1777,6 @@ module.exports = {
     createFSR : createFSR,
     fsrList : fsrList,
     employeeInventoryList : employeeInventoryList,
-    updateAdminMasterInventory : updateAdminMasterInventory
+    updateAdminMasterInventory : updateAdminMasterInventory,
+    getLatestFSRS : getLatestFSRS
 }
