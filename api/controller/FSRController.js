@@ -1486,7 +1486,7 @@ const fsrList = async(req,res)=>{
                     totalGSTAmount:1
                   }
                 }
-              ]);
+              ]).sort({_id : -1});
             return res.status(200).json({
                 message: "FSR List",
                 code : 200,
@@ -1500,7 +1500,7 @@ const fsrList = async(req,res)=>{
                 });
             }
 
-            const fsrData = await FSR.find({ employeeId: req.body.employeeId })
+            const fsrData = await FSR.find({ employeeId: req.body.employeeId }).sort({_id : -1})
             .populate('employeeId', 'firstName lastName')
 
             if (fsrData.length === 0) {
