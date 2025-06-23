@@ -2,7 +2,7 @@ const express = require('express');
 // const authentication = require('../api/utility/authentication.js');
 // const authenticate = authentication.authenticateToken;
 
-const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer , getEmployeeDetails , deleteEmployee , updateCustomerDetails , getAllCustomers , createUpdateCustomerDetails , updateDetailsWithoutValidation , updateEmployeePassword , generateStateList , getStateList } = require('../api/controller/EmployeeController.js');
+const { createEmployee , getEmployeeList , login , createEmployeeRole , getEmployeeRole , createCustomer , getEmployeeDetails , deleteEmployee , updateCustomerDetails , getAllCustomers , createUpdateCustomerDetails , updateDetailsWithoutValidation , updateEmployeePassword , generateStateList , getStateList , getAllCustomersByPage , searchCustomerByNameOrCode } = require('../api/controller/EmployeeController.js');
 const { createServiceRequest , getMyComplaints , getAllComplaints , saveCustomerFeedback , getNatureOfComplaints , saveNatureOfComplaints , getAssignedComplaints , assignComplaint , closeServiceRequest , getDashboardDetails , getAdminDashboardDetails , updateServiceRequest , updateCustomerPassword , getCustomerServiceRequestCount , updateAppVersion , trackComplaint , reAssignComplaint , generateAndSendOTP , verifyOTP , getAllOpenComplaints , getAllCloseComplaints , deleteCustomerById , raiseAMCRequest , getCustomerDetails , genetrateAndSendAMCToCustomer , createUpdateGST , createUpdateAMCAmount , getAllOpenAMCRequest , getAllCloseAMCRequest , updateMachineDetails , getMachineDetailsByCustomerId } = require('../api/controller/ServiceRequestController.js');
 const { generateCalibrationRequest , getCalibrationEmployeeList , getAllCalibrationList , getMyCalibrationRequestList , getCustomerCalibrationList , validateCalibration , updateCylinderDetails , generateAndSendCalibration , insertMachineModel , getCylinderDetails , insertNewMachineDetails , updateCalibrationStatusById , deletecalibrationRequestById , getAllOpenCalibrationList , getAllCloseCalibrationList } = require('../api/controller/CalibrationController.js');
 const { saveNotification , fetchNotification , insertCustomerFCM , validateCustomerDeviceFCM } = require('../api/controller/NotificationController.js');
@@ -77,6 +77,8 @@ routes.post("/create-update-gst" , createUpdateGST);
 routes.post("/create-update-amc-amount" , createUpdateAMCAmount);
 routes.get("/get-all-open-amc-request" , getAllOpenAMCRequest);
 routes.get("/get-all-close-amc-request" , getAllCloseAMCRequest);
+routes.get("/get-all-customers-mobile", getAllCustomersByPage);
+routes.get("/search-customer", searchCustomerByNameOrCode)
 
 // FSR , Toolkit & Inventory API's
 routes.post("/insert-master-inventory" , insertMasterInventory);

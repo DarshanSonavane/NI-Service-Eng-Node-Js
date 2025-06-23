@@ -1407,6 +1407,9 @@ const createFSR = async(req,res)=>{
 
 const fsrList = async(req,res)=>{
     try{
+        const page = parseInt(req.query.page) || 1; // default to page 1
+        const limit = 20; // default to 20 items per page
+        const skip = (page - 1) * limit;
         if(!req.body.role){
             return res.status(400).json({
                 message: "Required Fields are missing",
@@ -1487,7 +1490,7 @@ const fsrList = async(req,res)=>{
                     createdAt:1
                   }
                 }
-              ]).sort({_id : -1});
+              ]).sort({_id : -1}).skip(skip).limit(limit);
             return res.status(200).json({
                 message: "FSR List",
                 code : 200,
@@ -1502,7 +1505,7 @@ const fsrList = async(req,res)=>{
             }
 
             const fsrData = await FSR.find({ employeeId: req.body.employeeId }).sort({_id : -1})
-            .populate('employeeId', 'firstName lastName')
+            .populate('employeeId', 'firstName lastName').skip(skip).limit(limit);
 
             if (fsrData.length === 0) {
                 return res.status(200).json({code: 200, message : "No FSR data found for this employee.", fsrData: fsrData});
