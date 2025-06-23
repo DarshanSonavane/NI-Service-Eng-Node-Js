@@ -386,6 +386,46 @@ const getStateList = async(req,res)=>{
     }
 }
 
+const getAllCustomersByPage = async(req,res)=>{
+    try{
+        if(!req.query.page){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            });
+        }
+        const page = parseInt(req.query.page) || 1; // default to page 1
+        const limit = 20; // default to 20 items per page
+        const skip = (page - 1) * limit;
+        const data = await CustomerDetails.find().skip(skip).limit(limit);
+        return res.status(200).json({ code : "200" , message: "Customer List!!", data: data });
+    }catch(err){
+        console.log(err)
+    }
+}
+
+const searchCustomerByNameOrCode = async(req,res)=>{
+    try{
+        if(!req.query.searchKey){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            }); 
+        }
+        const searchTerm = req.query.searchKey; // e.g., from ?search=John123
+
+        const customer = await CustomerDetails.find({
+            $or: [
+              { customerName: { $regex: searchTerm, $options: 'i' } }, // partial & case-insensitive
+              { customerCode: { $regex: searchTerm, $options: 'i' } }
+            ]
+          });
+        return res.status(200).json({ code : "200" , message: "Customer List!!", data: customer });
+    }catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createEmployee: createEmployee,
     getEmployeeList: getEmployeeList,
@@ -401,5 +441,7 @@ module.exports = {
     updateDetailsWithoutValidation : updateDetailsWithoutValidation,
     updateEmployeePassword : updateEmployeePassword,
     generateStateList : generateStateList,
-    getStateList : getStateList
+    getStateList : getStateList,
+    getAllCustomersByPage : getAllCustomersByPage,
+    searchCustomerByNameOrCode : searchCustomerByNameOrCode
 }
