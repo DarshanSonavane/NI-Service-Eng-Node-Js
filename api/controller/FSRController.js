@@ -1752,7 +1752,7 @@ const getLatestFSRS = async(req,res)=>{
                 code : 400
             });
         }
-        if(req.body.role == '0'){
+        /* if(req.body.role == '0'){
             const data = await FSR.find().sort({ createdAt: -1 }).limit(3);
             return res.status(200).json({message: "Latest FSR List!", code : 200, data : data});
         }else if(req.body.role == '1'){
@@ -1764,6 +1764,139 @@ const getLatestFSRS = async(req,res)=>{
             }
             const data = await FSR.find({ employeeId: req.body.employeeId }).sort({ createdAt: -1 }).limit(3)
             return res.status(200).json({message: "Latest FSR List!", code : 200, data : data});
+        } */
+
+        try{
+            if(!req.body.role){
+                return res.status(400).json({
+                    message: "Required Fields are missing",
+                    code : 400
+                });
+            }
+            let data;
+            let customerData;
+            if(req.body.role == '0'){
+                const fsrData = await FSR.aggregate([
+                    // Lookup to join FSR with customer_details collection
+                    {
+                      $lookup: {
+                        from: 'customerdetails',           // Collection to join with
+                        localField: 'customerCode',        // Field from FSR collection
+                        foreignField: 'customerCode',      // Field from customer_details collection
+                        as: 'customerInfo'                // Output field that will contain the customer details
+                      }
+                    },
+                    // Unwind customer_info to flatten the array (if only one result)
+                    {
+                      $unwind: {
+                        path: '$customerInfo',            // Unwind the array to get a single object
+                        preserveNullAndEmptyArrays: true   // In case there's no matching customerCode
+                      }
+                    },
+                    // Lookup to join FSR with employees collection using employee's _id
+                    {
+                      $lookup: {
+                        from: 'employees',                // Collection to join with (replace 'employees' with your actual collection name)
+                        localField: 'employeeId',         // Field from FSR collection (assuming employee_id is the field storing employee's _id)
+                        foreignField: '_id',               // Field from employees collection (_id is the primary key in employees)
+                        as: 'employeeInfo'                // Output field that will contain employee details
+                      }
+                    },
+                    // Unwind employee_info to flatten the array (if only one result)
+                    {
+                      $unwind: {
+                        path: '$employeeInfo',            // Unwind the array to get a single object
+                        preserveNullAndEmptyArrays: true   // In case there's no matching employee_id
+                      }
+                    },
+                    // Project the necessary fields: customerName, city, state, and employee's firstName, lastName
+                    {
+                      $project: {
+                        customerInfo: {
+                          customerName: 1,  // Include customerName
+                          city: 1,          // Include city
+                          stateCode: 1          // Include state
+                        },
+                        employeeInfo: {
+                          firstName: 1,     // Include firstName from employee_details
+                          lastName: 1       // Include lastName from employee_details
+                        },
+                        employee_id: 1,    // Include employee_id
+                        customerCode: 1,   // Include customerCode
+                        productsUsed: 1,  // Include products_used
+                        contactPerson: 1,
+                        designation: 1,
+                        employeeCode : 1,
+                        complaintType : 1,
+                        natureOfCompliant : 1,
+                        remark : 1,
+                        correctiveAction : 1,
+                        status: 1,
+                        serviceDetails: 1,
+                        fsrLocation : 1,
+                        fsrStatus: 1,
+                        serviceVisit: 1,
+                        employeeSignature:1,
+                        customerSignature:1,
+                        fsrStatus:1,
+                        fsrStartTime:1,
+                        fsrEndTime:1,
+                        fsrFinalAmount:1,
+                        isChargeable:1,
+                        totalGSTAmount:1,
+                        createdAt:1
+                      }
+                    }
+                  ]).sort({ createdAt: -1 }).limit(3);
+                return res.status(200).json({
+                    message: "FSR List",
+                    code : 200,
+                    fsrData : fsrData,
+                });
+            }else if(req.body.role == "1"){
+                if(!req.body.employeeId){
+                    return res.status(400).json({
+                        message: "Required Fields are missing",
+                        code : 400
+                    });
+                }
+    
+                const fsrData = await FSR.find({ employeeId: req.body.employeeId }).sort({ createdAt: -1 })
+                .populate('employeeId', 'firstName lastName').limit(3);
+    
+                if (fsrData.length === 0) {
+                    return res.status(200).json({code: 200, message : "No FSR data found for this employee.", fsrData: fsrData});
+                }
+    
+                const customerCodes = fsrData.map(fsr => fsr.customerCode);  // Get all customerCodes from the FSR data
+                const customerDetails = await CustomerDetails.find({ customerCode: { $in: customerCodes } })
+                .select('customerCode customerName city state');  // Select only relevant fields
+    
+                // Map customer details to each FSR record
+                const fsrWithCustomerDetails = fsrData.map(fsr => {
+                    const customer = customerDetails.find(customer => customer.customerCode === fsr.customerCode);
+                    const transformedFsr = {
+                        ...fsr.toObject(),  // Convert FSR document to plain object
+                        customerInfo: customer || null  // Add customer details or null if not found
+                      };
+                      
+                      // Rename employee_id to employeeInfo
+                    if (transformedFsr.employeeId) {
+                        transformedFsr.employeeInfo = transformedFsr.employeeId;
+                        delete transformedFsr.employeeId;
+                    }
+                
+                    return transformedFsr;
+                });
+    
+                return res.status(200).json({
+                    message: "FSR List",
+                    code : 200,
+                    fsrData : fsrWithCustomerDetails,
+                });
+            }
+        }catch(err){
+            console.log(err);
         }
 
     }catch(err){
