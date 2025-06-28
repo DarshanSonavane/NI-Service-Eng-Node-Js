@@ -4,6 +4,8 @@ const UserRoles =  require('../model/UserRoles.js');
 const CustomerDetails =  require("../model/CustomerDetails.js");
 const StateList = require("../model/StateList.js");
 const MachineModel = require('../model/MachineModel.js');
+const rewardModel = require('../model/Reward.js');
+const Reward = require('../model/Reward.js');
 // const authentication = require("../utility/authentication.js");
 
 const createEmployee = async (req,res) =>{
@@ -426,6 +428,77 @@ const searchCustomerByNameOrCode = async(req,res)=>{
     }
 }
 
+const submitReward = async(req,res)=>{
+    try{
+        if(!req.body.key || !req.body.description || !req.body.employeeId){
+            return res.status(400).json({
+                message: "Required Fields are missing",
+                status: false,
+            }); 
+        }
+        await Reward.create({
+            employeeId: req.body.employeeId,
+            key: req.body.key,
+            description: req.body.description
+        }).then((data)=>{
+            return res.status(200).json({ code : "200" , message: "Reward Created Successfully!!", data: data });
+        }).catch((err)=>{
+            console.log(err);
+            return res.status(500).json({
+                message: "Internal server error",
+                status: false,
+            });
+        })
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const getAllRewards = async(req,res)=>{
+    try{
+        const data = await Reward.find().sort({_id : -1});
+        return res.status(200).json({ code : "200" , message: "Reward list!!", data: data });
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const getLatestReward = async(req,res)=>{
+    try{
+        const data = await Reward.findOne().sort({_id : -1})
+        if(data && data.createdAt){
+            if(isDateInCurrentWeek(data.createdAt)){
+                return res.status(200).json({ code : "200" , message: "Latest Reward!!", data: data });
+            }else {
+                return res.status(200).json({ code : "200" , message: "No Latest Reward Found!!", data: {} });
+            }
+        }else {
+            return res.status(200).json({ code : "200" , message: "No Latest Reward Found!!", data: {} });
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
+function isDateInCurrentWeek(dateToCheck) {
+  const now = new Date();
+
+  // Set to start of week (Sunday)
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(now.getDate() - now.getDay());
+  startOfWeek.setHours(0, 0, 0, 0);
+
+  // Set to end of week (Saturday)
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+  endOfWeek.setHours(23, 59, 59, 999);
+
+  // Convert input to date object if not already
+  const inputDate = new Date(dateToCheck);
+
+  return inputDate >= startOfWeek && inputDate <= endOfWeek;
+}
+
 module.exports = {
     createEmployee: createEmployee,
     getEmployeeList: getEmployeeList,
@@ -443,5 +516,8 @@ module.exports = {
     generateStateList : generateStateList,
     getStateList : getStateList,
     getAllCustomersByPage : getAllCustomersByPage,
-    searchCustomerByNameOrCode : searchCustomerByNameOrCode
+    searchCustomerByNameOrCode : searchCustomerByNameOrCode,
+    submitReward : submitReward,
+    getAllRewards : getAllRewards,
+    getLatestReward : getLatestReward,
 }
