@@ -219,8 +219,8 @@ const generateAndSendCalibration = async(req,res)=>{
         const currentDate = new Date();
         const customerState = calibrationrequestData['customerId']['stateCode'];
         const customerEmail = calibrationrequestData['customerId']['email'];
-        const nextCalibrationDate = generateDate(customerState); 
-        const customerName = calibrationrequestData['customerId']['customerName'];
+        const nextCalibrationDate = '06/01/2026' // generateDate(customerState); 
+        const customerName = calibrationrequestData['customerId']['customerName'].trim().replace(/\s+/g, "_").replace(/[^\w.-]/g, "");
         await generateBarcodeForCalibrationRequest(req.body.calibrationId , customerName);
 
         console.log('nextCalibrationDate', nextCalibrationDate , calibrationrequestData['machineType'] , calibrationrequestData);
@@ -259,11 +259,11 @@ const generateAndSendCalibration = async(req,res)=>{
         if(machineModelDetails && machineModelDetails.MODEL && customerEmail){
             ejs.renderFile(
                 path.join(__dirname, fileName),{
-                    serialNumber : serialNumber,
-                    issueDate : currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
+                    serialNumber : 4660, //serialNumber,
+                    issueDate : '07/10/2025', //currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
                     modelNumber : machineModelDetails.MODEL,
                     machineNumber : machineNumber,
-                    centerName : calibrationrequestData['customerId']['customerName'],
+                    centerName : customerName, // calibrationrequestData['customerId']['customerName'],
                     city : calibrationrequestData['customerId']['city'],
                     state : state,
                     coValue : cylinderDetails[0]['CO'],
@@ -285,7 +285,7 @@ const generateAndSendCalibration = async(req,res)=>{
                         console.log(err);
                     }
                     
-                    const outputPath = `./assets/uploads/calibration/${calibrationrequestData['customerId']['customerName']}_${req.body.calibrationId}.pdf`;
+                    const outputPath = `./assets/uploads/calibration/${customerName}_${req.body.calibrationId}.pdf`;
                     // const options = { type: "A4" };
                     // const options = { type: 'A4'};
                     var options = {
