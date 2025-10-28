@@ -219,7 +219,7 @@ const generateAndSendCalibration = async(req,res)=>{
         const currentDate = new Date();
         const customerState = calibrationrequestData['customerId']['stateCode'];
         const customerEmail = calibrationrequestData['customerId']['email'];
-        const nextCalibrationDate = '06/01/2026' // generateDate(customerState); 
+        const nextCalibrationDate = '10/12/2025' // generateDate(customerState); 
         const customerName = calibrationrequestData['customerId']['customerName'].trim().replace(/\s+/g, "_").replace(/[^\w.-]/g, "");
         await generateBarcodeForCalibrationRequest(req.body.calibrationId , customerName);
 
@@ -260,7 +260,7 @@ const generateAndSendCalibration = async(req,res)=>{
             ejs.renderFile(
                 path.join(__dirname, fileName),{
                     serialNumber : 4660, //serialNumber,
-                    issueDate : '07/10/2025', //currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
+                    issueDate : '11/9/2025', //currentDate.getDate() + "/" + ( currentDate.getMonth() + 1 ) + "/" + currentDate.getFullYear(),
                     modelNumber : machineModelDetails.MODEL,
                     machineNumber : machineNumber,
                     centerName : customerName, // calibrationrequestData['customerId']['customerName'],
