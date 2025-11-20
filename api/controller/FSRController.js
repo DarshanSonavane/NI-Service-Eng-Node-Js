@@ -1201,8 +1201,10 @@ async function updateMasterInventory(productId,assignedQuantity){
 
 async function isProductQuanityAvailable(productId , assignedQuantity){
     try{
+        console.log("ProductDetails", productId, assignedQuantity);
         console.log("Here" , productId , assignedQuantity);
         const productData = await MasterInventory.findOne({_id : productId});
+        console.log("Product Data", productData);
         if(productData && productData.totalQuantity > 0 && assignedQuantity <= productData.totalQuantity){
             return true;
         }else {
@@ -1222,7 +1224,9 @@ const assignInventoryToEmployee = async(req, res)=>{
             });
         }
         const employeeProduct = await EmployeeInventory.find({employeeId : req.body.employeeId , productId : req.body.productId});
+        console.log("employeeProduct", employeeProduct);
         const isProductAvailable = await isProductQuanityAvailable(req.body.productId , req.body.assignedQuantity);
+        console.log("isProductAvailable", isProductAvailable)
         if(employeeProduct.length > 0){
             if(isProductAvailable){
                 updateData = { 
